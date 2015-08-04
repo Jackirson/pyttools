@@ -21,12 +21,14 @@
 % требуется для оформления ссылок
 \RequirePackage[pdftex,unicode,colorlinks,linkcolor=blue,citecolor=red,bookmarksopen,pdfhighlight=/N]{hyperref}
 
+% page settings
 \RequirePackage[a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm,headsep=5mm,headheight=7mm]{geometry}
-
 \usepackage{indentfirst}
 \parindent=10mm
 \newcommand{\tocsecindent}{\hspace{1mm}}
 \renewcommand{\baselinestretch}{1,3}
+
+% slide settings (grayed out)
 %\raggedbottom
 %\parskip=0mm
 %\setcounter{secnumdepth}{10}
@@ -35,21 +37,17 @@
 %\sloppy
 %\clubpenalty=10000
 %\widowpenalty=10000
-
 % \setbeamercolor{normal text}{bg=lightgray}
 % \setbeamercolor{normal text}{bg=white}
-
-\setlength{\parskip}{2mm}
-
+%\setlength{\parskip}{2mm}
 %\newtheorem{rudefinition}{\inputencoding{utf8}Определение}
 %\newenvironment{definition}{\begin{rudefinition}}{\end{rudefinition}}
 %\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
 %\newenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
-
 %\newenvironment{commentframe}[1]{\setbeamercolor{normal text}{bg=lightgray}\begin{frame}{#1}}{\end{frame}\setbeamercolor{normal text}{bg=white}}
-
 %\newlength{\mylength}
 
+% possibility symbols
 \newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}
 \newcommand{\todo}[1]{\textcolor{red}{TODO~--- #1}}
 \newcommand{\define}[1]{\overset{\text{def}}{#1}}
@@ -163,6 +161,7 @@
 \newcommand{\rulambda}{\text{\it л}}
 \newcommand{\bq}{\mathbf{q}}
 
-%\newcommand{\XP}{{(X,\, \mathcal{P}(X),\,\P)}} %^{\tilde x})}}
-%\newcommand{}[1]{{(X,\, 2^X,\,\P_{#1}^{\tilde x})}}
-%\newcommand{\XPSP}[1]{{(X,\, 2^{X},\,\P_{#1}^{\tilde x})}}
+% diploma specific symbols
+\newcommand{\setN}{\{1, ..., N\}}
+\newcommand{\setM}{\{1, ..., M\}}
+
