@@ -3,10 +3,7 @@ main=main
 
 # this line added only to update modification time
 
-FILES=$(main).tex preamble.sty \
-      intro.tex algo.tex \
-      methods.tex infinum.tex samples.tex \
-      extro.tex pic 
+FILES=*.tex preamble.sty pic
 
 # Which compilation model shall be used?
 # Possible options:
