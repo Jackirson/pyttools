@@ -1,8 +1,10 @@
 name=expert_project
 main=main
 
-FILES=$(main).tex intro.tex preamble.sty \
-      pic
+FILES=$(main).tex preamble.sty \
+      intro.tex algo.tex \
+      methods.tex infinum.tex samples.tex \
+      extro.tex pic 
 
 # Which compilation model shall be used?
 # Possible options:
