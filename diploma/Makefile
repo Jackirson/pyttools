@@ -1,6 +1,8 @@
 name=expert_project
 main=main
 
+# this line added only to update modification time
+
 FILES=$(main).tex preamble.sty \
       intro.tex algo.tex \
       methods.tex infinum.tex samples.tex \
