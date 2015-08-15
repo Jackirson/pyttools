@@ -89,7 +89,7 @@
 Можно дать и другое определение. Пусть $\Eps(d)$ --- событие, при котором $d \in D$ не является верным решением:
 \begin{equation}
   \label{e:Eps_d_def2}
-  \Eps(d) \define= \{t: \exists \delta(t) \neq d\} \bigcup \{t: \not\exists \delta(t)\}. 
+  \Eps(d) \define= \{t: \exists \delta(t) \neq d\} \bigcup \{t: \nexists \delta(t)\}. 
 \end{equation}
 Определения (\ref{e:Eps_d_def}) и (\ref{e:Eps_d_def2}) эквивалентны и взаимозаменяемы.
 
@@ -125,10 +125,10 @@
   \Eps_l \define= \{t: \Pi_l(t) > k\} = \{t: \exists;\ L' \subset O, \abs{L'} > k: \forall; l' \in L' x_l'(t) \geq x_{l}(t)\}.
 \end{equation}
 
-Докажем, что при произвольном $t$ заранее, фиксированное решение $d \in D$ ошибочно тогда и только тогда, когда для одного из выбранных объектов $l \in d$ реализуется событие $\Eps_l$.
+Докажем, что при произвольном $t$, заранее фиксированное решение $d \in D$ ошибочно тогда и только тогда, когда для одного из выбранных объектов $l \in d$ реализуется событие $\Eps_l$.
 \begin{enumerate}
-  \item Если $\exists \delta_t$, реализация события $\Eps_l, l \in O$ означает $l \notin \delta_t$ (\ref{right_order_strict}). Действительно, $\Pi_l(t) > k$ (\ref{e:Eps_l_def}), а если бы объект с номером $l$ был одним из $k$ лидеров, выполнялось бы $\Pi_l(t) \leq k$. Отсюда при $l \in d$ следует $\Eps(d)$ (\ref{e:Eps_d_def2}).
-  \item Если $\not\exists \delta_t$ (\ref{right_order_fail}), то $\Pi_l(t) > k$, вообще говоря, не означает, что <<качество>> $l$-й объекта меньше <<качества>> остальных объектов. Но $\not\exists \delta(t) \Rightarrow \Eps(d') \forall d' \in D$ (\ref{e:Eps_d_def2}).
+  \item Если $\exists \delta_t$, реализация события $\Eps_l, l \in O$ означает $l \notin \delta_t$ (\ref{e:right_order_strict}). Действительно, $\Pi_l(t) > k$ (\ref{e:Eps_l_def}), а если бы объект с номером $l$ был одним из $k$ лидеров, выполнялось бы $\Pi_l(t) \leq k$. Отсюда при $l \in d$ следует $\Eps(d)$ (\ref{e:Eps_d_def2}).
+  \item Если $\nexists \delta_t$ (\ref{e:right_order_fail}), то $\Pi_l(t) > k$, вообще говоря, не означает, что <<качество>> $l$-й объекта меньше <<качества>> остальных объектов. Но $\nexists \delta(t) \Rightarrow \Eps(d') \forall d' \in D$ (\ref{e:Eps_d_def2}).
   \item Если же решение $d$ ошибочно (неважно, существует ли $\delta_t$), то в силу (\ref{e:Eps_d_def}) $\exists i \in d,\, \exists i' \notin d: x_i(t) \leq x_{i'}(t)$. %Для этого $l$ и реализуется $\Eps_l$. % А вот и нет)))
   Пусть $l = \arg\min \{x_l(t)':\,l' \in d\}$, для него уже $\Pi_l(t) \geq k$. Но $x_l(t) \leq x_i(t) \leq x_{i'}(t)$, откуда $\Pi_l(t) \geq k+1$ и реализуется событие $\Eps_l$.     
 \end{enumerate}
@@ -138,7 +138,7 @@
   \Eps(d) = \bigcup_{l \in d} \Eps_l.
 \end{equation*}
 
-Несмотря на то, что, вообще говоря, $\Eps_l \cap \Eps_l' \neq \varnothing, l \neq l'$, правило суммирования возможностей позволяет записать:
+Наконец, перейдём к возможностям рассматриваемых событий, а именно запишем связь между минимизируемой $\P(\Eps(d))$ и возможностями того, что объект с номером $l$ не попадает в число лидеров. Несмотря на то, что, вообще говоря, $\Eps_l \cap \Eps_l' \neq \varnothing, l \neq l'$, правило суммирования возможностей позволяет записать:
 \begin{equation}
   \label{e:razbienie}
   \P(\Eps(d)) = \sup_{l \in d} \P(\Eps_l).
