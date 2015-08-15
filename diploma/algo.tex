@@ -65,13 +65,13 @@
     \label{e:delta_def}
     \delta_{t} \define= \{i_1, \mydots, i_k\}: \forall i \in \delta,\; \forall i' \in O \setminus \delta: x_i > x_{i'}. 
 \end{equation}
-Подмножество $\delta_{t}$ будем называть верным решением задачи о выборе объектов при $\theta = t$, а объекты $i_1, \mydots, i_k$ --- лидерами. 
+Подмножество $\delta_{t}$ будем называть верным решением задачи о выборе объектов при $\theta = t$, а объекты $i_1, \mydots, i_k$ --- лидерами. Если какой-то объект $i \in \delta_t$, будем говорить, что $i$-й объект попал (или вошёл) в $k$ лидеров.
 
 Верное решение существует не всегда. Действительно, если расположить $x_1, \mydots, x_n$ в порядке невозрастания, из определения (\ref{e:delta_def}) следует:
 \begin{equation}
    \label{e:right_order_strict}
     \delta_t = \{i_1, \mydots, i_k\}: x_{i_1} \geq \mydots \geq x_{i_k} > x_{i_{k+1}} \geq \mydots \geq x_{i_n},   
-\end{equation*}
+\end{equation}
 то есть между $x_{i_k}$ и $x_{i_{k+1}}$ должен стоять знак строгого неравенства. Но при некоторых $t$, $k$ возможна такая ситуация:
 \begin{equation}
     \label{e:right_order_fail}
@@ -125,11 +125,11 @@
   \Eps_l \define= \{t: \Pi_l(t) > k\} = \{t: \exists;\ L' \subset O, \abs{L'} > k: \forall; l' \in L' x_l'(t) \geq x_{l}(t)\}.
 \end{equation}
 
-Пусть вектор $\theta$ принял значение $t$. Докажем, что заранее фиксированное решение $d \in D$ ошибочно (событие $\Eps(d)$ реализуется) тогда и только тогда, когда для одного из выбранных объектов $l \in d$ реализуется событие $\Eps_l$.
+Докажем, что при произвольном $t$ заранее, фиксированное решение $d \in D$ ошибочно тогда и только тогда, когда для одного из выбранных объектов $l \in d$ реализуется событие $\Eps_l$.
 \begin{enumerate}
-  \item Если $\exists \delta(t)$, реализация события $\Eps_l, l \in O$ означает $l \notin \delta(t)$ (\ref{right_order_strict}). Действительно, $\Pi_l(t) > k$ (\ref{e:Eps_l_def}), но если бы объект с номером $l$ был одним из $k$ лидеров, выполнялось бы $\Pi_l(t) \leq k$. Отсюда при $l \in d$ следует $\Eps(d)$ (\ref{e:Eps_d_def2}).
-  \item Если $\not\exists \delta(t)$, то $\Pi_l(t) > k$, вообще говоря, не означает, что <<качество>> $l$-й объекта меньше <<качества>> остальных. Но $\not\exists \delta(t) \Rightarrow \Eps(d') \forall d' \in D$ (\ref{e:Eps_d_def2}), в том числе $d' = d$.
-  \item Если же решение $d$ ошибочно (неважно, существует ли верный вариант выбора объектов), то в силу (\ref{e:Eps_d_def}) $\exists i \in d,\, \exists i' \notin d: x_i(t) \leq x_{i'}(t)$. %Для этого $l$ и реализуется $\Eps_l$. % А вот и нет)))
+  \item Если $\exists \delta_t$, реализация события $\Eps_l, l \in O$ означает $l \notin \delta_t$ (\ref{right_order_strict}). Действительно, $\Pi_l(t) > k$ (\ref{e:Eps_l_def}), а если бы объект с номером $l$ был одним из $k$ лидеров, выполнялось бы $\Pi_l(t) \leq k$. Отсюда при $l \in d$ следует $\Eps(d)$ (\ref{e:Eps_d_def2}).
+  \item Если $\not\exists \delta_t$ (\ref{right_order_fail}), то $\Pi_l(t) > k$, вообще говоря, не означает, что <<качество>> $l$-й объекта меньше <<качества>> остальных объектов. Но $\not\exists \delta(t) \Rightarrow \Eps(d') \forall d' \in D$ (\ref{e:Eps_d_def2}).
+  \item Если же решение $d$ ошибочно (неважно, существует ли $\delta_t$), то в силу (\ref{e:Eps_d_def}) $\exists i \in d,\, \exists i' \notin d: x_i(t) \leq x_{i'}(t)$. %Для этого $l$ и реализуется $\Eps_l$. % А вот и нет)))
   Пусть $l = \arg\min \{x_l(t)':\,l' \in d\}$, для него уже $\Pi_l(t) \geq k$. Но $x_l(t) \leq x_i(t) \leq x_{i'}(t)$, откуда $\Pi_l(t) \geq k+1$ и реализуется событие $\Eps_l$.     
 \end{enumerate}
 
