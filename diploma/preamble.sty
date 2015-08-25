@@ -5,7 +5,10 @@
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
-\usepackage{verbatim} % comment
+\usepackage{verbatim} % comment envirnment
+%\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
+%\newenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
+\newenvironment{notice}{\small}{\normalsize}
 
 % требуется для оформления ссылок
 \RequirePackage[pdftex,unicode,colorlinks,linkcolor=blue,citecolor=red,bookmarksopen,pdfhighlight=/N]{hyperref}
