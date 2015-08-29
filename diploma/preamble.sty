@@ -5,7 +5,7 @@
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
-\usepackage{verbatim} % comment envirnment
+\usepackage{verbatim, titlesec, titletoc, appendix} % comment envirnment
 %\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
 %\newenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
 \newenvironment{notice}{\small}{\normalsize}
@@ -13,6 +13,19 @@
 
 % требуется для оформления ссылок
 \RequirePackage[pdftex,unicode,colorlinks,linkcolor=blue,citecolor=red,bookmarksopen,pdfhighlight=/N]{hyperref}
+
+% biber from AndReW
+\usepackage{csquotes} %???
+\usepackage[backend=biber,
+            language=auto, autolang=other, babel=other,
+            citestyle=numeric-comp, bibstyle=gost-numeric,
+            maxnames=3, sorting=none
+            ]{biblatex}
+\renewcommand{\mkbibbrackets}{}
+\let\oldcite\cite
+\def\cite#1{[\oldcite{#1}]}
+\let\firstcite\cite
+\addbibresource{thesis.bib}
 
 % page settings
 \RequirePackage[a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm,headsep=5mm,headheight=7mm]{geometry}
