@@ -83,7 +83,7 @@ $(build)/$(main).pdf: $(FILES) Makefile clean build
 	@$(MAKE) latex
 	@$(MAKE) biber
 	@$(MAKE) latex
-	@$(MAKE) latex
+	#@$(MAKE) latex
 	@$(MAKE) warnings
 	
 endif
