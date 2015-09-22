@@ -23,7 +23,7 @@ $(name).pdf: $(build)/$(main).pdf
 
 build:
 	@echo; echo "===== LN (clean build)";  
-	@if test -d $(build); then rm -r $(build); fi;
+	@rm -f -r $(build);
 	@mkdir $(build);
 	@cd $(build) && ln -s $(FILES:%=../%) .
 
@@ -50,7 +50,7 @@ quick:
 	@$(MAKE) latex
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf: clean build latex biber latex2 warnings
+$(build)/$(main).pdf:  build latex biber latex2 warnings
 
 
 clean:
