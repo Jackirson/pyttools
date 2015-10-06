@@ -57,7 +57,7 @@ endfunction
 //  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptopObjSelectionFile( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptopSup' or 'ptopInf' functions may be called prior to 'ptopObjSelection' to obtain a "collective opinion" as supremum or infinum of the poss-dists. See ptopSup description. 
-// OUT is following qObj*qObj matrix (example):
+// OUT two qObj*qObj matrices like the following
 // sel(1)=[0 0 T 0 T 0] -- 3rd and 5th objects
 // sel(2)=[0 0 T 0 T 0]
 // sel(3)=[T 0 T 0 T T] -- 1st, 3rd, 5th and 6th objects
@@ -69,28 +69,27 @@ function [ sel, lPLoser2d ] = ptopObjSelection(poss_init, sQualFun);
     // make a lambda from string
     deff('y=lqualFun(x)', sQualFun);
     [lqParam,lqXmax,lqObj] = size(poss_init);
- //zeros(lqObj,lqObj);
-    
+    sel = list(); // allocate an emply list of lists 
+        
     for k=1:lqObj  
      // find P(i)'s for each k
       for i=1:lqObj   
           lPLoser2d(k,i) = lfindPLoser(poss_init, i, k, lqualFun);
           // e.g. lPLoser2d(2,1) is the possibility for the 1-st object not to fit into 2 best objects among 1:lqObj
       end;
-     // Find the smallest P(i) for each k that let us select at least k objects and select them and objects equal to them. P(i)'s that are even smaller are wiped out (set to Inf) - we cannot afford such a little Error possibility for given k. Initially no objects are selected.
+
       lPLoserTemp1d = lPLoser2d(k,:);
       sel(k,:) = ( lPLoserTemp1d ~= lPLoserTemp1d ); 
-   ///  print(%io(2), k);
-   ///  print(%io(2), sel(k,:));
+
 
       while sum( sel(k,:) ) < k
           sel(k,:) = ( lPLoserTemp1d == min(lPLoserTemp1d) );
-      ///    print(%io(2), sel(k,:));
           lPLoserTemp1d( sel(k,:) ) = 10;
       end;
     end;
 endfunction
-// wrapper for file (later html stream) input
+
+// wrapper for file (later html stream) input and "smart output"
 function [ sel, lPLoser2d ] = ptopObjSelectionFile( filename )
     [lposs, lsCustomData1d] = ptopLoadPoss3d(filename);
     [ sel, lPLoser2d ] = ptopObjSelection(lposs, lsCustomData1d(2));
