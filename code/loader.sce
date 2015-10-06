@@ -50,7 +50,7 @@ function [poss3d, sCustomData] = ptopLoadPoss3d( sFilename );
     end
 endfunction
        
-// ptopObjSelection: select objects by minimizing P(Error), where Error happens if objects not chosen are not worse in terms of user-defined "quality" then chosen objects and P() is a possibility measure constructed from "expert sasessments" - poss-dists of each object's "quality" p(x), x=1:qXmax.
+// ptopObjSelection: select objects by minimizing P(Error), where Error happens if objects not chosen are not worse in terms of user-defined "quality" then chosen objects and P() is a possibility measure constructed from "expert sasessments" - initial poss-dists of each object's "quality" p(x), x=1:qXmax.
 // COMMENT: There are qObj objects and each object has qParam parameters to be assessed in terms of poss-dist prior to run ptopObjSelection. Values of qObj, qParam and also qXmax are generally selected by the Chief. The Chief also must invent a monotonous object quality function qualFun(x(1), ..., x(qParam)) -> y.
 // IN: qParam*qXmax*qObj array (assuming 1 expert),
 //     qualFun() defined with string 'sQualFun', e.g. sQualFun='y=(x(1)+x(2))/2'  
@@ -62,14 +62,14 @@ endfunction
 // k=3: ua={3,5},a={4,6,1}  etc.
 // The 'k' is the number of objects to select as a setting; for each setting in range k=1:qObj there are two sets of object indeces, the first one to be an unabmigious selection of size r<=k and the second one to be an ambigious selection with "equally good" assessed objects from which to choose r-k objects randomly or to choose other 'k' value.
 exec 'dichotomy.sce'; // load local functions
-function [ sel ] = ptopObjSelection(p_init, sQualFun);
+function [ sel ] = ptopObjSelection(poss_init, sQualFun);
     // make a lambda from string
     deff('y=lqualFun(x)', sQualFun);
     [lqParam,lqXmax,lqObj] = size(p_init);
     
     k=1; // TODO: add loop on k
-    for l=1:lqObj   
-        P_loser(l) = lfindPLoser(p_init, l, k);
+    for i=1:lqObj   
+        P_loser(i) = lfindPLoser(poss_init, i, k);
     end
 endfunction
 
