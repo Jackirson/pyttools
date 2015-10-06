@@ -16,7 +16,7 @@ function [ answer ] = ldichotomy( p, p_level, l, K, sum_function ) // math symbo
     
     // Construction of T_edge: give best points for all objects i=1..N except i=l ans worst points for object l
     // 1. select best points as maximum in each row of 
-    T_edge3d =  max(X, 'c');  // sum into single column along rows: M*1*N
+    T_edge3d =  max(X3d, 'c');  // sum into single column along rows: M*1*N
     T_edge2d = T_edge3d(:,:);  // a sideway concatenation of matrices in array x_top(:,ONLY,:) eliminates the not used middle index and makes a normal M*N matrix                   
     // 2. change all '0' indicating p <= p_level to 'inf'
     X3d(~X3d) = %inf;   
@@ -38,14 +38,15 @@ function [ answer ] = ldichotomy( p, p_level, l, K, sum_function ) // math symbo
        
 endfunction
 // ===================
-function  [ P_loser ] = lfindPLoser(poss_init, qLoser, qSelSize)
+// return value is a scalar!
+function  [ P_loser ] = lfindPLoser(poss_init, qLoser, qSelSize, sum_function)
     // dichotomy until |dP| < eps_p, the latter initialized in loader.sce
     p_cur = [0 1];
     p_step =0.5;
   //  p_old = [-1 -1];
     while ( p_step > eps_p )
-        p_old = p_i;
-        if ldichotomy(poss_init, p_cur(1)+p_step, qLoser, qSelSize)
+       // p_old = p_i;
+        if ldichotomy(poss_init, p_cur(1)+p_step, qLoser, qSelSize, sum_function)
             // +1/2 of current step
             p_cur(1) = p_cur(1) + p_step;
             p_step = 0.5 * p_step;           
@@ -55,5 +56,7 @@ function  [ P_loser ] = lfindPLoser(poss_init, qLoser, qSelSize)
             p_step = 0.5 * p_step;
         end
     end
+    P_loser = (p_cur(1)+p_cur(2))/2;
+        
 endfunction
 
