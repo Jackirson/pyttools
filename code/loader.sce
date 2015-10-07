@@ -1,4 +1,4 @@
-// **** PToP Toolbox main script ****
+// **** Pytiev Theory of Possibility (PToP) Toolbox main script ****
 // This script must be ran to load all availible methods of the toolbox as usual Scilab functions.
 // 	1. (prepare possibility distributions for input)
 // 	2. exec loader.sce
@@ -11,14 +11,16 @@
 //  s - string, q - integer, no prefix - standard real var (single or double)
 //  Nd - number of dimensions, e.g. 2d for matrices; may be omitted
 // ptopFuncName: "global" toolbox functions
+// hptopFuncName: "help" functions
 // lfuncName: "local" functions
-// J, 
 
 // ** Global default values (override if needed) **
     filename= 'dist.txt'; 
     eps_p = 0.0001;    // we work with possibility measure P(). interative procedures working with P()-values such as Dichotomy will run until |dP| < eps_p, or they will try to find a precise solution if eps_p < 0 chosen.
 	
 // ** Functions with description **
+exec 'dichotomy.sce'; // load local functions
+
 // ptopLoadPoss: Function to load possibility distributions (aka poss-dist) from file
 // COMMENT: Each line of poss-dist data in the file represents one distribution p(x) with discreet x=1:qXmax. That means, 'qXmax' is the quantity of p()-values per line and it's value is determined from file formatting. The total count of poss-dists 'qLinesOfData' is also determined from file formatting.
 // IN: filename (string)
@@ -57,19 +59,17 @@ endfunction
 //  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptopObjSelectionFile( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptopSup' or 'ptopInf' functions may be called prior to 'ptopObjSelection' to obtain a "collective opinion" as supremum or infinum of the poss-dists. See ptopSup description. 
-// OUT is following qObj*qObj matrix (example):
+// OUT are two following qObj*qObj boolean matrices(example):
 // sel(1)=[0 0 T 0 T 0] -- 3rd and 5th objects
 // sel(2)=[0 0 T 0 T 0]
 // sel(3)=[T 0 T 0 T T] -- 1st, 3rd, 5th and 6th objects
 // ...
-// The 'k' is the number of objects to select as a setting; for each setting in range k=1:qObj there is a set of object indeces the Chief may select k from with the SAME possibility or Error for any choice. 
+// There is a number 'k' of objects to select as a setting; for each setting in range k=1:qObj there is a set  of object indeces with size >= k the Chief may select k from with the SAME possibility or Error for any choice - these sets are stored to sel(k,:,1). There is also a set of object indexes for each k of a maximum size that is <= k, but induces a lower possibility of Error - they are stored to sel(k,:,2) and interpreted as objects that "must be chosen" (?)
 //  remark #1: Additional ouput is a qObj*qObj possibility matrix FOR DEBUG!
-exec 'dichotomy.sce'; // load local functions
 function [ sel, lPLoser2d ] = ptopObjSelection(poss_init, sQualFun);
     // make a lambda from string
     deff('y=lqualFun(x)', sQualFun);
     [lqParam,lqXmax,lqObj] = size(poss_init);
- //zeros(lqObj,lqObj);
     
     for k=1:lqObj  
      // find P(i)'s for each k
@@ -77,25 +77,65 @@ function [ sel, lPLoser2d ] = ptopObjSelection(poss_init, sQualFun);
           lPLoser2d(k,i) = lfindPLoser(poss_init, i, k, lqualFun);
           // e.g. lPLoser2d(2,1) is the possibility for the 1-st object not to fit into 2 best objects among 1:lqObj
       end;
-     // Find the smallest P(i) for each k that let us select at least k objects and select them and objects equal to them. P(i)'s that are even smaller are wiped out (set to Inf) - we cannot afford such a little Error possibility for given k. Initially no objects are selected.
-      lPLoserTemp1d = lPLoser2d(k,:);
-      sel(k,:) = ( lPLoserTemp1d ~= lPLoserTemp1d ); 
-   ///  print(%io(2), k);
-   ///  print(%io(2), sel(k,:));
 
-      while sum( sel(k,:) ) < k
-          sel(k,:) = ( lPLoserTemp1d == min(lPLoserTemp1d) );
-      ///    print(%io(2), sel(k,:));
-          lPLoserTemp1d( sel(k,:) ) = 10;
+      lPLoserTemp1d = lPLoser2d(k,:);
+      sel(k,:, 1) = ( lPLoserTemp1d ~= lPLoserTemp1d ); // initialize with "false"
+      sel(k,:, 2) = ( lPLoserTemp1d ~= lPLoserTemp1d ); // initialize with "false"
+
+      while sum( sel(k,:, 1) ) < k
+          // sel(:,:,1) is a set object indeces 'i' with P_i that induce minimum P(E) when taken at least k objects (i.e. size(sel(k,:,1)>=k)
+          sel(k,:, 2) = sel(k, : ,1);  // the sel on previous step is of size <= k and with less P(E)
+          sel(k,:, 1) = sel(k,:, 1) | ( lPLoserTemp1d == min(lPLoserTemp1d) );  // add objects with greater error possibility until we have at least k objects in set
+          lPLoserTemp1d( sel(k,:, 1) ) = 10; // wipe out the miniumium values of P_l to find next minimum values on next loop
       end;
     end;
 endfunction
-// wrapper for file (later html stream) input
+
+// ptopObjSelectionFile: wrapper to ptopObjSelection for file (later http stream) input 
+// IN: filename
+// OUT: same as ptopObjSelection 
 function [ sel, lPLoser2d ] = ptopObjSelectionFile( filename )
     [lposs, lsCustomData1d] = ptopLoadPoss3d(filename);
     [ sel, lPLoser2d ] = ptopObjSelection(lposs, lsCustomData1d(2));
 endfunction
 
-// The'ptopSup' and similar functions input p[qPossPerExpert, qXmax, qExperts]. When fed with raw data, the first qPossPerExpert poss-dist lines correspond to the 1-st expert's opition and so on.
+// hptopPrintSel: help function to print "smart" output of ptopObjSelection
+// IN: 'sel' from ptopObjSelection
+// PRINT: prints the output in text form
+// OUT: list of size k with two lists of chosen objcts (instead of two boolean matrices)
+//       sel(k)(1) is "mandatory" selection (size <= k), sel(k)(2) is "additional" selection (size >= k)
+function sel = hptopPrintSel(sel3d)
+    lqObj = size(sel3d, 1);
+    lObjects = 1:lqObj; // set of all object indeces
 
+    sel = list();
+    for k = 1:lqObj
+         sel(k) = list();
+         mprintf("For k=%i ",k);
+         if sum( sel3d(k,:,1) ) == k then  // if selection is precise
+             sel(k)(1) =  lObjects(sel3d(k,:,1)); // mandatory set is precise
+             sel(k)(2) = []; // optional set is empty 
+             mprintf("(precise): ");
+         else
+             sel(k)(1) =  lObjects(sel3d(k,:,2)); // mandatory set is taken from prevoius-step sel (see ptopObjSelection)
+              sel(k)(2) =  lObjects(sel3d(k,:,1) & ~sel3d(k,:,2)); // optional set is the common sel without mandatory set
+             mprintf("(ambigious): ");
+         end//if
+         
+         // ===print 1-st set
+         for  i=1:length(sel(k)(1))
+             mprintf("%i ", sel(k)(1)(i)); 
+         end
+         if length(sel(k)(2))>0 then mprintf(" | "); end;
+         // ===print 2-nd set
+         for  i=1:length(sel(k)(2))
+             mprintf("%i ", sel(k)(2)(i)); 
+         end            
+         mprintf("\n");
+    end    
+    
+
+endfunction
+
+// The'ptopSup' and similar functions input p[qPossPerExpert, qXmax, qExperts]. When fed with raw data, the first qPossPerExpert poss-dist lines correspond to the 1-st expert's opition and so on.
 
