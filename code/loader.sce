@@ -59,7 +59,7 @@ endfunction
 //  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptopObjSelectionFile( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptopSup' or 'ptopInf' functions may be called prior to 'ptopObjSelection' to obtain a "collective opinion" as supremum or infinum of the poss-dists. See ptopSup description. 
-// OUT are two following qObj*qObj boolean matrices(example):
+// OUT: two following qObj*qObj boolean matrices(example):
 // sel(1)=[0 0 T 0 T 0] -- 3rd and 5th objects
 // sel(2)=[0 0 T 0 T 0]
 // sel(3)=[T 0 T 0 T T] -- 1st, 3rd, 5th and 6th objects
@@ -70,7 +70,7 @@ function [ sel, lPLoser2d ] = ptopObjSelection(poss_init, sQualFun);
     // make a lambda from string
     deff('y=lqualFun(x)', sQualFun);
     [lqParam,lqXmax,lqObj] = size(poss_init);
-    
+
     for k=1:lqObj  
      // find P(i)'s for each k
       for i=1:lqObj   
@@ -81,7 +81,6 @@ function [ sel, lPLoser2d ] = ptopObjSelection(poss_init, sQualFun);
       lPLoserTemp1d = lPLoser2d(k,:);
       sel(k,:, 1) = ( lPLoserTemp1d ~= lPLoserTemp1d ); // initialize with "false"
       sel(k,:, 2) = ( lPLoserTemp1d ~= lPLoserTemp1d ); // initialize with "false"
-
       while sum( sel(k,:, 1) ) < k
           // sel(:,:,1) is a set object indeces 'i' with P_i that induce minimum P(E) when taken at least k objects (i.e. size(sel(k,:,1)>=k)
           sel(k,:, 2) = sel(k, : ,1);  // the sel on previous step is of size <= k and with less P(E)
@@ -133,8 +132,6 @@ function sel = hptopPrintSel(sel3d)
          end            
          mprintf("\n");
     end    
-    
-
 endfunction
 
 // The'ptopSup' and similar functions input p[qPossPerExpert, qXmax, qExperts]. When fed with raw data, the first qPossPerExpert poss-dist lines correspond to the 1-st expert's opition and so on.
