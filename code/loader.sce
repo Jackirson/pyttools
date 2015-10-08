@@ -56,7 +56,7 @@ endfunction
 // COMMENT: There are qObj objects and each object has qParam parameters to be assessed in terms of poss-dist prior to run ptObjSelection. Values of qObj, qParam and also qXmax are generally selected by the Chief. The Chief also must invent a monotonous object quality function qualFun(x(1), ..., x(qParam)) -> y.
 // IN: qParam*qXmax*qObj array (assuming 1 expert),
 //     qualFun() defined with string 'sQualFun', e.g. sQualFun='y=(x(1)+x(2))/2'  
-//  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptObjSelectionFile( filename )
+//  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptObjSelFile( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptSup' or 'ptInf' functions may be called prior to 'ptObjSelection' to obtain a "collective opinion" as supremum or infinum of the poss-dists. See ptSup description. 
 // OUT: two following qObj*qObj boolean matrices(example):
@@ -90,10 +90,10 @@ function [ sel, lPLoser2d ] = ptObjSelection(poss_init, sQualFun);
     end;
 endfunction
 
-// ptObjSelectionFile: wrapper to ptObjSelection for file (later http stream) input 
+// ptObjSelFile: wrapper to ptObjSelection for file (later http stream) input 
 // IN: filename
 // OUT: same as ptObjSelection 
-function [ sel, lPLoser2d ] = ptObjSelectionFile( filename )
+function [ sel, lPLoser2d ] = ptObjSelFile( filename )
     [lposs, lsCustomData1d] = ptLoadPoss3d(filename);
  
     [ sel, lPLoser2d ] = ptObjSelection(lposs, lsCustomData1d(2));
@@ -104,7 +104,7 @@ endfunction
 // PRINT: prints the output in text form
 // OUT: list of size k with two lists of chosen objcts (instead of two boolean matrices)
 //       sel(k)(1) is "mandatory" selection (size <= k), sel(k)(2) is "additional" selection (size >= k)
-function sel = pthPrintSel(sel3d)
+function sel = ptPrintSel(sel3d)
     lqObj = size(sel3d, 1);
     lObjects = 1:lqObj; // set of all object indeces
 
