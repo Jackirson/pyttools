@@ -37,8 +37,8 @@ function [ answer ] = ldichotomy( p, p_level, l, K, sum_function ) // math symbo
     
     // if more than K objects have edgeQuality not worse than edgeQuality(l), then P(l) > p_level
     // 'sum' here only counts 'trues' in (s_top_x > s_top_x(l)) statement 
-    Pi_l = sum( (edgeQuality1d >= edgeQuality1d(l)) );
-    if Pi_l >  K  
+    Pi_l = sum( (edgeQuality1d > edgeQuality1d(l)) );
+    if Pi_l >=  K  
         answer = %T;
     else
         answer = %F;
