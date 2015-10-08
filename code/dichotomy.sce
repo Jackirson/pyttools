@@ -28,9 +28,10 @@ function [ answer ] = ldichotomy( p, p_level, l, K, sum_function ) // math symbo
         edgeQuality1d(i) = sum_function(T_edge2d(:,i));
     end
     
-    // if more than K objects have S_top better than S_top(l), then P(l) > p_level
-    // 'sum' here only counts 'trues' in (s_top_x > s_top_x(l)) statement (aka Pi_l)
-    if sum( (edgeQuality1d > edgeQuality1d(l)) ) > K  // changed from >= in 2015
+    // if more than K objects have edgeQuality not worse than edgeQuality(l), then P(l) > p_level
+    // 'sum' here only counts 'trues' in (s_top_x > s_top_x(l)) statement 
+    Pi_l = sum( (edgeQuality1d >= edgeQuality1d(l)) );
+    if Pi_l >  K  
         answer = %T;
     else
         answer = %F;
@@ -41,11 +42,32 @@ endfunction
 // return value is a scalar!
 function  [ P_loser ] = lfindPLoser(poss_init, qLoser, qSelSize, sum_function)
     // dichotomy until |dP| < eps_p, the latter initialized in loader.sce
-    p_cur = [0 1];
-    p_step =0.5;
-  //  p_old = [-1 -1];
-    while ( p_step > eps_p )
-       // p_old = p_i;
+    lAllPossValues = unique(poss_init);
+    p_cur = [min(lAllPossValues) 1];
+    p_step =0.5*(p_cur(2)-p_cur(1));
+
+    
+    while ( 1 )
+        
+        // exit conditions
+        if( eps_p < 0 )  // "precise" case is based on statement: every P() hase a value one of the poss-dists have (stroed in lAllPossValues)
+            
+            lindex1d = find(lAllPossValues >= p_cur(1) & lAllPossValues <= p_cur(2));
+           /// print(%io(2),length(lindex1d) );
+           /// if( length(lindex1d) == 0 ) then pause; end;
+                
+            if( length(lindex1d) == 1 ) 
+                P_loser = poss_init(lindex1d);
+                break;
+            end//if    
+        else 
+            if( p_step < eps_p ) 
+                P_loser = (p_cur(1)+p_cur(2))/2;
+                break;
+            end//if      
+        end//if
+        
+        // main test
         if ldichotomy(poss_init, p_cur(1)+p_step, qLoser, qSelSize, sum_function)
             // +1/2 of current step
             p_cur(1) = p_cur(1) + p_step;
@@ -54,9 +76,8 @@ function  [ P_loser ] = lfindPLoser(poss_init, qLoser, qSelSize, sum_function)
             // -1/2 of current step
             p_cur(2) = p_cur(2) - p_step;
             p_step = 0.5 * p_step;
-        end
+        end//if
+ 
     end
-    P_loser = (p_cur(1)+p_cur(2))/2;
-        
 endfunction
 
