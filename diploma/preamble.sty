@@ -8,7 +8,7 @@
 \usepackage{verbatim, titlesec, titletoc, appendix} % comment envirnment
 %\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
 %\newenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
-\newenvironment{notice}{\small}{\normalsize}
+
 %\newenvironment{penalty}{}{}
 
 % требуется для оформления ссылок
@@ -54,6 +54,10 @@
 \usepackage{ccaption}
 \captiondelim{~---~}
 \renewcommand{\figurename}{Рисунок}
+
+% notices
+\newcommand{\noticeheader}{ {\large \textbf{Замечание}} }
+\newenvironment{notice}{\small}{\normalsize}
 
 % possibility symbols
 \newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}

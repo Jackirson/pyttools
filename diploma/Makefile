@@ -22,8 +22,6 @@ $(name).pdf: $(build)/$(main).pdf
 	@cp $< $@
 
 build:
-	@echo; echo "===== LN (clean build)";  
-	@rm -f -r $(build);
 	@mkdir $(build);
 	@cd $(build) && ln -s $(FILES:%=../%) .
 
@@ -50,16 +48,13 @@ quick:
 	@$(MAKE) latex
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf:  build latex biber latex2 warnings
-
+$(build)/$(main).pdf:  clean build latex biber latex2 warnings
 
 clean:
 	@echo; echo ===== CLEAN; 
 	@rm -f -r $(build)
 	@rm -f ./*~
-	@$(RM) -f `find . -name \*'-eps-converted-to.pdf'`
 
 clobber: clean
 	@echo; echo ===== CLOBBER; 
 	@rm -f $(name).pdf
-
