@@ -21,6 +21,7 @@ function [ sel, PLoser2d ] = ptObjSelection(poss_init, sQualFun);
     sQualFunParsed = lptParseQualFun( sQualFun );
     deff('y=qualFun(x)', sQualFun);     // make a lambda from string
     [qParam_notUsed,qXmax_notUsed,qObj] = size(poss_init);
+    sel = zeros(qObj,qObj,2);
 
     for k=1:qObj  
       for i=1:qObj   
@@ -28,8 +29,9 @@ function [ sel, PLoser2d ] = ptObjSelection(poss_init, sQualFun);
       end;
 
       PLoserTemp1d = PLoser2d(k,:);
-      sel(k,:, 1) = ( PLoserTemp1d ~= PLoserTemp1d ); // initialize with "false"
-      sel(k,:, 2) = ( PLoserTemp1d ~= PLoserTemp1d ); // same shit
+    ///  sel(k,:, 1) = ( PLoserTemp1d ~= PLoserTemp1d ); 
+    ///  sel(k,:, 2) = ( PLoserTemp1d ~= PLoserTemp1d ); // same shit
+      // zeroes in sel(k,:,:) will turn to %F when a boolean expression (a == b) is assigned below. it's important for indexing style float_matrix(bool_matrix)
       while sum( sel(k,:, 1) ) < k // until we have sel at least k objects
           sel(k,:, 2) = sel(k, : ,1);  // sel on previous step is of size <= k and with less P(E)
           sel(k,:, 1) = sel(k,:, 1) | ( PLoserTemp1d == min(PLoserTemp1d) );  // add objects with minimal P(E) 

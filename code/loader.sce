@@ -20,5 +20,5 @@
 // ** Functions with description in corresp. files **
 exec 'input.sce';
 exec 'objsel.sce';
-exec 'supremum.sce';
+exec 'order.sce';
 
