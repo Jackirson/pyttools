@@ -1,0 +1,23 @@
+The toolbox actually consists of two parts:
+
+I)  The functions designed to perform the basic Pytyev's Possibility Theory (pt)
+operations. Note that it's correct to say "possibility theory", not "theory of
+possibility".
+
+II) The functions designed to evaluate technologies under uncertainty.
+Generally speaking these functions can be used to evaluate not only technologies,
+but everything a decision maker wants to evaluate. So let's call this problem
+simply "evaluation".
+
+I think these parts have to be separated. Let's do it the following way:
+
+1. Put the functions from different groups (I and II) to separate directories:
+   "possibility" for basic possibility theory functions (group I), and
+   "evaluation" for group II.
+
+2. Use prefix "pt" for the function from group I and "ev" for group II.
+
+3. Put a loader.sce script to both "possibility" and "evaluation" directories.
+
+4. Put to the root directory a loader.sce script executing both
+   possibility/loader.sce and evaluation/loader.sce.
