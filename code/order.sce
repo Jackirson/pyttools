@@ -1,9 +1,9 @@
 // The procedures below implement order (predecessor, successor) on poss-dists
 // TODO: develop pipeline statrting with raw data, the first qPossPerExpert poss-dist lines corresponding to the 1-st expert's opition and so on.
-// supremum when supp p1 = supp p2 (case B) of two poss-dists (i.e. poss2d[2,qXmax])
+
 
 //=================================================
-// TODO: Describe the function here
+// ptSupB: supremum when supp p1 = supp p2 (case B) of two poss-dists
 //=================================================
 function poss_sup = lptSupB(poss1, poss2)
     // Check that the distributions have the same sizes
