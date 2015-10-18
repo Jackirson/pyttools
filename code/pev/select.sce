@@ -1,12 +1,12 @@
 // Procedures to select objects (make a decision, choose a selection). If you don't know where to start, type 
-//    ptPrintSel( ptObjSelFile( filename );
+//    pevPrintResult( pevSelectF( filename ) );
 // and then read comments below.
 // ===================  
-// ptObjSelection: select objects by minimizing P(Error), where Error happens if objects not chosen are not worse in terms of user-defined "quality" then chosen objects and P() is a possibility measure constructed from "expert sasessments" - initial poss-dists of each object's "quality" p(x), x=1:qXmax.
-// COMMENT: There are qObj objects and each object has qParam parameters to be assessed in terms of poss-dist prior to run ptObjSelection. Values of qObj, qParam and also qXmax are generally selected by the Chief. The Chief also must invent a monotonous object quality function qualFun(x1, ..., xM)) -> y, M = qParam. 
+// pevSelect: select objects by minimizing P(Error), where Error happens if objects not chosen are not worse in terms of user-defined "quality" then chosen objects and P() is a possibility measure constructed from "expert sasessments" - initial poss-dists of each object's "quality" p(x), x=1:qXmax.
+// COMMENT: There are qObj objects and each object has qParam parameters to be assessed in terms of poss-dist prior to run pevSelect. Values of qObj, qParam and also qXmax are generally selected by the Chief. The Chief also must invent a monotonous object quality function qualFun(x1, ..., xM)) -> y, M = qParam. 
 // IN: qParam*qXmax*qObj array (assuming 1 expert),
 //     string 'sQualFun', e.g. sQualFun='y=(x1+x2)/2'  
-//  remark #1: if you like to feed ObjSelection directly from a datafile with qParam and sQualFun specified, use ptObjSelFile( filename )
+//  remark #1: if you like to feed Select directly from a datafile with qParam and sQualFun specified, use pevSelectF( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptSup' or 'ptInf' functions may be called prior to 'ptObjSelection' to obtain a "collective opinion" as supremum or infinum of poss-dists. See file 'supremum.sce'. 
 // OUT: two following qObj*qObj boolean matrices(example):
@@ -16,7 +16,7 @@
 // ...
 // There is a number 'k' of objects to select as a setting; for each setting in range k=1:qObj there is a set of object indeces of size >= k the Chief may select k from with the SAME possibility or Error for any choice - these sets are stored to sel(k,:,1). There is also a set of object indexes for each k of size <= k, but induces a strictly lower possibility of Error - they are stored to sel(k,:,2) if exist (otherwise sel(k,:,2) are all False).
 //  remark #1: Additional ouput is a qObj*qObj possibility matrix FOR DEBUG!
-function [ sel, PLoser2d ] = ptObjSelection(poss_init, sQualFun);
+function [ sel, PLoser2d ] = pevSelect(poss_init, sQualFun);
 
     sQualFunParsed = lParseQualFun( sQualFun );
     deff('y=qualFun(x)', sQualFun);     // make a lambda from string
@@ -40,21 +40,21 @@ function [ sel, PLoser2d ] = ptObjSelection(poss_init, sQualFun);
     end;
 endfunction
 // ===================
-// ptObjSelFile: wrapper to ptObjSelection for file (later http stream) input 
+// pevPrintResult: wrapper to pevSelect for file (later http stream) input 
 // IN: filename
-// OUT: same as ptObjSelection 
-function [ sel, PLoser2d ] = ptObjSelFile( filename )
+// OUT: same as pevSelect 
+function [ sel, PLoser2d ] = pevSelectF( filename )
     [poss, sData1d] = ptLoadPoss3d(filename);
  
-    [ sel, PLoser2d ] = ptObjSelection(poss, sData1d(2));
+    [ sel, PLoser2d ] = pevSelect(poss, sData1d(2));
 endfunction
 // ===================
-// ptPrintSel: help function to print "smart" output of ptObjSelection
-// IN: 'sel' from ptObjSelection
+// pevPrintResult: function to print "smart" output of pevSelect (later maybe also something else)
+// IN: 'sel' from pevSelect
 // PRINT: prints the output in text form
 // OUT: list of size k with two lists of chosen objcts (instead of two boolean matrices)
 //       sel(k)(1) is "mandatory" selection (size <= k), sel(k)(2) is "additional" selection (size >= k)
-function sel = ptPrintSel(sel3d)
+function sel = pevPrintResult(sel3d)
     qObj = size(sel3d, 1);
     Objects = 1:qObj; // set of all object indeces
 
@@ -86,4 +86,5 @@ function sel = ptPrintSel(sel3d)
          mprintf("\n");
     end//for    
 endfunction
+// ==eof===eof==
 
