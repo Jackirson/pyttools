@@ -5,7 +5,7 @@
 //=================================================
 // ptSupB: supremum when supp p1 = supp p2 (case B) of two poss-dists
 //=================================================
-function poss_sup = lptSupB(poss1, poss2)
+function poss_sup = ptSupB(poss1, poss2)
     // Check that the distributions have the same sizes
     if ~isequal(size(poss1), size(poss2)) then
         error("Given distributions must be of the same size");
@@ -28,7 +28,7 @@ endfunction
 //=================================================
 // TODO: Describe the function here
 //=================================================
-function comp2d = lptPoss2Comp(poss1d)
+function comp2d = ptPoss2Comp(poss1d)
     [poss_r, poss_c] = meshgrid(poss1d(:), poss1d(:));
     comp2d = (poss_r < poss_c) - (poss_r > poss_c);
 endfunction
@@ -41,6 +41,6 @@ function poss1d = lptComp2Poss(comp2d)
         poss1d = ones(1, size(comp2d, 1));
     else
         prevec = -sum(comp2d, 'r'); // already ordered like the poss-dist we need
-        poss1d = (prevec - min(prevec)) / max(prevec - min(prevec)) * 0.9 + 0.1;
+        poss1d = ptRescale(prevec);
     end
 endfunction

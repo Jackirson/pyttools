@@ -1,0 +1,41 @@
+libEGL warning: GLX: failed to create any config
+libEGL warning: GLX: failed to create any config
+libEGL warning: GLX: failed to create any config
+terminate called after throwing an instance of 'GiwsException::JniCallMethodException'
+  what():  Exception when calling Java method : com/artenum/rosetta/ui/Console
+ at org.scilab.modules.gui.console.ScilabConsoleBridge.createConsole(Unknown Source)
+ at org.scilab.modules.gui.bridge.ScilabBridge.createConsole(Unknown Source)
+ at org.scilab.modules.gui.console.ScilabConsole.<init>(Unknown Source)
+ at org.scilab.modules.gui.console.ScilabConsole.getConsole(Unknown Source)
+ at org.scilab.modules.gui.bridge.CallScilabBridge.display(Unknown Source)
+ at jogamp.nativewindow.x11.X11Lib.XRenderFindVisualFormat1(Native Method)
+ at jogamp.nativewindow.x11.X11Lib.XRenderFindVisualFormat(X11Lib.java:150)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfiguration.XVisual2XRenderMask(X11GLXGraphicsConfiguration.java:279)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfiguration.XVisualInfo2GLCapabilities(X11GLXGraphicsConfiguration.java:527)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfigurationFactory.chooseGraphicsConfigurationXVisual(X11GLXGraphicsConfigurationFactory.java:433)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfigurationFactory.chooseGraphicsConfigurationStatic(X11GLXGraphicsConfigurationFactory.java:239)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory.createMutableSurfaceImpl(X11GLXDrawableFactory.java:511)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory.createDummySurfaceImpl(X11GLXDrawableFactory.java:522)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory$SharedResourceImplementation.createSharedResource(X11GLXDrawableFactory.java:276)
+ at jogamp.opengl.SharedResourceRunner.run(SharedResourceRunner.java:295)
+ at java.lang.Thread.run(Thread.java:745)
+com/artenum/rosetta/ui/Console
+ at org.scilab.modules.gui.console.ScilabConsoleBridge.createConsole(Unknown Source)
+ at org.scilab.modules.gui.bridge.ScilabBridge.createConsole(Unknown Source)
+ at org.scilab.modules.gui.console.ScilabConsole.<init>(Unknown Source)
+ at org.scilab.modules.gui.console.ScilabConsole.getConsole(Unknown Source)
+ at org.scilab.modules.gui.bridge.CallScilabBridge.display(Unknown Source)
+ at jogamp.nativewindow.x11.X11Lib.XRenderFindVisualFormat1(Native Method)
+ at jogamp.nativewindow.x11.X11Lib.XRenderFindVisualFormat(X11Lib.java:150)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfiguration.XVisual2XRenderMask(X11GLXGraphicsConfiguration.java:279)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfiguration.XVisualInfo2GLCapabilities(X11GLXGraphicsConfiguration.java:527)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfigurationFactory.chooseGraphicsConfigurationXVisual(X11GLXGraphicsConfigurationFactory.java:433)
+ at jogamp.opengl.x11.glx.X11GLXGraphicsConfigurationFactory.chooseGraphicsConfigurationStatic(X11GLXGraphicsConfigurationFactory.java:239)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory.createMutableSurfaceImpl(X11GLXDrawableFactory.java:511)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory.createDummySurfaceImpl(X11GLXDrawableFactory.java:522)
+ at jogamp.opengl.x11.glx.X11GLXDrawableFactory$SharedResourceImplementation.createSharedResource(X11GLXDrawableFactory.java:276)
+ at jogamp.opengl.SharedResourceRunner.run(SharedResourceRunner.java:295)
+ at java.lang.Thread.run(Thread.java:745)
+
+terminate called recursively
+Aborted (core dumped)

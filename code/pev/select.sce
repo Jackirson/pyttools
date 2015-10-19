@@ -10,9 +10,9 @@
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptSup' or 'ptInf' functions may be called prior to 'ptObjSelection' to obtain a "collective opinion" as supremum or infinum of poss-dists. See file 'supremum.sce'. 
 // OUT: two following qObj*qObj boolean matrices(example):
-// sel(1)=[F F T F T F] -- 3rd and 5th objects
-// sel(2)=[F F T F T F]
-// sel(3)=[T F T F T T] -- 1st, 3rd, 5th and 6th objects
+// sel(1)=[0 0 1 0 0 1] -- 3rd and 5th objects
+// sel(2)=[0 0 1 0 1 1]
+// sel(3)=[1 0 1 0 1 1] -- 1st, 3rd, 5th and 6th objects
 // ...
 // There is a number 'k' of objects to select as a setting; for each setting in range k=1:qObj there is a set of object indeces of size >= k the Chief may select k from with the SAME possibility or Error for any choice - these sets are stored to sel(k,:,1). There is also a set of object indexes for each k of size <= k, but induces a strictly lower possibility of Error - they are stored to sel(k,:,2) if exist (otherwise sel(k,:,2) are all False).
 //  remark #1: Additional ouput is a qObj*qObj possibility matrix FOR DEBUG!
@@ -31,11 +31,12 @@ function [ sel, PLoser2d ] = pevSelect(poss_init, sQualFun);
       PLoserTemp1d = PLoser2d(k,:);
     ///  sel(k,:, 1) = ( PLoserTemp1d ~= PLoserTemp1d ); 
     ///  sel(k,:, 2) = ( PLoserTemp1d ~= PLoserTemp1d ); // same shit
-      // zeroes in sel(k,:,:) will turn to %F when a boolean expression (a == b) is assigned below. it's important for indexing style float_matrix(bool_matrix)
+      
       while sum( sel(k,:, 1) ) < k // until we have sel at least k objects
           sel(k,:, 2) = sel(k, : ,1);  // sel on previous step is of size <= k and with less P(E)
           sel(k,:, 1) = sel(k,:, 1) | ( PLoserTemp1d == min(PLoserTemp1d) );  // add objects with minimal P(E) 
-          PLoserTemp1d( sel(k,:, 1) ) = 10; // wipe out the miniumium values to find next minimum values
+          PLoserTemp1d( sel(k,:, 1)==1 ) = 10; // wipe out the miniumium values to find next minimum values
+          // sel(k,:,1) is a boolean, but real-valued matrix, thus for indexing use float_matrix( bool_float_matrix==1 ) 
       end;
     end;
 endfunction
@@ -63,14 +64,14 @@ function sel = pevPrintResult(sel3d)
          sel(k) = list();
          mprintf("For k=%i ",k);
          if sum( sel3d(k,:,1) ) == k    // if selection is clear (unambiguous)
-             sel(k)(1) =  Objects(sel3d(k,:,1)); // mandatory set is clear
+             sel(k)(1) =  Objects(sel3d(k,:,1)==1); // mandatory set is clear
              sel(k)(2) = [];                      // additional set is empty 
              mprintf("(clear): ");
          else                           // if selection is ambiguous 
               // mandatory set is sel of size <= k (with less P(E))
-              sel(k)(1) =  Objects(sel3d(k,:,2));   
+              sel(k)(1) =  Objects(sel3d(k,:,2)==1);   
               // additional set is sel of size >=k without mandatory set
-              sel(k)(2) =  Objects(sel3d(k,:,1) & ~sel3d(k,:,2)); 
+              sel(k)(2) =  Objects(sel3d(k,:,1)==1 & sel3d(k,:,2)==0); 
              mprintf("(ambiguous): ");
          end//if
          
