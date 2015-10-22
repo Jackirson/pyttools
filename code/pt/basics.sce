@@ -58,7 +58,7 @@ function possOut = ptRescaleUni( vec );
     Vals =		unique( vec );
     ValsUni = 	linspace(0,1, length(Vals));
     possOut = ptChange1d( vec, ValsUni, Vals ); 
-    if( size(vec,1) < size(vec,2) ) then posOut = possOut'; end;
+    if( size(vec,1) < size(vec,2) ) then possOut = possOut'; end;
 endfunction
 
 //========================================,=========
