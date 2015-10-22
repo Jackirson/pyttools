@@ -29,7 +29,7 @@ endfunction
 // TODO: Describe the function here
 //=================================================
 function comp2d = ptPoss2Comp(poss1d)
-    [poss_r, poss_c] = meshgrid(poss1d(:), poss1d(:));
+    [poss_r, poss_c] = meshgrid(poss1d);  /// (:) makes a large 2d matrix anyway
     comp2d = (poss_r < poss_c) - (poss_r > poss_c);
 endfunction
 
@@ -38,9 +38,9 @@ endfunction
 //=================================================
 function poss1d = lptComp2Poss(comp2d)
     if sum(abs(comp2d)) == 0 then
-        poss1d = ones(1, size(comp2d, 1));
+        poss1d = ones(1, size(comp2d, 1)-1);
     else
         prevec = -sum(comp2d, 'r'); // already ordered like the poss-dist we need
-        poss1d = ptRescale(prevec);
+        poss1d = ptRescaleUni(prevec);
     end
 endfunction
