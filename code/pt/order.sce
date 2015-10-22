@@ -1,21 +1,54 @@
 // The procedures below implement order (predecessor, successor) on poss-dists
 // TODO: develop pipeline statrting with raw data, the first qPossPerExpert poss-dist lines corresponding to the 1-st expert's opition and so on.
 
+//=================================================
+// ptSupStack: supremum of several vectors in general case 
+// 	by now supremum is calculated pairwise
+// IN:    poss2d[qRows*qXmax]: poss-dists as qRows rows of qXmax poss-points each 
+// OUT: their supremum
+//=================================================
+function poss_sup = ptSupStack(poss2d)
+
+endfunction
 
 //=================================================
-// ptSupB: supremum when supp p1 = supp p2 (case B) of two poss-dists
+// ptSupB: supremum of two poss-dists in general case 
+// IN: 2 poss-dist vectors
+// OUT: their supremum
+//=================================================
+function poss_sup = ptSup(poss1, poss2)
+    // Check that the distributions have the same sizes
+    if ~isequal(length(poss1), length(poss2)) or ~isequal(length(poss1), length(poss1(:))) then
+        error("Given distributions must be vectors of the same size.");
+    end
+
+    // Check that the distributions have the same supports
+    supp1 = poss1 > 0;
+    supp2 = poss2 > 0;
+    if isequal(supp1, supp2) then
+        poss_sup = ptSupB(poss1, poss2);
+    else
+    
+    
+    end;
+endfunction    
+
+//=================================================
+// ptSupB: supremum of two poss-dists when supp p1 = supp p2 (case B) 
+// IN: 2 poss-dist vectors
+// OUT: their supremum
 //=================================================
 function poss_sup = ptSupB(poss1, poss2)
     // Check that the distributions have the same sizes
-    if ~isequal(size(poss1), size(poss2)) then
-        error("Given distributions must be of the same size");
+    if ~isequal(length(poss1), length(poss2)) or ~isequal(length(poss1), length(poss1(:))) then
+        error("Given distributions must be vectors of the same size.");
     end
-    
+
     // Check that the distributions have the same supports
     supp1 = poss1 > 0;
     supp2 = poss2 > 0;
     if ~isequal(supp1, supp2) then
-        error("Supports of the given distributions must be the same");
+        error("Supports of the given distributions must be the same.");
     end
     
     M1 = lptPoss2Comp(poss1(supp1));
@@ -48,6 +81,10 @@ endfunction
 // OUT:	poss-dist
 //=================================================
 function poss1d = ptComp2Poss(comp2d)
+    if ~isequal(size(comp2d,1), size(comp2d,2)) then
+        error("Comp matrix must be scew-symmetric.");
+    end
+    
     qXmax = size(comp2d, 1) - 1;
     if sum(abs(comp2d)) == 0 then
         poss1d = ones(1, qXmax);
@@ -57,3 +94,5 @@ function poss1d = ptComp2Poss(comp2d)
         poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
     end
 endfunction
+
+// ==eof===eof==
