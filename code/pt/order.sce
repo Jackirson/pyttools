@@ -28,9 +28,18 @@ function poss_sup = ptSup(poss1, poss2)
     if isequal(supp1, supp2) then
         poss_sup = ptSupB(poss1, poss2);
     else
-    
-    
-    end;
+	S1minusS2 = supp1 & ~supp2;
+	S2minusS1 = supp2 & ~supp1;
+	if( sum(S1minusS2) == 0 ) then
+	  // S1 is inside S2
+	else
+	  if( sum(S1minusS2) == 0 ) then
+	      // S2 is inside S1 
+	  else 
+	     // lemm3
+	  end;   
+        end;
+    end;//if case D
 endfunction    
 
 //=================================================
