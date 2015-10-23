@@ -3,8 +3,6 @@
 // 	2. exec loader.sce;
 // 	3. (call the toolbox functions and other functions you need)
 
-filename= 'data/distReal.txt';  // a sample data file with possibility distributions (poss-dists)
-
 // Description inside the loaded files:
 cd pt;
 exec 'loader.sce';

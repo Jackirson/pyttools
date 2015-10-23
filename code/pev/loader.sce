@@ -2,6 +2,8 @@
 
 PEV_EPS_P = -1;    // we work with possibility measure P(). interative procedures working with P()-values such as Dichotomy will run until |dP| < eps_p, or they will try to find a precise solution if eps_p < 0 chosen (this is the default and usually faster option)
 
+filename= 'pev/data/distReal.txt';  // a sample data file with possibility distributions (poss-dists)
+
 // Description inside the loaded files:
 exec 'select_dichotomy.sce';
 exec 'select.sce';
