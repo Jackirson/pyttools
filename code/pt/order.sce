@@ -2,23 +2,29 @@
 // TODO: develop pipeline statrting with raw data, the first qPossPerExpert poss-dist lines corresponding to the 1-st expert's opition and so on.
 
 //=================================================
-// ptSupStack: supremum of several vectors in general case 
+// ptSupStack: supremum of several poss-dists (recursively)  
 // 	by now supremum is calculated pairwise
 // IN:    poss2d[qRows*qXmax]: poss-dists as qRows rows of qXmax poss-points each 
 // OUT: their supremum
 //=================================================
-function poss_sup = ptSupStack(poss2d)
-
+function poss_sup = ptSupStack(poss2d);
+   qRows =  size(poss2d, 1);
+   if(  qRows == 2 ) // only 2 rows 
+	poss_sup = ptSup( [poss2d(1,:), poss2d(2,:)] );
+   else
+        poss2d(2,:) = ptSup( poss2d(1,:), poss2d(2,:) );  // supremum of the first 2 rows   
+	poss_sup 	  = ptSupStack( poss2d(2:qRows, :) ); 
+   end; 
 endfunction
 
 //=================================================
-// ptSupB: supremum of two poss-dists in general case 
+// ptSup: supremum of two poss-dists in general case 
 // IN: 2 poss-dist vectors
 // OUT: their supremum
 //=================================================
-function poss_sup = ptSup(poss1, poss2)
+function poss_sup = ptSup(poss1, poss2);
     // Check that the distributions have the same sizes
-    if ~isequal(length(poss1), length(poss2)) or ~isequal(length(poss1), length(poss1(:))) then
+    if length(poss1) ~= length(poss2) or length(poss1) ~= length(poss1(:)) then
         error("Given distributions must be vectors of the same size.");
     end
 
@@ -31,13 +37,19 @@ function poss_sup = ptSup(poss1, poss2)
 	S1minusS2 = supp1 & ~supp2;
 	S2minusS1 = supp2 & ~supp1;
 	if( sum(S1minusS2) == 0 ) then
-	  // S1 is inside S2
+	    // S1 is inside S2; lemm2 infects poss1
+	    poss1 = lsupLemm2(poss1, poss2, supp1, supp2);
+	    poss_sup = ptSupB(poss1, poss2);
 	else
-	  if( sum(S1minusS2) == 0 ) then
-	      // S2 is inside S1 
-	  else 
-	     // lemm3
-	  end;   
+	    if( sum(S1minusS2) == 0 ) then
+		// S2 is inside poss_sup = ptSupB(poss1, poss2);e S1; lemm2 infects poss2
+		poss2 = lsupLemm2(poss2, poss1, supp2, supp1);
+		poss_sup = ptSupB(poss1, poss2);
+	    else 
+		// both S1minusS2 and S2minusS1 are non-empty; lemm3
+		[poss1, poss2] = lsupLemm3(poss1, poss2, supp1, supp2);
+		poss_sup = ptSupB(poss1, poss2);
+	    end;   
         end;
     end;//if case D
 endfunction    
@@ -47,9 +59,9 @@ endfunction
 // IN: 2 poss-dist vectors
 // OUT: their supremum
 //=================================================
-function poss_sup = ptSupB(poss1, poss2)
+function poss_sup = ptSupB(poss1, poss2);
     // Check that the distributions have the same sizes
-    if ~isequal(length(poss1), length(poss2)) or ~isequal(length(poss1), length(poss1(:))) then
+    if length(poss1) ~= length(poss2) or length(poss1) ~= length(poss1(:)) then
         error("Given distributions must be vectors of the same size.");
     end
 
@@ -60,11 +72,11 @@ function poss_sup = ptSupB(poss1, poss2)
         error("Supports of the given distributions must be the same.");
     end
     
-    M1 = lptPoss2Comp(poss1(supp1));
+    M1 = lptPoss2Comp(poss1(supp1)); // only compare non-zero values ...
     M2 = lptPoss2Comp(poss2(supp1));
     M = (M1+M2 == 2) - (M1+M2 == -2); // only 2 and -2 count?
-    poss_sup = zeros(poss1);
-    poss_sup(supp1) = lptComp2Poss(M);
+    poss_sup = zeros(poss1);	// ... others are assigned zero directly (efficiency gain)
+    poss_sup(supp1) = lptComp2Poss(M); 
 endfunction
 
 //=================================================
@@ -74,7 +86,7 @@ endfunction
 // IN:		poss-dist
 // OUT:	comp matrix
 //=================================================
-function comp2d = ptPoss2Comp(poss1d)
+function comp2d = ptPoss2Comp(poss1d);
     if length(poss1d) ~=length(poss1d(:)) then
        error("All input args are vectors.");
     end;
@@ -89,7 +101,7 @@ endfunction
 // IN:		comp matrix
 // OUT:	poss-dist
 //=================================================
-function poss1d = ptComp2Poss(comp2d)
+function poss1d = ptComp2Poss(comp2d);
     if ~isequal(size(comp2d,1), size(comp2d,2)) then
         error("Comp matrix must be scew-symmetric.");
     end

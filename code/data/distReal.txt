@@ -1,6 +1,6 @@
 qParam= 16 (parameters per 1 object)
 y = 1/3000*( 0.25*(x(1)+0.1*x(3)*x(4)+x(5)+0.5*(x(2)+x(6))) + 0.05*(x(7)+x(9))*x(8) + 0.5*(x(10)+0.5*(x(11)+x(12))) ) * x(13)*x(16)*0.5*(x(14)+x(15))
-The above lines are intended for 'ptopObjSelectionFile( filename )' usage. See file loader.sce for help. The line below is a separator and must begin with an asterix.
+See comment to ptSelect and ptSelectF in file pev/select.sce for help. The line below is a separator and must begin with an asterix.
 *******************************************
 0.684691 0.684691 0.684691 0.684691 0.684691 0.684691 0.684691 0.696749 0.766193 1.000000 0.766193 
 0.684691 0.684691 0.684691 0.684691 0.684691 0.684691 0.684691 0.684691 0.804419 1.000000 0.860543 
