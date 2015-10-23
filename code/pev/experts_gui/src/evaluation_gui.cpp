@@ -80,3 +80,31 @@ void EvBar::mousePressEvent(QMouseEvent *event) {
         update();
     }
 }
+
+Eval EvBar::getData() {
+    return eval;
+}
+
+TechEvWindow::TechEvWindow(int numParameters, int numLevels, int maxPoint) :
+    grid(this)
+{
+    bars.resize(numParameters);
+    for (int i = 0; i < numParameters; i++) {
+        bars[i] = new EvBar(numLevels, maxPoint);
+        grid.addWidget(bars[i], i, 0);
+    }
+}
+
+TechEvWindow::~TechEvWindow() {
+    for (int i = 0; i < bars.size(); i++) {
+        delete bars[i];
+    }
+}
+
+TechEval TechEvWindow::getData() {
+    TechEval teval;
+    for (int i = 0; i < bars.size(); i++) {
+        teval[i] = bars[i]->getData();
+    }
+    return teval;
+}

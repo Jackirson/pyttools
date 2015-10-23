@@ -6,18 +6,26 @@
 
 using namespace std;
 
-class SingleEv : public vector<unsigned int> {
+class Eval : public vector<unsigned int> {
     protected:
         int numLevels, maxPoint;
 
     public:
-        SingleEv(int numLevels = 4, int maxPoint = 10);
+        Eval(int numLevels = 4, int maxPoint = 10);
         double operator() (int i);
         void change(int i);
         int getNumLevels();
         int getMaxPoint();
 
-        friend ostream & operator<< (ostream &out, SingleEv &eval);
+        friend ostream & operator<< (ostream &out, Eval &eval);
+};
+
+class TechEval : public vector<Eval> {
+    public:
+        TechEval(int numParameters = 16, int numLevels = 4, int maxPoint = 10);
+        double operator() (int i, int j);
+
+        friend ostream & operator<< (ostream &out, TechEval &teval);
 };
 
 #endif // __EVALUATION_DATA_H__

@@ -8,7 +8,7 @@ extern QColor baseColor, colorOne, colorHigh, colorLow, colorZero;
 
 class EvBar : public QFrame {
     protected:
-        SingleEv eval;
+        Eval eval;
         int W, H, HMargin, VMargin;
         int pressPoint;
 
@@ -19,6 +19,18 @@ class EvBar : public QFrame {
 
     public:
         EvBar(int numLevels = 4, int maxPoint = 10);
+        Eval getData();
+};
+
+class TechEvWindow : public QFrame {
+    protected:
+        vector<EvBar *> bars;
+        QGridLayout grid;
+
+    public:
+        TechEvWindow(int numParameters = 16, int numLevels = 4, int maxPoint = 10);
+        ~TechEvWindow();
+        TechEval getData();
 };
 
 #endif // __EVALUATION_GUI_H__

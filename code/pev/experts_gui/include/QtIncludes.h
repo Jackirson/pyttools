@@ -25,3 +25,4 @@
 #include <QThread>
 #include <QProgressBar>
 #include <QCheckBox>
+#include <QGridLayout>

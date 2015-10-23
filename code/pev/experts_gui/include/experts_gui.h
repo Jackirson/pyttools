@@ -37,8 +37,5 @@ class MainWindow : public QMainWindow
         void onEvaluate();
 };
 
-class TechEvWindow : public QMdiSubWindow {
-};
-
 #endif // __EXPERTS_GUI_H__
 
