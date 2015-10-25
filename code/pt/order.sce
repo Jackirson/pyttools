@@ -10,10 +10,10 @@
 function poss_sup = ptSupStack(poss2d);
    qRows =  size(poss2d, 1);
    if(  qRows == 2 ) // only 2 rows 
-	poss_sup = ptSup( [poss2d(1,:), poss2d(2,:)] );
+	poss_sup = ptSup( poss2d(1,:), poss2d(2,:) );
    else
         poss2d(2,:) = ptSup( poss2d(1,:), poss2d(2,:) );  // supremum of the first 2 rows   
-	poss_sup 	  = ptSupStack( poss2d(2:qRows, :) ); 
+        poss_sup    = ptSupStack( poss2d(2:qRows, :) ); 
    end; 
 endfunction
 
@@ -31,17 +31,20 @@ function poss_sup = ptSup(poss1, poss2);
     // Check that the distributions have the same supports
     supp1 = poss1 > 0;
     supp2 = poss2 > 0;
+   
     if isequal(supp1, supp2) then
         poss_sup = ptSupB(poss1, poss2);
     else
+        
 	S1minusS2 = supp1 & ~supp2;
 	S2minusS1 = supp2 & ~supp1;
+  /// print(%io(2), S1minusS2, S2minusS1); poss_sup = 0; return;    
 	if( sum(S1minusS2) == 0 ) then
         // S1 is inside S2; lemm2 infects poss1
         poss1 = lsupLemm2(poss1, poss2, supp1, supp2);
         poss_sup = ptSupB(poss1, poss2);
 	else
-        if( sum(S1minusS2) == 0 ) then
+        if( sum(S2minusS1) == 0 ) then
             // S2 is inside poss_sup = ptSupB(poss1, poss2);e S1; lemm2 infects poss2
             poss2 = lsupLemm2(poss2, poss1, supp2, supp1);
             poss_sup = ptSupB(poss1, poss2);

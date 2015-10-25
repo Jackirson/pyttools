@@ -36,19 +36,20 @@ function [p1_tilde, p2_tilde] = lsupLemm3(p1, p2, S1, S2);
 
     // > and >= signs below ought to cover whole [0; 1] range
     // the choice between > and >= is based on estimated calc.eff.          
-	X = p1(S1) < p1_0d; // bool mask for Om scale
-         // there'll be automatically no %T points not in supp(p1)
+	X = p1 < p1_0d & S1; // bool mask for Om scale
 	p1_tilde(X) = p1(X)* p1__0d/p1_0d;
-    X = (p1(S1) >= p1_0d & p1(S1) <= p1__0d) | S2minusS1;
+    X = (p1 >= p1_0d & p1 <= p1__0d & S1) | S2minusS1;
     p1_tilde(X) = p1__0d;
-    X = p1(S1) > p1__0d;
+    X = p1 > p1__0d & S1;
     p1_tilde(X) = p1(X);
     
     // same shit for p2
-    X = p2(S2) < p2_0d; 
+	X = p2 < p2_0d & S2; // bool mask for Om scale
 	p2_tilde(X) = p2(X)* p2__0d/p2_0d;
-    X = (p2(S2) >= p2_0d & p2(S2) <= p2__0d) | S1minusS2;
+    X = (p2 >= p2_0d & p2 <= p2__0d & S2) | S1minusS2;
     p2_tilde(X) = p2__0d;
-    X = p2(S2) > p2__0d;
+    X = p2 > p2__0d & S2;
     p2_tilde(X) = p2(X);
+    
+    // this is the end. loops not used. hope there's no index error;)
 endfunction
