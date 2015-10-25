@@ -16,30 +16,30 @@ endfunction
 
 //=================================================
 // ptNormalize: ensures the poss-dist has a maximum P==1 value.
-// 	same ad ptNormalize1d, but for arbitrary dimensioned matrix
+// 	    same as ptNormalize1d, but for arbitrary dimensioned matrix
 // IN: 	poss array (possibly without P==1 points), 
 //		sDim: 'r' if single poss-dists to be rows, 'c' if them to be columns
 // OUT:	poss-dist array
-//=================================poss-================
+//=================================================
 function possOut = ptNormalize( possWithoutOnes, sDim );
     possOut = possWithoutOnes;
-    if( sIndicator == 'r' )
-	possOut( possOut == repmat(max(possOut, 'c'), 1, size(possOut,2)) ) = 1;
+    if( sDim == 'r' )
+        possOut( possOut == repmat(max(possOut, 'c'), 1, size(possOut,2)) ) = 1;
     else
-	if( sIndicator == 'c' )	
-	    possOut( possOut == repmat(max(possOut, 'r'), size(possOut,1), 1) ) = 1;
+    if( sDim == 'c' )	
+        possOut( possOut == repmat(max(possOut, 'r'), size(possOut,1), 1) ) = 1;
 	else
-	    error("Dim must be either r or c.");
+        error("Dim must be either r or c.");
 	end;
     end;   
 endfunction
 
-//========================================,=========
-// ptRescale: rescales a dist into range [0 1].
+//=================================================
+// ptRescale1d: rescales a dist into range [0 1].
 // IN: 	vec: some vector
 // OUT: 	possOut: poss-dist vector with values in range [0,1]
 //=================================================
-function possOut = ptRescale( vec );
+function possOut = ptRescale1d( vec );
     if length(vec) ~=length(vec(:)) then
        error("All input args are vectors.");
     end;
@@ -47,7 +47,27 @@ function possOut = ptRescale( vec );
     possOut = (vec - min(vec)) / max(vec - min(vec));
 endfunction
 
-//========================================,=========
+//=================================================
+// ptRescale: rescales a dist into range [0 1].
+//      same as ptRescale1d, but for arbitrary dimensioned matrix
+// IN: 	poss array (possibly without P==1 points), 
+//		sDim: 'r' if single poss-dists to be rows, 'c' if them to be columns
+// OUT:	poss-dist array
+//=================================================
+function possOut = ptRescale( array, sDim );
+    if( sDim == 'r' )
+        possOut = (array - repmat(min(array, 'c'), 1, size(array, 2))) ./ repmat(max(array - repmat(min(array,'c'),1,size(array,2)),'c'),1,size(array,2));
+    else
+    if( sDim == 'c' )	
+        possOut = (array - repmat(min(array, 'r'), size(array, 1), 1)) ./ repmat(max(array - repmat(min(array,'r'),size(array,1),1),'r'),size(array,1),1);
+	else
+        error("Dim must be either r or c.");
+	end;
+    end;  
+endfunction
+
+
+//=================================================
 // ptRescaleUni: rescales a vector into range [0 1] uniformely.
 // IN: 	vec: some vector
 // OUT: 	possOut: poss-dist vector with values in range [0,1] uniformely placed
@@ -56,7 +76,7 @@ function possOut = ptRescaleUni( vec );
    // test for vector input is inside ptChange1d //
    
     Vals =		unique( vec );
-    ValsUni = 	linspace(0,1, length(Vals));
+    ValsUni =   linspace(0,1, length(Vals));
     possOut = ptChange1d( vec, ValsUni, Vals ); 
     if( size(vec,1) < size(vec,2) ) then possOut = possOut'; end;
 endfunction

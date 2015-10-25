@@ -37,20 +37,20 @@ function poss_sup = ptSup(poss1, poss2);
 	S1minusS2 = supp1 & ~supp2;
 	S2minusS1 = supp2 & ~supp1;
 	if( sum(S1minusS2) == 0 ) then
-	    // S1 is inside S2; lemm2 infects poss1
-	    poss1 = lsupLemm2(poss1, poss2, supp1, supp2);
-	    poss_sup = ptSupB(poss1, poss2);
+        // S1 is inside S2; lemm2 infects poss1
+        poss1 = lsupLemm2(poss1, poss2, supp1, supp2);
+        poss_sup = ptSupB(poss1, poss2);
 	else
-	    if( sum(S1minusS2) == 0 ) then
-		// S2 is inside poss_sup = ptSupB(poss1, poss2);e S1; lemm2 infects poss2
-		poss2 = lsupLemm2(poss2, poss1, supp2, supp1);
-		poss_sup = ptSupB(poss1, poss2);
-	    else 
-		// both S1minusS2 and S2minusS1 are non-empty; lemm3
-		[poss1, poss2] = lsupLemm3(poss1, poss2, supp1, supp2);
-		poss_sup = ptSupB(poss1, poss2);
-	    end;   
-        end;
+        if( sum(S1minusS2) == 0 ) then
+            // S2 is inside poss_sup = ptSupB(poss1, poss2);e S1; lemm2 infects poss2
+            poss2 = lsupLemm2(poss2, poss1, supp2, supp1);
+            poss_sup = ptSupB(poss1, poss2);
+        else 
+            // both S1minusS2 and S2minusS1 are non-empty; lemm3
+            [poss1, poss2] = lsupLemm3(poss1, poss2, supp1, supp2);
+            poss_sup = ptSupB(poss1, poss2);
+        end;   
+    end;
     end;//if case D
 endfunction    
 
@@ -72,11 +72,11 @@ function poss_sup = ptSupB(poss1, poss2);
         error("Supports of the given distributions must be the same.");
     end
     
-    M1 = lptPoss2Comp(poss1(supp1)); // only compare non-zero values ...
-    M2 = lptPoss2Comp(poss2(supp1));
+    M1 = ptPoss2Comp(poss1(supp1)); // only compare non-zero values ...
+    M2 = ptPoss2Comp(poss2(supp1));
     M = (M1+M2 == 2) - (M1+M2 == -2); // only 2 and -2 count?
     poss_sup = zeros(poss1);	// ... others are assigned zero directly (efficiency gain)
-    poss_sup(supp1) = lptComp2Poss(M); 
+    poss_sup(supp1) = ptComp2Poss(M); 
 endfunction
 
 //=================================================
