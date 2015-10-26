@@ -28,7 +28,7 @@ class TechEvWindow : public QFrame {
         QGridLayout grid;
 
     public:
-        TechEvWindow(int numParameters = 16, int numLevels = 4, int maxPoint = 10);
+        TechEvWindow(int numOfThisTech=1, int numParameters = 16, int numLevels = 4, int maxPoint = 10);
         ~TechEvWindow();
         TechEval getData();
 };

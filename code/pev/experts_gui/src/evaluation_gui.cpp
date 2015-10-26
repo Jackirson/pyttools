@@ -85,14 +85,17 @@ Eval EvBar::getData() {
     return eval;
 }
 
-TechEvWindow::TechEvWindow(int numParameters, int numLevels, int maxPoint) :
+TechEvWindow::TechEvWindow(int numOfThisTech, int numParameters, int numLevels, int maxPoint) :
     grid(this)
 {
+
+    setWindowTitle("Tech #" + QString::number(numOfThisTech));
     bars.resize(numParameters);
     for (int i = 0; i < numParameters; i++) {
         bars[i] = new EvBar(numLevels, maxPoint);
         grid.addWidget(bars[i], i, 0);
     }
+
 }
 
 TechEvWindow::~TechEvWindow() {

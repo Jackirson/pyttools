@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
         fprintf(stderr,"Error while calling StartScilab\n");
         return -1;
     }
+    // TODO (kiraboris): why the hell is this path hard-coded?
     string scicommand = string("cd ") + app.applicationDirPath().toUtf8().data() + "/../..";
     if (SendScilabJob((char *)scicommand.c_str())) {
         cerr << "Scilab error" << endl;
@@ -74,7 +75,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onAddTech() {
-    QMdiSubWindow *subwnd = ui->techMdiArea->addSubWindow(new TechEvWindow);
+    QMdiSubWindow *subwnd = ui->techMdiArea->addSubWindow(new TechEvWindow(2));
     subwnd->show();
 }
 

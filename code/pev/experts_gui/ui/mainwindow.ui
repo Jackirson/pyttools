@@ -38,44 +38,145 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QPushButton" name="addTech">
+      <widget class="QGroupBox" name="group_IO">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>10</y>
          <width>131</width>
-         <height>23</height>
+         <height>281</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Add technology</string>
+       <property name="title">
+        <string>I/O Technologies</string>
        </property>
+       <widget class="QPushButton" name="addTech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="saveTech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>240</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save all</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="saveOneTech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>210</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save current</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadOneTech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load...</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="filename">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>110</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadTech">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load all</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="selectFile">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>87</y>
+          <width>41</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_filename">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>91</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>File name:</string>
+        </property>
+       </widget>
       </widget>
-      <widget class="QPushButton" name="saveTech">
+      <widget class="QGroupBox" name="group_SCI">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
+         <y>480</y>
          <width>131</width>
-         <height>23</height>
+         <height>71</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Save all technologies</string>
+       <property name="title">
+        <string>Scilab</string>
        </property>
-      </widget>
-      <widget class="QPushButton" name="evaluate">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>131</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Evaluate</string>
-       </property>
+       <widget class="QPushButton" name="evaluate">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Evaluate</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
