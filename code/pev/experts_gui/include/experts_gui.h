@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::MainWindow *ui;
+        int saveToStream(int, ostream &);
 
     private slots:
         void onAddTech();

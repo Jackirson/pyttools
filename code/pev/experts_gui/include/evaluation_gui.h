@@ -19,18 +19,20 @@ class EvBar : public QFrame {
 
     public:
         EvBar(int numLevels = 4, int maxPoint = 10);
-        Eval getData();
+        Eval getData() { return eval; }
 };
 
 class TechEvWindow : public QFrame {
     protected:
         vector<EvBar *> bars;
         QGridLayout grid;
+        int mNumOfTech;
 
     public:
         TechEvWindow(int numOfThisTech=1, int numParameters = 16, int numLevels = 4, int maxPoint = 10);
         ~TechEvWindow();
         TechEval getData();
+        int      getNumber() { return mNumOfTech; }
 };
 
 #endif // __EVALUATION_GUI_H__

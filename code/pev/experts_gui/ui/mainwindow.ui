@@ -44,7 +44,7 @@
          <x>10</x>
          <y>10</y>
          <width>131</width>
-         <height>281</height>
+         <height>191</height>
         </rect>
        </property>
        <property name="title">
@@ -67,29 +67,16 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>240</y>
+          <y>121</y>
           <width>111</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Save all</string>
+         <string>Save all...</string>
         </property>
        </widget>
        <widget class="QPushButton" name="saveOneTech">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>210</y>
-          <width>111</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Save current</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="loadOneTech">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -99,56 +86,20 @@
          </rect>
         </property>
         <property name="text">
-         <string>Load...</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="filename">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>111</width>
-          <height>23</height>
-         </rect>
+         <string>Save current...</string>
         </property>
        </widget>
        <widget class="QPushButton" name="loadTech">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>180</y>
+          <y>90</y>
           <width>111</width>
           <height>23</height>
          </rect>
         </property>
         <property name="text">
-         <string>Load all</string>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="selectFile">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>87</y>
-          <width>41</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_filename">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>90</y>
-          <width>91</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>File name:</string>
+         <string>Load all...</string>
         </property>
        </widget>
       </widget>
