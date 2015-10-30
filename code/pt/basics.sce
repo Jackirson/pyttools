@@ -72,14 +72,25 @@ endfunction
 // IN: 	vec: some vector
 // OUT: 	possOut: poss-dist vector with values in range [0,1] uniformely placed
 //=================================================
-function possOut = ptRescaleUni( vec );
+function possOut = ptRescaleUnif( vec );
    // test for vector input is inside ptChange1d //
    
-    Vals =		unique( vec );
-    ValsUni =   linspace(0,1, length(Vals));
-    possOut = ptChange1d( vec, ValsUni, Vals ); 
-    if( size(vec,1) < size(vec,2) ) then possOut = possOut'; end;
+    ValsOld =   unique( vec );
+    ValsUnif =  linspace(0,1, length(Vals));
+    possOut = ptChange1d( vec, ValsUnif, ValsOld ); 
+    if( size(vec,1) < size(vec,2) ) then possOut = possOut'; 
 endfunction
+
+//=================================================
+// ptRescale2Given: rescales a vector into range [0 1] by correcting a  
+//      transformation function between some vector 'vec' and a given 
+//      poss-dist 'givenPoss' to make it 'close to' a linear transform  
+// IN: 	vec: some vector, givenPoss: goal scale
+// OUT: possOut: poss-dist vector with values in range [0,1] uniformely placed
+//=================================================
+///function  possOut = ptRescale2Given( vec );
+/// NOT YET NEEDED
+///endfunction
 
 //========================================,=========
 // ptChange1d: emulates Matlab 'changem' function for vectors.
@@ -108,8 +119,5 @@ function vecOut = ptChange1d( vec, toVals, fromVals )
     
     vecOut = repT( find(repV == repF) );    
 endfunction
-
-
-
 // ==eof===eof==
 
