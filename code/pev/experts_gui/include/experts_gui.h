@@ -35,7 +35,9 @@ class MainWindow : public QMainWindow
     private slots:
         void onAddTech();
         void onSaveAllTech();
+        void onSaveSingleTech();
         void onEvaluate();
+        void onActiveTechChanged(QMdiSubWindow*);
 };
 
 #endif // __EXPERTS_GUI_H__

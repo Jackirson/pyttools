@@ -65,13 +65,29 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->techMdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),
+            this,SLOT(onActiveTechChanged(QMdiSubWindow*)));
     connect(ui->addTech, SIGNAL(clicked()), this, SLOT(onAddTech()));
     connect(ui->saveTech, SIGNAL(clicked()), this, SLOT(onSaveAllTech()));
+    connect(ui->saveOneTech, SIGNAL(clicked()), this, SLOT(onSaveSingleTech()));
     connect(ui->evaluate, SIGNAL(clicked()), this, SLOT(onEvaluate()));
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::onActiveTechChanged(QMdiSubWindow* win)
+{
+    if(win != NULL)
+    {
+      cout << "Active tech is " <<
+              dynamic_cast<TechEvWindow *>((win)->widget())->getNumber() << endl;
+    }
+    else
+    {
+      cout<< "No active window" << endl;
+    }
 }
 
 void MainWindow::onAddTech() {
@@ -91,6 +107,18 @@ void MainWindow::onAddTech() {
 
 void MainWindow::onSaveAllTech() {
     saveToStream(-1, cout);
+}
+
+void MainWindow::onSaveSingleTech() {
+    int nTechToSave = -1;
+    QList<QMdiSubWindow *> lst = ui->techMdiArea->subWindowList();
+    QList<QMdiSubWindow *>::iterator it;
+    for (it = lst.begin(); it != lst.end(); it++) {
+        //dynamic_cast<TechEvWindow *>((*it)->widget())->activateWindow();
+        if( 0 )
+            nTechToSave = dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
+    }
+    cout << "There are " << nTechToSave << endl;
 }
 
 // saveToFile: outputs given tech or all techs (ntech= -1)
