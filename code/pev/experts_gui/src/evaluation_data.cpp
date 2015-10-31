@@ -1,4 +1,5 @@
 #include "evaluation_data.h"
+#include "math.h"
 
 Eval::Eval(int numLevels, int maxPoint) {
     this->numLevels = numLevels;
@@ -7,8 +8,17 @@ Eval::Eval(int numLevels, int maxPoint) {
 }
 
 double Eval::operator() (int i) {
-    return ((*this)[i] % numLevels) / (double)(numLevels - 1);
+    return (this->at(i)  % numLevels) / (double)(numLevels-1);
 }
+
+void Eval::unbracket(int i, double val) {
+    // check boundaries
+    if(val > 1) val = 1;
+    if(val < 0) val = 0;
+
+    this->at(i) = round( (val * (numLevels-1)) );
+}
+
 
 void Eval::change(int i) {
     if (!(*this)[i]) (*this)[i] = numLevels - 1;
@@ -30,6 +40,15 @@ ostream & operator<< (ostream &out, Eval &eval) {
     return out;
 }
 
+istream & operator>> (istream &in,  Eval &eval) {
+    double val = -1;
+    // kiraboris: maxPoint may also be defined here using std::getline(), then std::istringstream
+    for (int i = 0; i <= eval.getMaxPoint(); i++) {
+        in >> val; eval.unbracket(i, val);
+    }
+    return in;
+}
+
 TechEval::TechEval(int numParameters, int numLevels, int maxPoint) {
     resize(numParameters);
     for (int i = 0; i < numParameters; i++) {
@@ -47,4 +66,11 @@ ostream & operator<< (ostream &out, TechEval &teval) {
         out << endl;
     }
     return out;
+}
+
+istream & operator>> (istream &in,  TechEval &teval) {
+    for (int i = 0; i < teval.size(); i++) {
+        in >> teval[i];
+    }
+    return in;
 }

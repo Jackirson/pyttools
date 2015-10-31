@@ -81,6 +81,7 @@ void EvBar::mousePressEvent(QMouseEvent *event) {
     }
 }
 
+// 'Default' tech window constructor
 TechEvWindow::TechEvWindow(int numOfThisTech, int numParameters, int numLevels, int maxPoint) :
     grid(this)
 {
@@ -95,6 +96,30 @@ TechEvWindow::TechEvWindow(int numOfThisTech, int numParameters, int numLevels, 
 
 }
 
+// 'Copy' tech window constructor (copies from external TechEval)
+TechEvWindow::TechEvWindow(int numOfThisTech, TechEval& teval, int numLevels) :
+    grid(this)
+{
+    mNumOfTech =  numOfThisTech;
+    setWindowTitle("Tech #" + QString::number(mNumOfTech));
+
+    int numParameters = teval.size();
+    int maxPoint = teval[0].size();
+
+    bars.resize(numParameters);
+    for (int i = 0; i < numParameters; i++) {
+        bars[i] = new EvBar(numLevels, maxPoint);
+
+        // COPY
+        for(int j=0; j<= maxPoint; ++j)  // kiraboris: remember <=maxPoint
+            bars[i]->getRData()[j] = teval[i][j];
+
+        grid.addWidget(bars[i], i, 0);
+    }
+
+}
+
+
 TechEvWindow::~TechEvWindow() {
     for (int i = 0; i < bars.size(); i++) {
         delete bars[i];
@@ -104,7 +129,7 @@ TechEvWindow::~TechEvWindow() {
 TechEval TechEvWindow::getData() {
     TechEval teval;
     for (int i = 0; i < bars.size(); i++) {
-        teval[i] = bars[i]->getData();
+        teval[i] = bars[i]->getRData();
     }
     return teval;
 }

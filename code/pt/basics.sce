@@ -78,7 +78,9 @@ function possOut = ptRescaleUnif( vec );
     ValsOld =   unique( vec );
     ValsUnif =  linspace(0,1, length(Vals));
     possOut = ptChange1d( vec, ValsUnif, ValsOld ); 
-    if( size(vec,1) < size(vec,2) ) then possOut = possOut'; 
+    if( size(vec,1) < size(vec,2) )  
+        possOut = possOut'; 
+    end;
 endfunction
 
 //=================================================
