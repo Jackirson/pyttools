@@ -75,11 +75,11 @@ function poss_sup = ptSupB(poss1, poss2);
         error("Supports of the given distributions must be the same.");
     end
     
-    M1 = ptPoss2Comp(poss1(supp1)); // only compare non-zero values ...
-    M2 = ptPoss2Comp(poss2(supp1));
+    ///M1 = ptPoss2Comp(poss1(supp1)); // only compare non-zero values ...
+    //M2 = ptPoss2Comp(poss2(supp1));
     M = (M1+M2 == 2) - (M1+M2 == -2); // only 2 and -2 count?
     poss_sup = zeros(poss1);	// ... others are assigned zero directly (efficiency gain)
-    poss_sup(supp1) = ptComp2Poss(M); 
+    ///poss_sup(supp1) = ptRescaleGammalin( ptComp2Poss(M), poss1(supp1) ); 
 endfunction
 
 //=================================================
@@ -89,34 +89,36 @@ endfunction
 // IN:		poss-dist
 // OUT:	comp matrix
 //=================================================
-function comp2d = ptPoss2Comp(poss1d);
-    if length(poss1d) ~=length(poss1d(:)) then
-       error("All input args are vectors.");
-    end;
-    
-    poss1d = [poss1d 0];
-    [poss_r, poss_c] = meshgrid(poss1d);  /// (:) makes a large 2d matrix anyway
-    comp2d = (poss_r < poss_c) - (poss_r > poss_c);
-endfunction
-
-//=================================================
-// ptComp2Poss: converts an extended comp matrix (see above) into a normalized poss-dist.
-// IN:		comp matrix
-// OUT:	poss-dist
-//=================================================
-function poss1d = ptComp2Poss(comp2d);
-    if ~isequal(size(comp2d,1), size(comp2d,2)) then
-        error("Comp matrix must be scew-symmetric.");
-    end
-    
-    qXmax = size(comp2d, 1) - 1;
-    if sum(abs(comp2d)) == 0 then
-        poss1d = ones(1, qXmax);
-    else
-        prevec = -sum(comp2d, 'r'); // already ordered like the poss-dist we need
-        poss1d = ptRescaleUni( prevec );
-        poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
-    end
-endfunction
-
+//function comp2d = ptPoss2Comp(poss1d);
+//    if length(poss1d) ~=length(poss1d(:)) then
+//       error("All input args are vectors.");
+//    end;
+//    
+//    poss1d = [poss1d 0];
+//    [poss_r, poss_c] = meshgrid(poss1d);  /// (:) makes a large 2d matrix anyway
+//    comp2d = (poss_r < poss_c) - (poss_r > poss_c);
+//endfunction
+//
+////=================================================
+//// ptComp2Poss: converts an extended comp matrix (see above) into a normalized poss-dist.
+//// IN:	comp matrix,
+////      sRescale: 'n' - none (may be omitted), 'u' - uniform, 'l' - linear  
+//// OUT:	poss-dist
+////=================================================
+//function poss1d = ptComp2Poss(comp2d, sRescale="none");
+//    if ~isequal(size(comp2d,1), size(comp2d,2)) then
+//        error("Comp matrix must be scew-symmetric.");
+//    end
+//    
+//    qXmax = size(comp2d, 1) - 1;
+//    if sum(abs(comp2d)) == 0 then
+//        poss1d = ones(1, qXmax);
+//    else
+//        prevec = -sum(comp2d, 'r'); // already ordered like the poss-dist we need
+//        if( sRescale == "u" ) then poss1d = ptRescaleUnif( prevec );
+//        if( sRescale == "l" ) then poss1d = ptRescale( prevec );
+//        poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
+//    end
+//endfunction
+//
 // ==eof===eof==
