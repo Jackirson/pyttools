@@ -1,2 +1,2 @@
 This is a sample new file.
-It has been slightly changed.
+It has been slightly changed again.
