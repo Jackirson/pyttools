@@ -44,7 +44,7 @@
          <x>10</x>
          <y>10</y>
          <width>131</width>
-         <height>191</height>
+         <height>251</height>
         </rect>
        </property>
        <property name="title">
@@ -67,39 +67,74 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>121</y>
+          <y>150</y>
           <width>111</width>
-          <height>21</height>
+          <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Save all...</string>
+         <string>Save all</string>
         </property>
        </widget>
        <widget class="QPushButton" name="saveOneTech">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>150</y>
+          <y>180</y>
           <width>111</width>
-          <height>23</height>
+          <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Save current...</string>
+         <string>Save active</string>
         </property>
        </widget>
        <widget class="QPushButton" name="loadTech">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>90</y>
+          <y>82</y>
           <width>111</width>
-          <height>23</height>
+          <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Load all...</string>
+         <string>Load file</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelActiveTech">
+        <property name="geometry">
+         <rect>
+          <x>12</x>
+          <y>220</y>
+          <width>111</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Active tech: none </string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkSaveCout">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>130</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save to COUT</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
         </property>
        </widget>
       </widget>

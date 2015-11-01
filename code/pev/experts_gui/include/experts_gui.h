@@ -30,12 +30,16 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::MainWindow *ui;
-        int saveToStream(int, ostream &);
+        int   saveToStream(int ntech, ostream &);
+        void  writeHeaders(ostream &);
+        int     mActiveTech;
+        QString msAppRoot;
 
     private slots:
         void onAddTech();
         void onSaveAllTech();
         void onSaveSingleTech();
+        void onLoadTechFile();
         void onEvaluate();
         void onActiveTechChanged(QMdiSubWindow*);
 };

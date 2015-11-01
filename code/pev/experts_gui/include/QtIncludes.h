@@ -8,6 +8,7 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QInputDialog>
+#include <QFileDialog>
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPainter>
@@ -26,3 +27,4 @@
 #include <QProgressBar>
 #include <QCheckBox>
 #include <QGridLayout>
+
