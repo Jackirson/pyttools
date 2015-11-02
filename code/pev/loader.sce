@@ -5,5 +5,7 @@ PEV_EPS_P = -1;    // we work with possibility measure P(). interative procedure
 filename= 'pev/data/distReal.txt';  // a sample data file with possibility distributions (poss-dists)
 
 // Description inside the loaded files:
+exec 'collective.sce';
 exec 'select_dichotomy.sce';
 exec 'select.sce';
+

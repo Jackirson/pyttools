@@ -1,5 +1,4 @@
 // The procedures below implement order (predecessor, successor) on poss-dists
-// TODO: develop pipeline statrting with raw data, the first qPossPerExpert poss-dist lines corresponding to the 1-st expert's opition and so on.
 
 //=================================================
 // ptSupStack: supremum of several poss-dists (recursively)  
