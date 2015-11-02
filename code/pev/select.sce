@@ -46,7 +46,7 @@ endfunction
 // OUT: same as pevSelect 
 function [ sel, PLoser2d ] = pevSelectF( filename )
     [poss, sData1d] = ptLoadPoss3d(filename);
-     poss = ptNormalize( poss, 'r' );
+    // poss = ptNormalize( poss, 'r' ); //WARNING! Auto-normalize is disabled
     [ sel, PLoser2d ] = pevSelect(poss, sData1d(2));
 endfunction
 // ===================
