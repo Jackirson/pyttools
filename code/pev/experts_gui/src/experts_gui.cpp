@@ -17,7 +17,7 @@ static int width = 800, height = 600;
 const int QPARAM = 16; // kiraboris: hard-coded
 const int QLEVEL = 4;
 
-const char tempfile[] = "/tmp/ExpertsGui.dat";
+const char *tempfile = tmpnam(NULL);
 
 int main(int argc, char **argv) {
     // Start the application
@@ -125,7 +125,7 @@ void MainWindow::onSaveAllTech() {
     if( ! ui->checkSaveCout->isChecked() )  {
         // then use file dialog
         QString filename = QFileDialog::getSaveFileName(this, "Save all techs for evaluation",
-                       QApplication::applicationDirPath()+"/../data/sample.txt", ".txt");
+                       QApplication::applicationDirPath()+"/../data/sample.txt", "*.txt");
         if( filename.isEmpty() ) return;
 
          ofstream of(filename.toUtf8().data(), ios::trunc);
@@ -153,7 +153,7 @@ void MainWindow::onSaveSingleTech() {
     if( ! ui->checkSaveCout->isChecked() )  {
         // then use file dialog
         QString filename = QFileDialog::getSaveFileName(this, "Save single tech as temlate:",
-                       QApplication::applicationDirPath()+"/../data/sample.txt", ".txt");
+                       QApplication::applicationDirPath()+"/../data/sample.txt", "*.txt");
         if( filename.isEmpty() ) return;
 
          ofstream of(filename.toUtf8().data(), ios::trunc);
@@ -178,7 +178,7 @@ void MainWindow::onSaveSingleTech() {
 
 void MainWindow::onLoadTechFile() {
     QString filename = QFileDialog::getOpenFileName(this, "Load tech data file:",
-                   QApplication::applicationDirPath()+"/../data", ".txt");
+                   QApplication::applicationDirPath()+"/../data", "*.txt");
     if( filename.isEmpty() ) return;
 
     ifstream file(filename.toUtf8().data(), ios::in);
