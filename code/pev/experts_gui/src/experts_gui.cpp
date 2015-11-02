@@ -80,9 +80,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->saveOneTech, SIGNAL(clicked()), this, SLOT(onSaveSingleTech()));
     connect(ui->loadTech, SIGNAL(clicked()), this, SLOT(onLoadTechFile()));
 
+    connect(ui->closeAll, SIGNAL(clicked()), this, SLOT(onCloseAll()));
+    connect(ui->duplicate, SIGNAL(clicked()), this, SLOT(onDuplicate()));
+    connect(ui->tile, SIGNAL(clicked()), this, SLOT(onTile()));
+
     // SCILAB buttons
     connect(ui->evaluate, SIGNAL(clicked()), this, SLOT(onEvaluate()));
 }
+
+void MainWindow::onCloseAll() {
+    ui->techMdiArea->closeAllSubWindows();
+}
+
+void MainWindow::onTile() {
+    ui->techMdiArea->tileSubWindows();
+}
+
+
 
 MainWindow::~MainWindow() {
     delete ui;
@@ -103,16 +117,31 @@ void MainWindow::onActiveTechChanged(QMdiSubWindow* win)
     }
 }
 
-void MainWindow::onAddTech() {
-    int smallestUnusedNumber = 1;
+
+int  MainWindow::findSmallestUnusedTechNumber() {
 
     QList<QMdiSubWindow *> lst = ui->techMdiArea->subWindowList();
     QList<QMdiSubWindow *>::iterator it;
-    for (it = lst.begin(); it != lst.end(); it++) {
-        int number = dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
-        if( smallestUnusedNumber == number )
-                ++smallestUnusedNumber;
+    vector<int> usedNumbers(lst.length());
+
+    int i=0;
+    for (it = lst.begin(); it != lst.end(); ++it, ++i)
+        usedNumbers.at(i) = dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
+
+    std::sort(usedNumbers.begin(), usedNumbers.end()); // in-place
+
+    int smallestUnusedNumber = 1; i=0;
+    while( i < usedNumbers.size() &&
+           smallestUnusedNumber == usedNumbers.at(i) ) {
+            ++i; ++smallestUnusedNumber;
     }
+
+    return smallestUnusedNumber;
+}
+
+void MainWindow::onAddTech() {
+
+    int smallestUnusedNumber = findSmallestUnusedTechNumber();
 
     QMdiSubWindow *subwnd = ui->techMdiArea->addSubWindow(new
                TechEvWindow(smallestUnusedNumber, QPARAM, QLEVEL));
@@ -175,6 +204,26 @@ void MainWindow::onSaveSingleTech() {
     }
 }
 
+void MainWindow::onDuplicate() {
+    if( mActiveTech <= 0 ) return;
+
+    QList<QMdiSubWindow *> lst = ui->techMdiArea->subWindowList();
+    QList<QMdiSubWindow *>::iterator it;
+
+    int maxNumber = lst.length();
+    vector<TechEval> sortedTechs(maxNumber);
+
+    for (it = lst.begin(); it != lst.end(); it++) {
+        int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
+        sortedTechs.at(number-1) =  // that's vector<Eval>::operator=
+                 dynamic_cast<TechEvWindow *>((*it)->widget())->getData();
+    }
+
+    int next_number = findSmallestUnusedTechNumber();
+    QMdiSubWindow *subwnd =  ui->techMdiArea->addSubWindow(
+                new TechEvWindow(next_number, sortedTechs.at(mActiveTech-1), QLEVEL));
+    subwnd->show();
+}
 
 void MainWindow::onLoadTechFile() {
     QString filename = QFileDialog::getOpenFileName(this, "Load tech data file:",
@@ -216,7 +265,9 @@ void MainWindow::onLoadTechFile() {
 
     // **NOW reading data from file into new tech windows
     // opened tech windows will be now closed
-    ui->techMdiArea->closeAllSubWindows();
+    if( ! ui->checkAppend->isChecked() )
+        ui->techMdiArea->closeAllSubWindows();
+
     cout << "==============================" << endl;
     cout << "WARNING: a uniform scale with " << QLEVEL << " different values is assumed in file!" << endl;
 
@@ -224,8 +275,12 @@ void MainWindow::onLoadTechFile() {
     for(int i=0; i < qLines / QPARAM; ++i) {
 
         ssdata >> teval;
-        QMdiSubWindow *subwnd =
-                ui->techMdiArea->addSubWindow(new TechEvWindow(i+1, teval, QLEVEL));
+        int new_number = i+1;
+        if( ui->checkAppend->isChecked() )
+            new_number =  findSmallestUnusedTechNumber();
+
+        QMdiSubWindow *subwnd = ui->techMdiArea->addSubWindow(
+                    new TechEvWindow(new_number, teval, QLEVEL));
         subwnd->show();
     }  // end of windows creation
 
@@ -235,7 +290,7 @@ void MainWindow::onLoadTechFile() {
 }
 
 
-// saveToFile: outputs given tech or all techs (ntech= -1)
+// saveToStream: outputs given tech or all techs (ntech= -1)
 //              to pstream via operator<<
 // returns count of saved techs
 // **this func and the next one actually belong to a Saver class
