@@ -45,11 +45,11 @@ int main(int argc, char **argv) {
     string sAppRoot = QApplication::applicationDirPath().toUtf8().data();
     string scicommand = string("cd ") + sAppRoot + "/../..";
     if (SendScilabJob((char *)scicommand.c_str())) {
-        cerr << "Scilab error" << endl;
+        cerr << __FILE__ << ": " << __LINE__ << " " << "Scilab error" << endl;
         return -1;
     }
     if (SendScilabJob((char *)"exec('loader.sce');")) {
-        cerr << "Scilab error" << endl;
+        cerr << __FILE__ << ": " << __LINE__ << " " << "Scilab error" << endl;
         return -1;
     }
 
@@ -299,11 +299,11 @@ void MainWindow::onEvaluate() {
 
     string scicommand = string("[sel, ploser] = pevSelectF('") + tempfile + "');";
     if (SendScilabJob((char *)scicommand.c_str())) {
-        cerr << "Scilab error" << endl;
+        cerr << __FILE__ << ": " << __LINE__ << " " << "Scilab error" << endl;
         return;
     }
     if (SendScilabJob((char *)"pevPrintResult(sel);")) {
-        cerr << "Scilab error" << endl;
+        cerr << __FILE__ << ": " << __LINE__ << " " << "Scilab error" << endl;
         return;
     }
 
