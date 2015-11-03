@@ -75,19 +75,24 @@ function poss_sup = ptSupB(poss1, poss2);
     end
 
     // define an explicit function poss_sup = gamm(poss1)
-    PVals = unique([poss1 poss2]); // "All" P-values
+    // PVals = unique([poss1 poss2]); // "All" P-values
+    PVals = unique(poss1(:)); // unique P1-values
     dstPVals = PVals;  // that means, initially map PVals to same PVals 
     
-    for i=1:length(PVals)  
-        p = PVals(i);   // loop on 'p' actually
-        X2 = (poss2 == p);
-        if( sum(X2) == 0 ) 
-            continue;
-        end;
-        srcPartMin = min( poss1(X2) );
-        srcPartMax = max( poss1(X2) );
-        srcPValsPart = PVals( PVals >= srcPartMin & PVals <= srcPartMax );
-        dstPVals = ptChange1d(dstPVals, srcPartMax, srcPValsPart);
+    for i = 1 : length(poss2(:))
+        for j = 1 : length(poss2(:))
+            if poss2(i) < poss2(j) then
+                continue;
+            end
+            if poss1(i) >= poss1(j) then
+                continue;
+            end
+            // Get here only if poss1(i) < poss1(j)
+            srcPartMin = poss1(i);
+            srcPartMax = poss1(j);
+            srcPValsPart = PVals( PVals >= srcPartMin & PVals <= srcPartMax );
+            dstPVals = ptChange1d(dstPVals, srcPartMax, srcPValsPart);
+        end
     end
         
     poss_sup = ptChange1d(poss1, dstPVals, PVals );	
