@@ -73,29 +73,17 @@ function poss_sup = ptSupB(poss1, poss2);
     if ~isequal(supp1, supp2) then
         error("Supports of the given distributions must be the same.");
     end
-
-    // define an explicit function poss_sup = gamm(poss1)
-    // PVals = unique([poss1 poss2]); // "All" P-values
-    PVals = unique(poss1(:)); // unique P1-values
-    dstPVals = PVals;  // that means, initially map PVals to same PVals 
+    
+    poss_sup = poss1;
     
     for i = 1 : length(poss2(:))
         for j = 1 : length(poss2(:))
-            if poss2(i) < poss2(j) then
-                continue;
+            if poss2(i) <= poss2(j) & poss_sup(i) >= poss_sup(j) then
+                x = poss_sup >= poss_sup(j) & poss_sup <= poss_sup(i);
+                poss_sup(x) = poss_sup(i);
             end
-            if poss1(i) >= poss1(j) then
-                continue;
-            end
-            // Get here only if poss1(i) < poss1(j)
-            srcPartMin = poss1(i);
-            srcPartMax = poss1(j);
-            srcPValsPart = PVals( PVals >= srcPartMin & PVals <= srcPartMax );
-            dstPVals = ptChange1d(dstPVals, srcPartMax, srcPValsPart);
         end
     end
-        
-    poss_sup = ptChange1d(poss1, dstPVals, PVals );	
 endfunction
 // ==eof===eof==
 
