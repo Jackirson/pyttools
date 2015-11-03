@@ -86,25 +86,3 @@ function poss_sup = ptSupB(poss1, poss2);
     end
 endfunction
 // ==eof===eof==
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ==eof===eof==
