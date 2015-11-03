@@ -10,7 +10,7 @@ function open_new_figure()
     figure("background", -2);
 endfunction
 
-function draw_sup(p1, p2)
+function psup = draw_sup(p1, p2)
     open_new_figure();
     subplot(3, 1, 1);
     plot(p1, "linewidth", 3);
@@ -20,8 +20,9 @@ function draw_sup(p1, p2)
     plot(p2, "linewidth", 3);
     set_axis_props();
     ylabel("$\mathrm{p}_2$", "font_size", 4);
+    psup = ptSup(p1, p2);
     subplot(3, 1, 3);
-    plot(ptSup(p1, p2), "linewidth", 3);
+    plot(psup, "linewidth", 3);
     set_axis_props();
     ylabel("$\mathrm{p}_1\vee\mathrm{p}_2$", "font_size", 4);
 endfunction
@@ -62,8 +63,25 @@ function test05()
     p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
     p1 = p1 / max(p1);
     p2 = exp(-(x+1).^2);
+    psup1 = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1);
+    open_new_figure();
+    plot(psup1, psup2, "-x");
+    for p = unique(psup2)
+        x = psup2 == p;
+        if length(unique(psup1(x))) ~= 1 then
+            mprintf("FAIL: p = %f\n", p);
+            break;
+        end
+    end
+endfunction
+
+function test06()
+    x = linspace(0, 1, 50);
+    p1 = x;
+    p1(1) = p1(2);
+    p2 = p1($ : -1 : 1);
     draw_sup(p1, p2);
-    draw_sup(p2, p1);
 endfunction
 
 tests = 5;
