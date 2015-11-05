@@ -126,8 +126,8 @@ TechEvWindow::~TechEvWindow() {
     }
 }
 
-TechEval TechEvWindow::getData() {
-    TechEval teval;
+TechEval TechEvWindow::getData(int qLevels) {
+    TechEval teval(bars.size(), qLevels);
     for (int i = 0; i < bars.size(); i++) {
         teval[i] = bars[i]->getRData();
     }

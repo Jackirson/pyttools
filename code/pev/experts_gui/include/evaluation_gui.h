@@ -32,7 +32,7 @@ class TechEvWindow : public QFrame {
         TechEvWindow(int numOfThisTech=1, int numParameters = 16, int numLevels = 4, int maxPoint = 10);
         TechEvWindow(int numOfThisTech, TechEval& teval, int numLevels = 4);
         ~TechEvWindow();
-        TechEval getData();
+        TechEval getData(int qLevels);
         int      getNumber() { return mNumOfTech; }
 };
 

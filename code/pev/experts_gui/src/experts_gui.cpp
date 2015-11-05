@@ -3,6 +3,7 @@
 #include "experts_gui.h"
 #include "evaluation_data.h"
 #include "ui_mainwindow.h"
+#include "settings.h"
 #include "stack-c.h"
 #include "call_scilab.h"
 #include <iostream>
@@ -14,8 +15,10 @@ using namespace std;
 
 static int width = 800, height = 600;
 
-const int QPARAM = 16; // kiraboris: hard-coded
-const int QLEVEL = 4;
+static int QPARAM = 16;
+static int QLEVEL = 4;
+
+SettingsDialog *WinSettings;
 
 const char *tempfile = tmpnam(NULL);
 
@@ -27,7 +30,11 @@ int main(int argc, char **argv) {
     QRect screen_size = QApplication::desktop()->availableGeometry();
     if (width > screen_size.width()) width = screen_size.width();
     if (height > screen_size.height()) height = screen_size.height();
-    MainWindow main_window;
+
+    MainWindow      main_window;
+    SettingsDialog  settings_window;
+    WinSettings = &settings_window;
+
     main_window.resize(width, height);
     main_window.show();
 
@@ -84,12 +91,41 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->duplicate, SIGNAL(clicked()), this, SLOT(onDuplicate()));
     connect(ui->tile, SIGNAL(clicked()), this, SLOT(onTile()));
 
+    // ADVANCED buttons
+     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onShowSettings()));
+
     // SCILAB buttons
     connect(ui->evaluate, SIGNAL(clicked()), this, SLOT(onEvaluate()));
 }
 
 void MainWindow::onCloseAll() {
+    if( ! ui->techMdiArea->subWindowList().isEmpty() ) {
+         int ret = QMessageBox::warning(this, tr("Close all windows"),
+                                   tr("All windows will be now closed."),
+                                   QMessageBox::Ok | QMessageBox::Cancel);
+         if( ret != QMessageBox::Ok )
+              return;
+    }
+
     ui->techMdiArea->closeAllSubWindows();
+}
+
+void MainWindow::onShowSettings() {
+
+    if( ! ui->techMdiArea->subWindowList().isEmpty() ) {
+         int ret = QMessageBox::warning(this, tr("Close all windows"),
+                                   tr("All windows will be closed after this dialog."),
+                                   QMessageBox::Ok | QMessageBox::Cancel);
+         if( ret != QMessageBox::Ok )
+              return;
+    }
+
+    WinSettings->exec();
+    ui->techMdiArea->closeAllSubWindows();
+
+    QPARAM = WinSettings->getQPARAM();
+    QLEVEL = WinSettings->getQLEVEL();
+
 }
 
 void MainWindow::onTile() {
@@ -211,12 +247,12 @@ void MainWindow::onDuplicate() {
     QList<QMdiSubWindow *>::iterator it;
 
     int maxNumber = lst.length();
-    vector<TechEval> sortedTechs(maxNumber);
+    vector<TechEval> sortedTechs(maxNumber, TechEval(QPARAM, QLEVEL));
 
     for (it = lst.begin(); it != lst.end(); it++) {
         int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
         sortedTechs.at(number-1) =  // that's vector<Eval>::operator=
-                 dynamic_cast<TechEvWindow *>((*it)->widget())->getData();
+                 dynamic_cast<TechEvWindow *>((*it)->widget())->getData(QLEVEL);
     }
 
     int next_number = findSmallestUnusedTechNumber();
@@ -254,7 +290,10 @@ void MainWindow::onLoadTechFile() {
     }
 
     if( qLines % QPARAM ) {
-        cerr << "(Data lines read) % (lines per tech) not zero. File corrupt?" << endl;
+        cerr << "=========================" << endl;
+        cerr << "(Data lines read) % (lines per tech) not zero. File corrupt or QPARAM set wrong?" << endl;
+        cerr << "QPARAM = " << QPARAM << endl;
+        cerr << "========================="  << endl;
         return;
     }
 
@@ -271,7 +310,8 @@ void MainWindow::onLoadTechFile() {
     cout << "==============================" << endl;
     cout << "WARNING: a uniform scale with " << QLEVEL << " different values is assumed in file!" << endl;
 
-    istringstream ssdata(sdata); TechEval teval;
+    istringstream ssdata(sdata);
+    TechEval teval(QPARAM, QLEVEL);
     for(int i=0; i < qLines / QPARAM; ++i) {
 
         ssdata >> teval;
@@ -300,12 +340,12 @@ int MainWindow::saveToStream(int ntech, ostream &pstream)
     QList<QMdiSubWindow *>::iterator it;
 
     int maxNumber = lst.length();
-    vector<TechEval> sortedTechs(maxNumber);
+    vector<TechEval> sortedTechs(maxNumber, TechEval(QPARAM, QLEVEL));
 
     for (it = lst.begin(); it != lst.end(); it++) {
         int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
         sortedTechs.at(number-1) =  // that's vector<Eval>::operator=
-                 dynamic_cast<TechEvWindow *>((*it)->widget())->getData();
+                 dynamic_cast<TechEvWindow *>((*it)->widget())->getData(QLEVEL);
     }
 
     if( ntech < 0 )             // save all
@@ -330,7 +370,7 @@ int MainWindow::saveToStream(int ntech, ostream &pstream)
 // writes headers to data file for pevSelectF()
 void MainWindow::writeHeaders(ostream &of) {
     of << "qParam= " << QPARAM << " (parameters per 1 object)" << endl;
-    of << "y = 1/3000*( 0.25*(x(1)+0.1*x(3)*x(4)+x(5)+0.5*(x(2)+x(6))) + 0.05*(x(7)+x(9))*x(8) + 0.5*(x(10)+0.5*(x(11)+x(12))) ) * x(13)*x(16)*0.5*(x(14)+x(15))" << endl;
+    of <<  WinSettings->getQualFun() << endl;
     of << "Machine-generated file. The above is intended for 'pevSelectF( filename )', see file select.sce." << endl;
     of << "The next separator line must begin with an asterix." << endl;
     of << "*******************************************" << endl;

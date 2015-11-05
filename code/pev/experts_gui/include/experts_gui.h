@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::MainWindow *ui;
+
         int   findSmallestUnusedTechNumber();
         int   saveToStream(int ntech, ostream &);
         void  writeHeaders(ostream &);
@@ -45,6 +46,7 @@ class MainWindow : public QMainWindow
         void onCloseAll();
         void onDuplicate();
         void onTile();
+        void onShowSettings();
         void onActiveTechChanged(QMdiSubWindow*);
 };
 
