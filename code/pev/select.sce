@@ -1,11 +1,33 @@
 // Procedures to select objects (make a decision, choose a selection). If you don't know where to start, type 
 //    pevPrintResult( pevSelectF( filename ) );
 // and then read comments below.
+
+//===============
+function sOut = lParseQualFun( sIn );
+   fScanBracket = %F;
+   sOut = "";
+   for(i=1:length(sIn))    
+      if( part(sIn, i:i) == 'x' ) fScanBracket = %T; end;
+      if( part(sIn, i:i) == ')' & fScanBracket ) 
+         sOut = strcat([sOut ",:)"]);
+         fScanBracket = %F; 
+         continue;
+      end
+      if( part(sIn, i:i) == '*' )
+         sOut = strcat([sOut " .*"]);
+         continue;
+      end
+         
+      sOut = strcat([sOut part(sIn, i:i)]);
+      
+    end
+endfunction
+
 // ===================  
 // pevSelect: select objects by minimizing P(Error), where Error happens if objects not chosen are not worse in terms of user-defined "quality" then chosen objects and P() is a possibility measure constructed from "expert sasessments" - initial poss-dists of each object's "quality" p(x), x=1:qXmax.
 // COMMENT: There are qObj objects and each object has qParam parameters to be assessed in terms of poss-dist prior to run pevSelect. Values of qObj, qParam and also qXmax are generally selected by the Chief. The Chief also must invent a monotonous object quality function qualFun(x1, ..., xM)) -> y, M = qParam. 
 // IN: qParam*qXmax*qObj array (assuming 1 expert),
-//     string 'sQualFun', e.g. sQualFun='y=(x1+x2)/2'  
+//     string 'sQualFun', e.g. sQualFun='y=(x(1)+x(2))/2'  
 //  remark #1: if you like to feed Select directly from a datafile with qParam and sQualFun specified, use pevSelectF( filename )
 //  First qParam lines of poss-dist data will correspond to the 1-st assessed object and so on.
 //  remark #2: if you have more than 1 expert, the 'ptSup' or 'ptInf' functions may be called prior to 'ptObjSelection' to obtain a "collective opinion" as supremum or infinum of poss-dists. See file 'supremum.sce'. 
@@ -19,7 +41,9 @@
 function [ sel, PLoser2d ] = pevSelect(poss_init, sQualFun);
 
     sQualFunParsed = lParseQualFun( sQualFun );
-    deff('y=qualFun(x)', sQualFun);     // make a lambda from string
+   /// print(%io(2), sQualFunParsed);
+    
+    deff('y=qualFun(x)', sQualFunParsed);     // make a lambda from string
     [qParam_notUsed,qXmax_notUsed,qObj] = size(poss_init);
     sel = zeros(qObj,qObj,2);
 
