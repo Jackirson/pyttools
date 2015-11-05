@@ -23,11 +23,14 @@ MOC_DIR     = src
 
 SOURCES = src/experts_gui.cpp \
     src/evaluation_data.cpp \
-    src/evaluation_gui.cpp
+    src/evaluation_gui.cpp \
+    src/settings.cpp
 
 HEADERS = include/QtIncludes.h \
           include/experts_gui.h \
     include/evaluation_data.h \
-    include/evaluation_gui.h
+    include/evaluation_gui.h \
+    include/settings.h
 
-FORMS   = ui/mainwindow.ui
+FORMS   = ui/mainwindow.ui \
+    ui/settings.ui
