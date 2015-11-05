@@ -151,11 +151,22 @@ function test08()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
+function test09()
+    x = linspace(-1, 1, 100);
+    p1 = 1 - abs(x);
+    p2 = p1;
+    p2(0.2 <= x & x <= 0.4) = max(p2(0.2 <= x & x <= 0.4));
+    p2(0.6 <= x & x <= 0.8) = max(p2(0.6 <= x & x <= 0.8));
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
 //=================================================
 // Test execution
 //=================================================
 
-tests = 1 : 8;
+tests = 1 : 9;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);
