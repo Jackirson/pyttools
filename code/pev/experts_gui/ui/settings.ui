@@ -53,7 +53,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Qual function e.g. y=( x(1) + x(2) )/2</string>
+    <string>Qual function</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="spinQPARAM">

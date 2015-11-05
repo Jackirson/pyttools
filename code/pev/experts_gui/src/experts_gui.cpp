@@ -198,7 +198,7 @@ void MainWindow::onSaveAllTech() {
        //  int nSaved = saveToStream(mActiveTech-1, of);
          int nSaved = saveToStream(-1, of);
          of << "*******************************************" << endl;
-         of << "File contains " << nSaved << " technology entries, each 16 lines long.";
+         of << "File contains " << nSaved << " technology entries, each " << QPARAM << " lines long.";
          of.close();
 
          cout << nSaved << " techs saved." << endl;
