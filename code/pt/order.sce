@@ -74,15 +74,31 @@ function poss_sup = ptSupB(poss1, poss2);
         error("Supports of the given distributions must be the same.");
     end
     
-    poss_sup = poss1;
+    // Sort the possibilities
+    [p1, ind1] = gsort(poss1(:));
+    p2 = poss2(ind1);
     
-    for i = 1 : length(poss2(:))
-        for j = 1 : length(poss2(:))
-            if poss2(i) <= poss2(j) & poss_sup(i) >= poss_sup(j) then
-                x = poss_sup >= poss_sup(j) & poss_sup <= poss_sup(i);
-                poss_sup(x) = poss_sup(i);
-            end
-        end
+    // Identify "incorrectly" ordered atomic events
+    [P1, P2] = meshgrid(p1, p1);
+    M1 = P1 <= P2;
+    [P1, P2] = meshgrid(p2, p2);
+    M2 = P1 <= P2;
+    M = M1 ~= M2;
+    indexes = [find(sum(M, "r") > 0), find(sum(M, "c") > 0)];
+    indexes = unique(indexes);
+    
+    // Identify the separate groups of the incorrectly ordered atomic events
+    // and make the possibilities among each group equal.
+    bounds = find(diff(indexes) > 1);
+    i1 = 1;
+    for i2 = bounds
+        p1(indexes(i1 : i2)) = max(p1(indexes(i1 : i2)));
+        i1 = i2 + 1;
     end
+    p1(indexes(i1 : $)) = max(p1(indexes(i1 : $)));
+    
+    // Form the result using the possibilities calculated at the previous step
+    poss_sup = poss1;
+    poss_sup(ind1) = p1(:)';
 endfunction
 // ==eof===eof==
