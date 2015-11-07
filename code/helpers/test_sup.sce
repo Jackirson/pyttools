@@ -2,36 +2,14 @@
 // Helper functions
 //=================================================
 
-function f = is_strictly_monotone_func(x, y)
-    [x1, ind] = unique(x(:));
-    y1 = y(ind);
-    f1 = isequal(unique(y1), y1);
-    [y1, ind] = unique(y(:));
-    x1 = x(ind);
-    f2 = isequal(unique(x1), x1);
-    f = f1 & f2;
-endfunction
-
-function f = is_monotone_func(x, y)
-    [x1, ind] = gsort(x(:));
-    for x0 = x1'
-        if length(unique(y(x == x0))) ~= 1 then
-            f = %f;
-            return;
-        end
-    end
-    y1 = y(ind);
-    f = isequal(gsort(y1), y1);
-endfunction
-
 function test_sup(p1, p2, psup1, psup2)
 //    open_new_figure();
 //    [tmp, ind] = gsort(p1);
 //    plot(p1(ind), psup1(ind), "-o");
     
-    f1 = is_strictly_monotone_func(psup1, psup2);
-    f2 = is_monotone_func(p1(p1 > 0), psup1(p1 > 0));
-    f3 = is_monotone_func(p2(p2 > 0), psup2(p2 > 0));
+    f1 = ptIsStrictlyMonotoneFunc(psup1, psup2);
+    f2 = ptIsMonotoneFunc(p1(p1 > 0), psup1(p1 > 0));
+    f3 = ptIsMonotoneFunc(p2(p2 > 0), psup2(p2 > 0));
     if f1 & f2 & f3 then
         mprintf("PASS\n");
     else
@@ -162,11 +140,19 @@ function test09()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
+function test10()   // kiraboris old test
+    p1 = [0. 0. 0. 0. 0. 0. 0. 0.0382419 0.2584829 1. 0.]
+    p2 = [0. 0. 0. 0. 0. 0. 0. 0.        0.3797164 1. 0.5577132];
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
 //=================================================
 // Test execution
 //=================================================
 
-tests = 1 : 9;
+tests = 5 : 5;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);

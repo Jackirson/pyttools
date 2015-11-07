@@ -1,6 +1,38 @@
 // These are some basics of possibility therory //
 
 //=================================================
+// ptIsStrictlyMonotoneFunc: test if x->y is strictly monotonous
+// IN: 	x, y
+// OUT:	boolean test result (%T if passed)
+//=================================================
+function f = ptIsStrictlyMonotoneFunc(x, y)
+    [x1, ind] = unique(x(:));
+    y1 = y(ind);
+    f1 = isequal(unique(y1), y1);
+    [y1, ind] = unique(y(:));
+    x1 = x(ind);
+    f2 = isequal(unique(x1), x1);
+    f = f1 & f2;
+endfunction
+
+//=================================================
+// ptIsMonotoneFunc: test if x->y is monotonous
+// IN: 	x, y
+// OUT:	boolean test result (%T if passed)
+//=================================================
+function f = ptIsMonotoneFunc(x, y)
+    [x1, ind] = gsort(x(:));
+    for x0 = x1'
+        if length(unique(y(x == x0))) ~= 1 then
+            f = %f;
+            return;
+        end
+    end
+    y1 = y(ind);
+    f = isequal(gsort(y1), y1);
+endfunction
+
+//=================================================
 // ptNormalize1d: ensures the poss-dist has a maximum P==1 value.
 // IN: 	poss vector (possibly without P==1 points)
 // OUT:	poss-dist vector
@@ -74,6 +106,7 @@ endfunction
 //=================================================
 function possOut = ptRescaleUnif( vec );
    // test for vector input is inside ptChange1d //
+   // ptChange1d can not be avoided
    
     ValsOld =   unique( vec );
     ValsUnif =  linspace(0,1, length(Vals));
