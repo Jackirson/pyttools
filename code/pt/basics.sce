@@ -1,11 +1,31 @@
 // These are some basics of possibility therory //
 
 //=================================================
+// ptIsValidPoss: test if all poss-dist values are in range [0 1]
+//              and each single poss-dist has a P==1 point
+// IN: 	poss array 
+//		sDim: 'r' if single poss-dists to be rows, 'c' if them to be columns
+// OUT:	boolean test result (%T if passed)
+//=================================================
+function f = ptIsValidPoss( poss, sDim );
+    f = ( max(poss)==1 ) & ( min(poss)==0 );
+    if( sDim == 'r' )
+        f = f & ( sum(max(poss, 'c')) == length(max(poss, 'c')) );
+    else
+    if( sDim == 'c' )	
+        f = f & ( sum(max(poss, 'r')) == length(max(poss, 'r')) );
+	else
+        error("Dim must be either r or c.");
+	end;
+    end;      
+endfunction
+
+//=================================================
 // ptIsStrictlyMonotoneFunc: test if x->y is strictly monotonous
 // IN: 	x, y
 // OUT:	boolean test result (%T if passed)
 //=================================================
-function f = ptIsStrictlyMonotoneFunc(x, y)
+function f = ptIsStrictlyMonotoneFunc(x, y);
     [x1, ind] = unique(x(:));
     y1 = y(ind);
     f1 = isequal(unique(y1), y1);
@@ -20,7 +40,7 @@ endfunction
 // IN: 	x, y
 // OUT:	boolean test result (%T if passed)
 //=================================================
-function f = ptIsMonotoneFunc(x, y)
+function f = ptIsMonotoneFunc(x, y);
     [x1, ind] = gsort(x(:));
     for x0 = x1'
         if length(unique(y(x == x0))) ~= 1 then
@@ -176,14 +196,24 @@ function comp2d = ptPoss2Comp(poss1d);
 endfunction
 
 //=================================================
+// ptIsValidCompMatrix: test if a matrix is a valid comp matrix (see Pytyev)
+// IN:	comp matrix,
+// OUT:	boolean test result (%T if passed)
+//=================================================
+function f = ptIsValidCompMatrix(comp2d);
+    // TODO: read Pytyev
+    f = isequal(size(comp2d,1), size(comp2d,2));
+endfunction
+
+//=================================================
 // ptComp2Poss: converts an extended comp matrix (see above) into a normalized poss-dist.
 // IN:	comp matrix,
 //      sRescale: 'n' - none (may be omitted), 'u' - uniform, 'l' - linear  
 // OUT:	poss-dist
 //=================================================
 function poss1d = ptComp2Poss(comp2d, sRescale);
-    if ~isequal(size(comp2d,1), size(comp2d,2)) then
-        error("Comp matrix must be scew-symmetric.");
+    if ~ptIsValidCompMatrix then
+        error("The input is not a comp matrix. Sorry.");
     end
     
     qXmax = size(comp2d, 1) - 1;
@@ -195,6 +225,36 @@ function poss1d = ptComp2Poss(comp2d, sRescale);
         if( sRescale == "l" ) then poss1d = ptRescale( prevec ); end;
         poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
     end
+endfunction
+
+//=================================================
+// ptPoss2Comp: converts a poss-dist into an extended preference vector
+//	'extended' means a w0: P(w0)==0 is added to poss-points in input vector of size qXmax,
+//	resulting in a qXmax+1 pref vector.
+// IN:	poss-dist
+// OUT:	pref vector
+//=================================================
+function pref1d = ptPoss2Pref(poss1d);
+endfunction
+
+//=================================================
+// ptIsValidCompMatrix: test if a matrix is a valid comp matrix (see Pytyev)
+// IN:	comp matrix,
+// OUT:	boolean test result (%T if passed)
+//=================================================
+function f = ptIsValidPrefVector(pref1d);
+    // TODO: make it 
+    f = %T;
+endfunction
+
+//=================================================
+// ptPoss2Comp: converts a poss-dist into an extended preference vector
+//	'extended' means a w0: P(w0)==0 is added to poss-points in input vector of size qXmax,
+//	resulting in a qXmax+1 pref vector.
+// IN:	poss-dist
+// OUT:	pref vector
+//=================================================
+function poss1d = ptPref2Poss(pref1d);
 endfunction
 // ==eof===eof==
 
