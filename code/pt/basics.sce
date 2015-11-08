@@ -201,8 +201,24 @@ endfunction
 // OUT:	boolean test result (%T if passed)
 //=================================================
 function f = ptIsValidCompMatrix(comp2d);
-    // TODO: read Pytyev
+    // is a skew-symmetric matrix with values -1, 0 and 1
     f = isequal(size(comp2d,1), size(comp2d,2));
+    f = f& isequal(comp2d', -comp2d);
+    f = f& ( sum((comp2d ~= 0) & (comp2d ~= -1) & (comp2d ~= 1)) == 0 );
+    
+    // is transitive
+    qSize = size(comp2d,1);
+    for i=1:qSize
+        for j=1:qSize
+            for k=1:qSize
+                ij =  comp2d(i,j);
+                if( ij == comp2d(j,k) & ij ~= comp2d(i,k) )
+                    f = %F;
+                end 
+            end
+        end
+    end
+    
 endfunction
 
 //=================================================
@@ -250,9 +266,10 @@ endfunction
 function f = ptIsValidPrefVector(pref1d);
      
     // is a vector with max == length
-    f = (length(pref1d) == length(pref1d(:))) & (length(pref1d) == max(pref1d));
+    f = (length(pref1d) == length(pref1d(:))) 
+    f = f& (length(pref1d) == max(pref1d));
     
-    // diagonal (see 151105-1)
+    // is upper diagonal (see 151105-1)
     qUsed = 0;
     for i = 1:max(pref1d)
         qIValCount = sum( pref1d == i );
