@@ -131,16 +131,6 @@ function test04()
 endfunction
 
 function test05()
-    x = linspace(-3, 3, 100);
-    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
-    p1 = p1 / max(p1);
-    p2 = exp(-(x+1).^2);
-    [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f, 2);
-    test_sup(p1, p2, psup1, psup2);
-endfunction
-
-function test06()
     x = linspace(0, 1, 50);
     p1 = x;
     p1(1) = p1(2);
@@ -150,7 +140,7 @@ function test06()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test07()
+function test06()
     p1 = [0.1, 1, 1];
     p2 = [0.5, 1, 0.1];
     [psup1, f] = draw_sup(p1, p2);
@@ -158,7 +148,7 @@ function test07()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test08()
+function test07()
     p1 = [0 0 1 0 0];
     p2 = [0 1 1 0.5 0];
     [psup1, f] = draw_sup(p1, p2);
@@ -166,7 +156,7 @@ function test08()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test09()
+function test08()
     x = linspace(-1, 1, 100);
     p1 = 1 - abs(x);
     p2 = p1;
@@ -177,13 +167,33 @@ function test09()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
+function test09()
+    x = linspace(-3, 3, 300);
+    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
+    p1 = p1 / max(p1);
+    p2 = exp(-(x+1).^2);
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
+function test10()
+    x = linspace(-3, 3, 100);
+    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
+    p1 = p1 / max(p1);
+    p2 = exp(-(x+1).^2);
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
 //=================================================
 // Test execution
 //=================================================
 
-// Pay attantion to test05()!!!
+// Pay attantion to test10()!!! Its result is incorrect.
 
-tests = 1 : 9;
+tests = 1 : 10;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);
