@@ -7,3 +7,4 @@ exec 'basics.sce';
 exec 'inout.sce';
 exec 'order_lemm.sce';
 exec 'order.sce';
+exec 'mean.sce';

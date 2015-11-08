@@ -218,7 +218,6 @@ function f = ptIsValidCompMatrix(comp2d);
             end
         end
     end
-    
 endfunction
 
 //=================================================
