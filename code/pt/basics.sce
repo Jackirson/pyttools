@@ -259,25 +259,52 @@ endfunction
 
 //=================================================
 // ptIsValidCompMatrix: test if a matrix is a valid comp matrix (see Pytyev)
-// IN:	comp matrix,
+// IN:	pref vector,
+//        'sorted' if the vector is already sorted
 // OUT:	boolean test result (%T if passed)
 //=================================================
-function f = ptIsValidPrefVector(pref1d);
+function f = ptIsValidPrefVector(pref1d, varargin);
+     [qlhs qrhs] = argn();
+     if( qrhs < 1 | qrhs > 2  )
+         error('Wrong number of arguments');
+     end
+     if( qrhs == 2 )   
+       fsorted = %T;
+     else
+       fsorted = %F;
+     end
      
     // is a vector with max == length
     f = (length(pref1d) == length(pref1d(:))) 
     f = f& (length(pref1d) == max(pref1d));
     
+    if( ~fsorted )
+      SSorted = gsort(pref1d, 'g', 'i');
+    else
+      SSorted = pref1d;
+    end
+  
     // is upper diagonal (see 151105-1)
+    qValCount = 1;
     qUsed = 0;
-    for i = 1:max(pref1d)
-        qIValCount = sum( pref1d == i );
-        if( qIValCount > 0 & qIValCount ~= i-qUsed ) 
+    for i = 1:length(SSorted)
+        thisVal = SSorted(i);
+        if( i == length(SSorted) )
+            nextVal = 0;
+        else    
+            nextVal = SSorted(i+1);
+        end;    
+        if( thisVal == nextVal )
+            qValCount = qValCount + 1;
+        else
+          if( qValCount ~= thisVal-qUsed ) 
             f = %F;
             break;
-        end
-        qUsed = qUsed + qIValCount;
-    end
+          end
+          qUsed = qUsed + qValCount;
+          qValCount = 1;
+        end;
+    end//for
 endfunction
 
 //=================================================
