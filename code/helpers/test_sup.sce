@@ -187,13 +187,21 @@ function test10()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
+function test11()
+    p1 = [1, 0.8, 0.8, 0.8, 0.9, 0.4, 0.2, 0];
+    p2 = [1, 0.8, 0.7, 0.6, 0.5, 0.4, 0.4, 0];
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
 //=================================================
 // Test execution
 //=================================================
 
 // Pay attantion to test10()!!! Its result is incorrect.
 
-tests = 1 : 10;
+tests = 10;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);

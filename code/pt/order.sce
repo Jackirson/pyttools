@@ -96,9 +96,11 @@ function poss_sup = ptSupB(poss1, poss2);
 
     // Identify the separate groups of the incorrectly ordered atomic events
     // and make the possibilities among each group equal.
-    bounds = find(diff(indexes) > 1);
+    bounds = find(diff(sum(M, "c")' > 0) == -1);
+    disp(bounds, indexes);
     i1 = 1;
-    for i2 = bounds
+    for k = bounds
+        i2 = find(indexes == k);
         p1(indexes(i1 : i2)) = max(p1(indexes(i1 : i2)));
         i1 = i2 + 1;
     end
