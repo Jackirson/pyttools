@@ -124,59 +124,59 @@ endfunction
 // IN: 	vec: some vector
 // OUT: 	possOut: poss-dist vector with values in range [0,1] uniformely placed
 //=================================================
-function possOut = ptRescaleUnif( vec );
-   // test for vector input is inside ptChange1d //
-   // ptChange1d can not be avoided
-   
-    ValsOld =   unique( vec );
-    ValsUnif =  linspace(0,1, length(Vals));
-    possOut = ptChange1d( vec, ValsUnif, ValsOld ); 
-endfunction
-
-//=================================================
-// ptRescale2Given: rescales a vector into range [0 1] by correcting a  
-//      transformation function between some vector 'vec' and a given 
-//      poss-dist 'givenPoss' to make it 'close to' a linear transform  
-// IN: 	vec: some vector, givenPoss: goal scale
-// OUT: possOut: poss-dist vector with values in range [0,1] uniformely placed
-//=================================================
-///function  possOut = ptRescale2Given( vec );
-/// NOT YET NEEDED
-///endfunction
-
-//========================================,=========
-// ptChange1d: emulates Matlab 'changem' function for vectors.
-// COMMENT: an implementation of p2=gamma(p1) in Pytyev will be:
-//    P1Vals=unique(p1);
-//    ... // define gammaOnP1Vals somehow
-//    p2 = ptChange1d( p1, gammaOnP1Vals, P1Vals);
-// IN: 	vec: some vector (to be changed), 
-//		toVals: vector of destination values
-//		fromVals: vector of source values (present in 'vec') 
-// 	toVals and fromVals must be of same size!
-// OUT: 	vecOut 
-//=================================================
-function vecOut = ptChange1d( vec, toVals, fromVals )
-    qFrom = length(fromVals);
-    qTo = length(toVals);
-    qVecLen = length(vec);
-    if qVecLen ~=length(vec(:)) | qFrom ~= length(fromVals(:)) |  ( qFrom ~= qTo & qTo > 1  ) | qTo ~= length(toVals(:))  
-         error("All input args are vectors; toVals and fromVals must be of same size except if toVals is of size 1.");
-    end
-
-    vecOut = vec;
-    for i=1:qVecLen
-        for j=1:qFrom
-            if vec(i) == fromVals(j) 
-                if( qTo > 1 )
-                  vecOut(i) = toVals(j);
-                else
-                  vecOut(i) = toVals;
-                end;    
-            end;
-        end;    
-    end;
-endfunction
+//function possOut = ptRescaleUnif( vec );
+//   // test for vector input is inside ptChange1d //
+//   // ptChange1d can not be avoided
+//   
+//    ValsOld =   unique( vec );
+//    ValsUnif =  linspace(0,1, length(Vals));
+//    possOut = ptChange1d( vec, ValsUnif, ValsOld ); 
+//endfunction
+//
+////=================================================
+//// ptRescale2Given: rescales a vector into range [0 1] by correcting a  
+////      transformation function between some vector 'vec' and a given 
+////      poss-dist 'givenPoss' to make it 'close to' a linear transform  
+//// IN: 	vec: some vector, givenPoss: goal scale
+//// OUT: possOut: poss-dist vector with values in range [0,1] uniformely placed
+////=================================================
+//function  possOut = ptRescale2Given( vec );
+//// NOT YET NEEDED
+//endfunction
+//
+////========================================,=========
+//// ptChange1d: emulates Matlab 'changem' function for vectors.
+//// COMMENT: an implementation of p2=gamma(p1) in Pytyev will be:
+////    P1Vals=unique(p1);
+////    ... // define gammaOnP1Vals somehow
+////    p2 = ptChange1d( p1, gammaOnP1Vals, P1Vals);
+//// IN: 	vec: some vector (to be changed), 
+////		toVals: vector of destination values
+////		fromVals: vector of source values (present in 'vec') 
+//// 	toVals and fromVals must be of same size!
+//// OUT: 	vecOut 
+////=================================================
+//function vecOut = ptChange1d( vec, toVals, fromVals )
+//    qFrom = length(fromVals);
+//    qTo = length(toVals);
+//    qVecLen = length(vec);
+//    if qVecLen ~=length(vec(:)) | qFrom ~= length(fromVals(:)) |  ( qFrom ~= qTo & qTo > 1  ) | qTo ~= length(toVals(:))  
+//         error("All input args are vectors; toVals and fromVals must be of same size except if toVals is of size 1.");
+//    end
+//
+//    vecOut = vec;
+//    for i=1:qVecLen
+//        for j=1:qFrom
+//            if vec(i) == fromVals(j) 
+//                if( qTo > 1 )
+//                  vecOut(i) = toVals(j);
+//                else
+//                  vecOut(i) = toVals;
+//                end;    
+//            end;
+//        end;    
+//    end;
+//endfunction
 
 //=================================================
 // ptPoss2Comp: converts a poss-dist into an extended comp matrix
@@ -206,13 +206,13 @@ function f = ptIsValidCompMatrix(comp2d);
 endfunction
 
 //=================================================
-// ptComp2Poss: converts an extended comp matrix (see above) into a normalized poss-dist.
+// ptComp2Poss: converts an extended comp matrix (see above) into a
+//      uniformly scaled poss-dist.
 // IN:	comp matrix,
-//      sRescale: 'n' - none (may be omitted), 'u' - uniform, 'l' - linear  
 // OUT:	poss-dist
 //=================================================
-function poss1d = ptComp2Poss(comp2d, sRescale);
-    if ~ptIsValidCompMatrix then
+function poss1d = ptComp2Poss(comp2d);
+    if ~ptIsValidCompMatrix(comp2d) then
         error("The input is not a comp matrix. Sorry.");
     end
     
@@ -221,20 +221,25 @@ function poss1d = ptComp2Poss(comp2d, sRescale);
         poss1d = ones(1, qXmax);
     else
         prevec = -sum(comp2d, 'r'); // already ordered like the poss-dist we need
-        if( sRescale == "u" ) then poss1d = ptRescaleUnif( prevec ); end;
-        if( sRescale == "l" ) then poss1d = ptRescale( prevec ); end;
+        poss1d = ptRescale1d( prevec );
         poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
     end
 endfunction
 
 //=================================================
-// ptPoss2Comp: converts a poss-dist into an extended preference vector
-//	'extended' means a w0: P(w0)==0 is added to poss-points in input vector of size qXmax,
+// ptPoss2Pref: converts a poss-dist into an extended preference vector
+//	'extended' means a w0: P(w0)==0 is added to poss-points in input vector of size qXmax
 //	resulting in a qXmax+1 pref vector.
 // IN:	poss-dist
 // OUT:	pref vector
 //=================================================
 function pref1d = ptPoss2Pref(poss1d);
+    if length(poss1d) ~=length(poss1d(:)) then
+       error("All input args are vectors.");
+    end;
+
+    [poss_r, poss_c] = meshgrid([poss1d 0]);
+    pref1d = sum( (poss_r >= poss_c), 'r' );
 endfunction
 
 //=================================================
@@ -243,18 +248,35 @@ endfunction
 // OUT:	boolean test result (%T if passed)
 //=================================================
 function f = ptIsValidPrefVector(pref1d);
-    // TODO: make it 
-    f = %T;
+     
+    // is a vector with max == length
+    f = (length(pref1d) == length(pref1d(:))) & (length(pref1d) == max(pref1d));
+    
+    // diagonal (see 151105-1)
+    qUsed = 0;
+    for i = 1:max(pref1d)
+        qIValCount = sum( pref1d == i );
+        if( qIValCount > 0 & qIValCount ~= i-qUsed ) 
+            f = %F;
+            break;
+        end
+        qUsed = qUsed + qIValCount;
+    end
 endfunction
 
 //=================================================
-// ptPoss2Comp: converts a poss-dist into an extended preference vector
-//	'extended' means a w0: P(w0)==0 is added to poss-points in input vector of size qXmax,
-//	resulting in a qXmax+1 pref vector.
-// IN:	poss-dist
-// OUT:	pref vector
+// ptPref2Poss: converts an extended prefvector (see above) into a normalized poss-dist.
+// IN:	pref vector,
+// OUT:	poss-dist
 //=================================================
 function poss1d = ptPref2Poss(pref1d);
+    if ~ptIsValidPrefVector(pref1d) then
+        error("The input is not a pref vector. Sorry.");
+    end
+
+     qXmax = length(pref1d) - 1;
+     poss1d = ptRescale1d( pref1d );
+     poss1d = poss1d(1:qXmax);  // eliminate the extension point w0: P(w0)==0
 endfunction
 // ==eof===eof==
 
