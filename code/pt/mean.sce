@@ -29,7 +29,7 @@ function poss_mean = ptMeanStack(poss2d, varargin);
      end 
      
      S = round( S / qRows );
-     print(%io(2),[pref2d; S]);
+  ///   print(%io(2),[pref2d; S]);
      [SSorted, qIndex1d] = gsort(S,'g','i');  // sort asc
      
     // make upper diagonal (see 151105-1)   
@@ -83,7 +83,7 @@ function poss_mean = ptMeanStack(poss2d, varargin);
   // p1 = [0.1    0.2    0.5    1.    0.5 ];p2 = [0.4    0.6    1.    0.6    0.6 ];    
      
      S(qIndex1d) = SSorted;           // revert sort
-     print(%io(2), S);
+  ///   print(%io(2), S);
      poss_mean = ptPref2Poss(S);
      return;
    end
