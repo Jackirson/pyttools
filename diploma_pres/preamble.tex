@@ -1,0 +1,141 @@
+\documentclass[unicode,mathserif]{beamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage{beamerprosper}
+\usetheme{Darmstadt}
+\usepackage{multimedia}
+\usepackage[dvips]{animate}
+\usepackage{verbatim}
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{euscript}
+\usepackage{oldgerm}
+\usepackage{inputenc}
+\inputencoding{utf8}
+\usepackage{epsfig}
+\usepackage{psfrag}
+\usepackage{rotating}
+\usepackage{graphicx}
+
+% \setbeamercolor{normal text}{bg=lightgray}
+% \setbeamercolor{normal text}{bg=white}
+
+\setlength{\parskip}{3mm}
+
+\newtheorem{rudefinition}{\inputencoding{utf8}Определение}
+\renewenvironment{definition}{\begin{rudefinition}}{\end{rudefinition}}
+\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
+\renewenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
+
+\newenvironment{commentframe}[1]{\setbeamercolor{normal text}{bg=lightgray}\begin{frame}{#1}}{\end{frame}\setbeamercolor{normal text}{bg=white}}
+
+\newlength{\mylength}
+
+\newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}
+\newcommand{\todo}[1]{\textcolor{red}{TODO~--- #1}}
+\newcommand{\define}[1]{\overset{\text{def}}{#1}}
+\newcommand{\defeq}{\overset{\text{\rm def}}{=}}
+\newcommand{\mn}[1]{\mathcal{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\ut}[2]{\underset{#1}{#2}}
+\newcommand{\mean}{\mathbf{E}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\leqs}{\leqslant}
+\newcommand{\geqs}{\geqslant}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\wt}{\widetilde}
+\newcommand{\what}{\widehat}
+\newcommand{\om}{\omega}
+\newcommand{\Om}{\Omega}
+\newcommand{\vphi}{\varphi}
+\newcommand{\te}{{\inputencoding{cp1251}т.\;е.~}}
+\newcommand{\tst}{\textstyle}
+\newcommand{\dst}{\displaystyle}
+\renewcommand{\L}{{\mathcal{L}}}
+\newcommand{\R}{{\mathcal{R}_n}}
+\newcommand{\T}{{\mathcal{T}}}
+\newcommand{\X}{{\mathcal{X}}}
+\newcommand{\Y}{{\mathcal{Y}}}
+\renewcommand{\G}{{\mathcal{G}}}
+\newcommand{\GG}{{\mathbb{G}}}
+\newcommand{\VV}{{\mathbb{V}}}
+\newcommand{\F}{{\mathcal{F}}}
+\newcommand{\calPi}{{\mathcal{P}}}
+\newcommand{\Alg}{{\mathfrak{A}}}
+\newcommand{\Bor}{{\mathfrak{B}}}
+\newcommand{\Cl}{{{\EuScript Cl}}}
+\renewcommand{\H}{{\mathcal{H}}}
+\renewcommand{\P}{{\mathrm{P}}}
+\renewcommand{\Pr}{{\mathrm{Pr}}}
+\newcommand{\p}{{\mathrm{p}}}
+\newcommand{\pr}{{\mathrm{pr}}}
+\newcommand{\PP}{{\mathbb{P}}}
+\newcommand{\PPr}{{\mathbb{P}\mathrm{r}}}
+\newcommand{\opopr}[1]{{\left(\X\times\T,\, \Alg,\, #1\right)}}
+\newcommand{\Pro}{{\mathcal{P}r}}
+\newcommand{\Po}{{\EuScript P}}
+\newcommand{\err}{{\mathcal{E}}}
+\renewcommand{\d}{{\mathrm{d}}}
+\newcommand{\N}{{\mathrm{N}}}
+\newcommand{\Dmm}{{D_\text{mm}}}
+\newcommand{\Dp}{{D_\text{\inputencoding{cp1251}В}}}
+\newcommand{\Dn}{{D_\text{\inputencoding{cp1251}Н}}}
+\newcommand{\Dpr}{{D_\text{\inputencoding{cp1251}вер}}}
+\newcommand{\D}[1]{{D_{#1}}}
+\newcommand{\Eps}{\mathcal{E}}
+\newcommand{\Exp}{\text{Э}}
+% \newcommand{\Exp}{{\begin{turn}{180} \raisebox{-\height}{\text{\frakfamily E}} \end{turn}}}
+\newcommand{\PPi}{{\Pi\negthickspace\negthinspace\negthinspace\Pi}}
+\newcommand{\fPPi}{{\PPi_\text{fz}}}
+\newcommand{\balpha}{{\boldsymbol\alpha}}
+\newcommand{\bpi}{{\boldsymbol\pi}}
+\newcommand{\bPPi}{{\boldsymbol\PPi}}
+\newcommand{\bI}{{\boldsymbol I}}
+\newcommand{\bi}{{\boldsymbol i}}
+\newcommand{\form}{F}
+\newcommand{\pxi}[2]{{\p_\xi^{\left( #1,\, #2 \right)}}}
+\newcommand{\prxi}[2]{{\pr_\xi^{\left( #1,\, #2 \right)}}}
+\newcommand{\ot}[2]{\overset{#1}{#2}}
+\newcommand{\E}{\text{\inputencoding{cp1251}Э}}
+\newcommand{\OPOPr}{{(\Omega,\,\PO{\Omega},\,\Pr)}}
+\newcommand{\OAPr}{{(\Omega,\,\Alg,\,\Pr)}}
+\newcommand{\OAPR}[1]{{(\Omega,\, \Alg,\,\Pr_{#1})}}
+\newcommand{\OPOP}{{(\Omega,\,\PO{\Omega},\,\P)}}
+\newcommand{\OAP}{{(\Omega,\, \Alg,\,\P)}}
+\newcommand{\PO}[1]{{\mathcal{P}(#1)}}
+\newcommand{\prl}{{(l)}}
+\newcommand{\prlq}{{(l),\{\Pr_i\}_{i=1}^l}}
+\newcommand{\PPJ}{\PP_1}
+\newcommand{\PPrJ}{\PPr_1}
+\newcommand{\PPrJal}{\PPr_J^{\alpha,(l)}}
+\newcommand{\PPrJd}{\PPr^{\left\{\delta_i\right\}_{i=1}^\infty}}
+\DeclareMathOperator{\mo}{\mathbf{E}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\ufm}[1]{ \underset{#1}{\downarrow} }
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\pib}{{\pi_\text{Б}}}
+\newcommand{\alphab}{{\alpha_\text{Б}}}
+\newcommand{\alpham}{{\alpha_\text{mm}}}
+\newcommand{\calP}{{\EuScript{P}}}
+\newcommand{\cY}{{\mathcal{Y}}}
+\newcommand{\cD}{{\mathcal{D}}}
+\DeclareMathOperator{\rank}{rank}
+\DeclareSymbolFont{boldsym}{OT1}{cmr}{bx}{n}
+\DeclareMathSymbol{\plus}{\mathbin}{boldsym}{"2B}
+\DeclareMathSymbol{\mult}{\mathbin}{symbols}{"0F}
+\DeclareMathSymbol{\bigplus}{\mathop}{boldsym}{"2B}
+\DeclareMathSymbol{\bigmult}{\mathop}{symbols}{"0F}
+\newcommand{\scL}{\EuScript L}
+\newcommand{\scale}{([0,1],\, \leqs,\, \plus,\, \mult)}
+\newcommand{\vtheta}{\vartheta}
+\newcommand{\bTheta}{\boldsymbol{\Theta}}
+\newcommand{\bPhi}{\boldsymbol{\Phi}}
+% \newcommand{\olLambda}{{\ol\Lambda}}
+\newcommand{\olLambda}{{\Lambda}}
+\newcommand{\pl}{{\mathrm{pl}}}
+\newcommand{\rulambda}{\text{\it л}}
+\newcommand{\bq}{\mathbf{q}}
