@@ -247,7 +247,7 @@ void MainWindow::onDuplicate() {
     QList<QMdiSubWindow *>::iterator it;
 
     int maxNumber = lst.length();
-    vector<TechEval> sortedTechs(maxNumber, TechEval(QPARAM, QLEVEL));
+    vector<TechEval> sortedTechs(maxNumber+1, TechEval(QPARAM, QLEVEL));
 
     for (it = lst.begin(); it != lst.end(); it++) {
         int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
