@@ -168,7 +168,7 @@ function test08()
 endfunction
 
 function test09()
-    x = linspace(-3, 3, 300);
+    x = linspace(-3, 3, 500);
     p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
     p1 = p1 / max(p1);
     p2 = exp(-(x+1).^2);
@@ -201,7 +201,7 @@ endfunction
 
 // Pay attantion to test10()!!! Its result is incorrect.
 
-tests = 10;
+tests = 1 : 11;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);

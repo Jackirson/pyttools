@@ -87,24 +87,25 @@ function poss_sup = ptSupB(poss1, poss2);
     indexes = [find(sum(M, "r") > 0), find(sum(M, "c") > 0)];
     indexes = unique(indexes);
    
-    // TODO: Сейчас признаком отнесения элементов к разным группам является
-    // наличие элемента, разделяющего их, и не относящегося ни к одной группе.
-    // Но это неправильный признак. К разным группам могут относиться соседние
-    // элементы. Поэтому новый алгоритм слишком упрощает результат - на выходе
-    // получается верхняя грань, но не точная верхняя грань.
-    // Нужно придумать другой признак разделения групп.
-
-    // Identify the separate groups of the incorrectly ordered atomic events
-    // and make the possibilities among each group equal.
-    bounds = find(diff(sum(M, "c")' > 0) == -1);
-    disp(bounds, indexes);
-    i1 = 1;
-    for k = bounds
-        i2 = find(indexes == k);
-        p1(indexes(i1 : i2)) = max(p1(indexes(i1 : i2)));
-        i1 = i2 + 1;
+    while 1
+        gr = find(M(:));
+        if isempty(gr) then
+            break;
+        end
+        gr = modulo(gr(1) -1, size(M, 1)) + 1;
+        gr_ind1 = 1;
+        gr_ind2 = 1;
+        while gr_ind1 <= length(gr)
+            for ind = gr(gr_ind1 : gr_ind2)
+                grnew = find(M(ind, :));
+                gr = [gr, grnew];
+                M(ind, grnew) = %f;
+            end
+            gr_ind1 = gr_ind2 + 1;
+            gr_ind2 = length(gr);
+        end
+        p1(gr) = max(p1(gr));
     end
-    p1(indexes(i1 : $)) = max(p1(indexes(i1 : $)));
     
     // Form the result using the possibilities calculated at the previous step
     poss_sup = poss1;
