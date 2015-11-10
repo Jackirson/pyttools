@@ -168,7 +168,7 @@ function test08()
 endfunction
 
 function test09()
-    x = linspace(-3, 3, 500);
+    x = linspace(-3, 3, 1000);
     p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
     p1 = p1 / max(p1);
     p2 = exp(-(x+1).^2);

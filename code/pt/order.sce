@@ -86,25 +86,42 @@ function poss_sup = ptSupB(poss1, poss2);
     M = M1 ~= M2;
     indexes = [find(sum(M, "r") > 0), find(sum(M, "c") > 0)];
     indexes = unique(indexes);
-   
-    while 1
-        gr = find(M(:));
-        if isempty(gr) then
-            break;
+    
+    // Identify the separate groups of the incorrectly ordered atomic events
+    // and make the possibilities among each group equal.
+    
+    // "mask" marks "indexes" from the same group, initially empty.
+    mask = indexes ~= indexes;
+    // "lb" indexes the elemets of array "indexes".
+    // "lb" is the lower boundary of the group, initially 1.
+    lb = 1;
+    
+    for i = 1 : length(indexes)
+        // Search for the elements joint with the current one.
+        // "Joint" means that the possibilities of the elements are ordered incorrectly.
+        incorrectOrder = M(indexes(i), :) | M(:, indexes(i))';
+        joint = find(incorrectOrder);
+        jointMin = min(joint);
+        jointMax = max(joint);
+        
+        // As possibilities of the elements with indexes "indexes" are ordered,
+        // all the elements between indexes(jointMin) and indexes(jointMax) are
+        // also in the same group.
+        jointMask = jointMin <= indexes & indexes <= jointMax;
+        
+        // Include the elements identified into the group.
+        mask(jointMask) = %t;
+        
+        // If the current element is the maximum one of the group, the group is full.
+        if i == length(indexes) | ~mask(i + 1) then
+            // Make the possibilities among the current group equal.
+            gr = indexes(mask);
+            p1(gr) = max(p1(gr));
+            
+            // Clear all the group markers and advance its lower boundary.
+            mask(:) = %f;
+            lb = i + 1;
         end
-        gr = modulo(gr(1) -1, size(M, 1)) + 1;
-        gr_ind1 = 1;
-        gr_ind2 = 1;
-        while gr_ind1 <= length(gr)
-            for ind = gr(gr_ind1 : gr_ind2)
-                grnew = find(M(ind, :));
-                gr = [gr, grnew];
-                M(ind, grnew) = %f;
-            end
-            gr_ind1 = gr_ind2 + 1;
-            gr_ind2 = length(gr);
-        end
-        p1(gr) = max(p1(gr));
     end
     
     // Form the result using the possibilities calculated at the previous step
