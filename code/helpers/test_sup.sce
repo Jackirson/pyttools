@@ -146,7 +146,7 @@ function test08()
 endfunction
 
 function test09()
-    x = linspace(-3, 3, 300);
+    x = linspace(-3, 3, 1000);
     p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
     p1 = p1 / max(p1);
     p2 = exp(-(x+1).^2);
@@ -156,16 +156,6 @@ function test09()
 endfunction
 
 function test10()
-    x = linspace(-3, 3, 100);
-    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
-    p1 = p1 / max(p1);
-    p2 = exp(-(x+1).^2);
-    [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f, 2);
-    test_sup(p1, p2, psup1, psup2);
-endfunction
-
-function test11()
     p1 = [1, 0.8, 0.8, 0.8, 0.9, 0.4, 0.2, 0];
     p2 = [1, 0.8, 0.7, 0.6, 0.5, 0.4, 0.4, 0];
     [psup1, f] = draw_sup(p1, p2);
@@ -173,7 +163,7 @@ function test11()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test10()   // kiraboris old test
+function test11()   // kiraboris old test
     p1 = [0. 0. 0. 0. 0. 0. 0. 0.0382419 0.2584829 1. 0.]
     p2 = [0. 0. 0. 0. 0. 0. 0. 0.        0.3797164 1. 0.5577132];
     [psup1, f] = draw_sup(p1, p2);
@@ -185,9 +175,7 @@ endfunction
 // Test execution
 //=================================================
 
-tests = 1 : 10;
-// Pay attantion to test10()!!! Its result is incorrect.
-
+tests = 1 : 11;
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);

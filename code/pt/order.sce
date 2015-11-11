@@ -86,25 +86,43 @@ function poss_sup = ptSupB(poss1, poss2);
     M = M1 ~= M2;
     indexes = [find(sum(M, "r") > 0), find(sum(M, "c") > 0)];
     indexes = unique(indexes);
-   
-    // TODO: Сейчас признаком отнесения элементов к разным группам является
-    // наличие элемента, разделяющего их, и не относящегося ни к одной группе.
-    // Но это неправильный признак. К разным группам могут относиться соседние
-    // элементы. Поэтому новый алгоритм слишком упрощает результат - на выходе
-    // получается верхняя грань, но не точная верхняя грань.
-    // Нужно придумать другой признак разделения групп.
-
+    
     // Identify the separate groups of the incorrectly ordered atomic events
     // and make the possibilities among each group equal.
-    bounds = find(diff(sum(M, "c")' > 0) == -1);
-    disp(bounds, indexes);
-    i1 = 1;
-    for k = bounds
-        i2 = find(indexes == k);
-        p1(indexes(i1 : i2)) = max(p1(indexes(i1 : i2)));
-        i1 = i2 + 1;
+    
+    // "mask" marks "indexes" from the same group, initially empty.
+    mask = indexes ~= indexes;
+    // "lb" indexes the elemets of array "indexes".
+    // "lb" is the lower boundary of the group, initially 1.
+    lb = 1;
+    
+    for i = 1 : length(indexes)
+        // Search for the elements joint with the current one.
+        // "Joint" means that the possibilities of the elements are ordered incorrectly.
+        incorrectOrder = M(indexes(i), :) | M(:, indexes(i))';
+        joint = find(incorrectOrder);
+        jointMin = min(joint);
+        jointMax = max(joint);
+        
+        // As possibilities of the elements with indexes "indexes" are ordered,
+        // all the elements between indexes(jointMin) and indexes(jointMax) are
+        // also in the same group.
+        jointMask = jointMin <= indexes & indexes <= jointMax;
+        
+        // Include the elements identified into the group.
+        mask(jointMask) = %t;
+        
+        // If the current element is the maximum one of the group, the group is full.
+        if i == length(indexes) | ~mask(i + 1) then
+            // Make the possibilities among the current group equal.
+            gr = indexes(mask);
+            p1(gr) = max(p1(gr));
+            
+            // Clear all the group markers and advance its lower boundary.
+            mask(:) = %f;
+            lb = i + 1;
+        end
     end
-    p1(indexes(i1 : $)) = max(p1(indexes(i1 : $)));
     
     // Form the result using the possibilities calculated at the previous step
     poss_sup = poss1;
