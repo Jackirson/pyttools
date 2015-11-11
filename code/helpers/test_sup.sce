@@ -29,25 +29,40 @@ function f = open_new_figure()
     f = figure("background", -2, "figure_name", msprintf("test%02d", testno));
 endfunction
 
-function [psup, f] = draw_sup(p1, p2, f0)
+function [psup, f] = draw_sup(p1, p2, f0, var)
     f = open_new_figure();
-    if exists("f0") then
+    if exists("f0") & ~isempty(f0) then
         f.figure_position(1) = f.figure_position(1) + f0.figure_size(1);
+    end
+    if ~exists("var") then
+        var = 1;
     end
     
     subplot(3, 1, 1);
     plot(p1, "linewidth", 3);
     set_axis_props();
-    ylabel("$\mathrm{p}_1$", "font_size", 4);
+    if var == 1 then
+        ylabel("$\mathrm{p}_1$", "font_size", 4);
+    else
+        ylabel("$\mathrm{p}_2$", "font_size", 4);
+    end
     subplot(3, 1, 2);
     plot(p2, "linewidth", 3);
     set_axis_props();
-    ylabel("$\mathrm{p}_2$", "font_size", 4);
+    if var == 1 then
+        ylabel("$\mathrm{p}_2$", "font_size", 4);
+    else
+        ylabel("$\mathrm{p}_1$", "font_size", 4);
+    end
     psup = ptSup(p1, p2);
     subplot(3, 1, 3);
     plot(psup, "linewidth", 3);
     set_axis_props();
-    ylabel("$\mathrm{p}_1\vee\mathrm{p}_2$", "font_size", 4);
+    if var == 1 then
+        ylabel("$\mathrm{p}_1\vee\mathrm{p}_2$", "font_size", 4);
+    else
+        ylabel("$\mathrm{p}_2\vee\mathrm{p}_1$", "font_size", 4);
+    end
 endfunction
 
 //=================================================
@@ -59,7 +74,7 @@ function test01()
     p1 = exp(-(x-1).^2);
     p2 = exp(-(x+1).^2);
     [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
+    psup2 = draw_sup(p2, p1, f, 2);
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
@@ -79,7 +94,7 @@ function test03()
     p1 = [0, 1/3, 2/3, 1, 2/3, 2/3, 2/3, 2/3, 1/3, 0];
     p2 = p1($ : -1 : 1);
     [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
+    psup2 = draw_sup(p2, p1, f, 2);
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
@@ -94,26 +109,16 @@ function test04()
 endfunction
 
 function test05()
-    x = linspace(-3, 3, 100);
-    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
-    p1 = p1 / max(p1);
-    p2 = exp(-(x+1).^2);
-    [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
-    test_sup(p1, p2, psup1, psup2);
-endfunction
-
-function test06()
     x = linspace(0, 1, 50);
     p1 = x;
     p1(1) = p1(2);
     p2 = p1($ : -1 : 1);
     [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
+    psup2 = draw_sup(p2, p1, f, 2);
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test07()
+function test06()
     p1 = [0.1, 1, 1];
     p2 = [0.5, 1, 0.1];
     [psup1, f] = draw_sup(p1, p2);
@@ -121,22 +126,50 @@ function test07()
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test08()
+function test07()
     p1 = [0 0 1 0 0];
     p2 = [0 1 1 0.5 0];
     [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
+    psup2 = draw_sup(p2, p1, f, 2);
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
-function test09()
+function test08()
     x = linspace(-1, 1, 100);
     p1 = 1 - abs(x);
     p2 = p1;
     p2(0.2 <= x & x <= 0.4) = max(p2(0.2 <= x & x <= 0.4));
     p2(0.6 <= x & x <= 0.8) = max(p2(0.6 <= x & x <= 0.8));
     [psup1, f] = draw_sup(p1, p2);
-    psup2 = draw_sup(p2, p1, f);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
+function test09()
+    x = linspace(-3, 3, 300);
+    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
+    p1 = p1 / max(p1);
+    p2 = exp(-(x+1).^2);
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
+function test10()
+    x = linspace(-3, 3, 100);
+    p1 = 3 * exp(-(x+1).^2) + exp(-(x-1).^2);
+    p1 = p1 / max(p1);
+    p2 = exp(-(x+1).^2);
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
+    test_sup(p1, p2, psup1, psup2);
+endfunction
+
+function test11()
+    p1 = [1, 0.8, 0.8, 0.8, 0.9, 0.4, 0.2, 0];
+    p2 = [1, 0.8, 0.7, 0.6, 0.5, 0.4, 0.4, 0];
+    [psup1, f] = draw_sup(p1, p2);
+    psup2 = draw_sup(p2, p1, f, 2);
     test_sup(p1, p2, psup1, psup2);
 endfunction
 
@@ -152,7 +185,9 @@ endfunction
 // Test execution
 //=================================================
 
-tests = 5 : 5;
+tests = 1 : 10;
+// Pay attantion to test10()!!! Its result is incorrect.
+
 for testno = tests
     test_command = msprintf("test%02d();", testno);
     mprintf("test%02d - ", testno);
