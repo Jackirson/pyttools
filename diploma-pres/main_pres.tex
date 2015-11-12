@@ -3,10 +3,10 @@
 \input{draw.tex}
 
 \title[Выбор объектов по экспертным оценкам]{Выбор наиболее качественных объектов на основе нечётких данных об их характеристиках}
-\institute{Физический факультет МГУ имени~М.\,В.\;Ломоносова\\Кафедра информатики и чего-то там
+\institute[Физфак МГУ]{Физический факультет МГУ имени~М.\,В.\;Ломоносова\\Кафедра информатики и чего-то там
        \\ \vspace{0.3cm}
       Научный руководитель:  Зубюк Андрей Владимирович \\ \vspace{0.5cm} }
-\author{Борисов Кирилл Александрович}
+\author{Борисов Кирилл}
 %\url{kiraboris@gmail.com}
 
 \date{15 ноября 2015~г.}
@@ -18,20 +18,19 @@
 
 \maketitle
 
-\section{Задача выбора объектов}
-
-
-\begin{frame}{Модель объектов и экспертной оценки}
+\section{Проблематика выбора объектов}
+\subsection{Модель объектов и экспертной оценки}
+\begin{frame}{C чем мы имеем дело?}
 	%\includegraphics[width=0.8\linewidth]{./pic/globalscheme}
  	\begin{columns}
- 		\column{0.45\textwidth}
+ 		\column{0.50\textwidth}
  			Есть $n$ объектов, у каждого объекта % составителем методологии выбрано
  			есть $m$ нечётких параметров: 
 			\\ \vspace*{2mm}
  			$\tilde x_{ij} \in X$, {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$} 
  			\\ \vspace*{3mm}
  			$x_{ij} \in X$ -- их значения (неизвестны), где $X$ --  числовое множество. %некое выпуклое подмножество действительной оси
- 		\column{0.55\textwidth}
+ 		\column{0.50\textwidth}
  			\includegraphics[width=1.0\linewidth]{./pic/theobjects}
  	\end{columns}
  	
@@ -41,7 +40,7 @@
 	    \path[->] (n1.west) edge  (t1.north east);
 	\end{tikzpicture}
 
-	\vspace*{1mm}
+	\vspace*{3mm}
 	\begin{columns}
 		\column{0.60\textwidth}
 		Экспертные оценки -- это распределения 
@@ -49,9 +48,9 @@
 		{\footnotesize где $i = 1 \ldots n$ -- номер объекта, $j = 1 \ldots m$, -- номер параметра, $r = 1 \ldots R$ -- номер эксперта}.  
 		\column{0.40\textwidth}
 		\begin{center}
-		    \vspace*{-4mm}
+		    \vspace*{-8mm}
 		 %   {\small Примеры оценок:}
-		    {\scriptsize \light{Примеры оценок: значения $\p(x)$ показаны цветом, $x \in \setTen$}}
+		    {\scriptsize {Примеры оценок: значения $\p(x)$ показаны цветом, $x \in \setTen$}}
 		    \\ \vspace*{2mm}
 		     \resizebox{1.0\linewidth}{!}{\showevDisplayFullScale{./pic/chapter01-tech01.dat}}
 		\end{center}
@@ -59,14 +58,24 @@
  	
 \end{frame} %===========================
 
+\subsection{Модель <<качества>> объекта}
 \begin{frame}{Пример формирования <<качества>> объекта}
 	\begin{center}
-		\includegraphics[width=1.0\linewidth]{./pic/schemeF2}
+		\includegraphics[width=0.9\linewidth]{./pic/schemeF2}
 	\end{center}
 \end{frame} %===========================
 
-\begin{frame}{Задача оптимального выбора объектов}
-	\includegraphics[width=0.8\linewidth]{./pic/globalscheme}
+\section{Задача и алгоритм выбора}
+\subsection{Задача выбора}
+\begin{frame}{Что должно получиться на выходе?}
+	\includegraphics[width=1\linewidth]{./pic/globalscheme}
+\end{frame} %===========================
+
+
+\section{Задача и алгоритм коллективной экспертизы}
+\subsection{Обзор методов}
+\begin{frame}{Что должно получиться на выходе?}
+	\includegraphics[width=1\linewidth]{./pic/globalscheme}
 \end{frame} %===========================
 
 

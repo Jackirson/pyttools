@@ -2,8 +2,18 @@
 
 \usepackage[T2A]{fontenc}
 \usepackage{beamerprosper}
-\usetheme{Warsaw}
+\usetheme{CambridgeUS}
 \usecolortheme{dolphin}
+%% Top infolines
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=2.0ex]{palette quaternary}%
+    \insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt plus1filll}
+    \end{beamercolorbox}%
+  }
+}
+
 
 \usepackage{multimedia}
 \usepackage[dvips]{animate}
