@@ -1,9 +1,14 @@
 
 \input{preamble.tex}
+\input{draw.tex}
 
 \title[Выбор объектов по экспертным оценкам]{Выбор наиболее качественных объектов на основе нечётких данных об их характеристиках}
-\institute{Физический факультет МГУ имени~М.\,В.\;Ломоносова\\Кафедра информатики и чего-то там}
+\institute{Физический факультет МГУ имени~М.\,В.\;Ломоносова\\Кафедра информатики и чего-то там
+       \\ \vspace{0.3cm}
+      Научный руководитель:  Зубюк Андрей Владимирович \\ \vspace{0.5cm} }
 \author{Борисов Кирилл Александрович}
+%\url{kiraboris@gmail.com}
+
 \date{15 ноября 2015~г.}
 % \date{\today}
 
@@ -36,20 +41,27 @@
 	    \path[->] (n1.west) edge  (t1.north east);
 	\end{tikzpicture}
 
-	\vspace*{3mm}
+	\vspace*{1mm}
 	\begin{columns}
 		\column{0.60\textwidth}
 		Экспертные оценки -- это распределения 
 		{\large \begin{center} \hspace{-20mm}  $\{ \p_{ij}(x_{ij}) \}_r$ \end{center} }
 		{\footnotesize где $i = 1 \ldots n$ -- номер объекта, $j = 1 \ldots m$, -- номер параметра, $r = 1 \ldots R$ -- номер эксперта}.  
 		\column{0.40\textwidth}
+		\begin{center}
+		    \vspace*{-4mm}
+		 %   {\small Примеры оценок:}
+		    {\scriptsize \light{Примеры оценок: значения $\p(x)$ показаны цветом, $x \in \setTen$}}
+		    \\ \vspace*{2mm}
+		     \resizebox{1.0\linewidth}{!}{\showevDisplayFullScale{./pic/chapter01-tech01.dat}}
+		\end{center}
 	\end{columns}
  	
 \end{frame} %===========================
 
 \begin{frame}{Пример формирования <<качества>> объекта}
 	\begin{center}
-		\includegraphics[width=1\linewidth]{./pic/schemeF2}
+		\includegraphics[width=1.0\linewidth]{./pic/schemeF2}
 	\end{center}
 \end{frame} %===========================
 
