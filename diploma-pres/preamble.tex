@@ -1,8 +1,10 @@
-\documentclass[unicode,mathserif]{beamer}
+\documentclass[unicode,mathserif,10pt]{beamer}
 
 \usepackage[T2A]{fontenc}
 \usepackage{beamerprosper}
-\usetheme{Darmstadt}
+\usetheme{Warsaw}
+\usecolortheme{dolphin}
+
 \usepackage{multimedia}
 \usepackage[dvips]{animate}
 \usepackage{verbatim}
@@ -20,16 +22,21 @@
 % \setbeamercolor{normal text}{bg=lightgray}
 % \setbeamercolor{normal text}{bg=white}
 
+% == kiraboris: my environments ==
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes}
+\tikzstyle{every picture}+=[remember picture]
+\newcommand{\light}[1]{\textcolor{gray}{#1}}
+
+
 \setlength{\parskip}{3mm}
+\newlength{\mylength}
 
 \newtheorem{rudefinition}{\inputencoding{utf8}Определение}
 \renewenvironment{definition}{\begin{rudefinition}}{\end{rudefinition}}
 \newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
 \renewenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
-
 \newenvironment{commentframe}[1]{\setbeamercolor{normal text}{bg=lightgray}\begin{frame}{#1}}{\end{frame}\setbeamercolor{normal text}{bg=white}}
-
-\newlength{\mylength}
 
 \newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}
 \newcommand{\todo}[1]{\textcolor{red}{TODO~--- #1}}
@@ -139,3 +146,13 @@
 \newcommand{\pl}{{\mathrm{pl}}}
 \newcommand{\rulambda}{\text{\it л}}
 \newcommand{\bq}{\mathbf{q}}
+
+% === diploma specific symbols ==
+\newcommand{\mydots}{\, \ldots,\, }
+\newcommand{\tvector}{(x_{11}, \mydots, x_{nm})}
+\newcommand{\tetavector}{(\tilde x_{11}, \mydots, \tilde x_{nm})}
+\newcommand{\setN}{\{1,\, \ldots,\, n\}}
+\newcommand{\setM}{\{1,\, \ldots,\, m\}}
+\newcommand{\dotN}{1,\, \ldots,\, n}
+\newcommand{\dotM}{1,\, \ldots,\, m}
+\newcommand{\intersects}{\cap}
