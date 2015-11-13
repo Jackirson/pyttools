@@ -38,6 +38,83 @@
 \tikzstyle{every picture}+=[remember picture]
 \newcommand{\light}[1]{\textcolor{gray}{#1}}
 
+% == improve the Tikz anchors ==
+\makeatletter
+\def\pgfaddtoshape#1#2{%
+  \begingroup
+  \def\shape@name{#1}%
+  \let\anchor\pgf@sh@anchor
+  #2%
+  \endgroup
+}
+\pgfaddtoshape{rectangle}{%
+  \anchor{west south west}{%
+    \pgf@process{\northeast}%
+    \pgf@ya=.5\pgf@y%
+    \pgf@process{\southwest}%
+    \pgf@y=1.5\pgf@y%
+    \advance\pgf@y by \pgf@ya%
+    \pgf@y=.5\pgf@y%
+  }%
+  \anchor{west north west}{%
+    \pgf@process{\northeast}%
+    \pgf@ya=1.5\pgf@y%
+    \pgf@process{\southwest}%
+    \pgf@y=.5\pgf@y%
+    \advance\pgf@y by \pgf@ya%
+    \pgf@y=.5\pgf@y%
+  }%
+  \anchor{east north east}{%
+    \pgf@process{\southwest}%
+    \pgf@ya=.5\pgf@y%
+    \pgf@process{\northeast}%
+    \pgf@y=1.5\pgf@y%
+    \advance\pgf@y by \pgf@ya%
+    \pgf@y=.5\pgf@y%
+  }%
+  \anchor{east south east}{%
+    \pgf@process{\southwest}%
+    \pgf@ya=1.5\pgf@y%
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+    \advance\pgf@y by \pgf@ya%
+    \pgf@y=.5\pgf@y%
+  }%
+  \anchor{north north west}{%
+    \pgf@process{\southwest}%
+    \pgf@xa=1.5\pgf@x%
+    \pgf@process{\northeast}%
+    \pgf@x=.5\pgf@x%
+    \advance\pgf@x by \pgf@xa%
+    \pgf@x=.5\pgf@x%
+  }%
+  \anchor{north north east}{%
+    \pgf@process{\southwest}%
+    \pgf@xa=.5\pgf@x%
+    \pgf@process{\northeast}%
+    \pgf@x=1.5\pgf@x%
+    \advance\pgf@x by \pgf@xa%
+    \pgf@x=.5\pgf@x%
+  }%
+  \anchor{south south west}{%
+    \pgf@process{\northeast}%
+    \pgf@xa=.5\pgf@x%
+    \pgf@process{\southwest}%
+    \pgf@x=1.5\pgf@x%
+    \advance\pgf@x by \pgf@xa%
+    \pgf@x=.5\pgf@x%
+  }%
+  \anchor{south south east}{%
+    \pgf@process{\northeast}%
+    \pgf@xa=1.5\pgf@x%
+    \pgf@process{\southwest}%
+    \pgf@x=.5\pgf@x%
+    \advance\pgf@x by \pgf@xa%
+    \pgf@x=.5\pgf@x%
+  }%
+}
+\makeatother
+% ==== ====
 
 \setlength{\parskip}{3mm}
 \newlength{\mylength}
@@ -167,3 +244,5 @@
 \newcommand{\dotN}{1,\, \ldots,\, n}
 \newcommand{\dotM}{1,\, \ldots,\, m}
 \newcommand{\intersects}{\cap}
+\newcommand{\supp}{{\mathrm{supp}}}
+\newcommand{\zo}{[0,1]}

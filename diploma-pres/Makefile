@@ -4,7 +4,7 @@ main=main_pres
 build=build
 
 FILES=$(main).tex \
-	  draw.tex preamble.tex pic
+	  10_pev.tex 20_order.tex draw.tex preamble.tex pic
 
 ##################################################
 
