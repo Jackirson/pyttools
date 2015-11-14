@@ -1,5 +1,39 @@
 // The procedures below implement order (predecessor, successor) on poss-dists
 
+//  test if poss1 < poss2
+function f=ptPrecise(poss1, poss2)
+    // Check that the distributions have the same sizes
+    if length(poss1) ~= length(poss2) | length(poss1) ~= length(poss1(:)) then
+        error("Given distributions must be vectors of the same size.");
+    end
+    
+    supp1 = poss1 > 0;
+    supp2 = poss2 > 0;
+	S1minusS2 = supp1 & ~supp2;
+    S2minusS1 = supp2 & ~supp1;
+    
+    // check D1
+    if ~( sum(S1minusS2) == 0 ) then
+        f=%F;  // S1 is not inside S2;
+        return;
+    end
+    
+    // check D2
+    if ~( ptIsMonotoneFunc(poss1(supp1), poss2(supp1)) ) then
+        f=%F;  // there is no g-func;
+        return;
+    end           
+    
+    // check D3
+   // Xmax = length(poss1);  // or poss2...
+     f = ( min(poss2(supp1)) >= max(poss2(~supp1)) );   
+endfunction
+
+// test if poss1 > poss2
+function f=ptDeprecise(poss1, poss2)
+    f=ptPrecise(poss2, poss1);
+endfunction
+
 //=================================================
 // ptSupStack: supremum of several poss-dists (recursively)  
 // 	by now supremum is calculated pairwise
