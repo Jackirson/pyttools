@@ -35,29 +35,49 @@
 	
 	{ \small Коллективное мнение экспертов с помощью векторов предпочтений \\ ($R$ экспертов, 1 объект с 1 параметром), аналогично случаю матриц п.\,с.:}
 	\begin{gather*}
-		{s^{(r)}}_i = \sum_{x \in X} \mathlarger{\mathlarger{\chi} }_{A_i}(x): \;\;
-		 \mathsmaller{ \p^{(r)}(x_{\abs{X}+1}) \define= 0; \;  r = 1 \ldots R;\; i = 1\ldots\abs{X}+1 }; 
-		 \\ \text{здесь } A^{(r)}_i = \{x \in X: \p^{(r)}(x) \leq \p^{(r)}(x_i)\} 
+		{s^{(r)}}_j = \sum_{x \in X} \mathlarger{\mathlarger{\chi} }_{A_j}(x): \;\;
+		 \mathsmaller{ \p^{(r)}(x_{\abs{X}+1}) \define= 0; \;  r = 1 \ldots R;\; j = 1\ldots\abs{X}+1 }; 
+		 \\ \text{здесь } A^{(r)}_j = \{x \in X: \p^{(r)}(x) \leq \p^{(r)}(x_j)\} 
 	\end{gather*}
 	Вектор предпочтений $s$ должен быть нормирован: $\max s_j= |X|$ и \emph{эквилизован}: число координат $|J|: s_j \leq s_0, j \in J$ должно быть не больше $s_0$.
 	
-	\textbf{Задача}: $\displaystyle s_* = \arg \underset{s} \min \sum_{r=1}^R \|s - s^{(r)}\|_2$.
+	\textbf{Задача}: $\displaystyle s_* = \arg \underset{s} \min \sum_{r=1}^R \rho(s - s^{(r)})$, где  $\displaystyle \rho(s, s') = \big( \sum_{j=1}^{\abs{X}}(s_{j} - {s'}_{j})^2 \big)^{1/2}$.
 	
 	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$, нормируем и \emph{эквилизуем}, изменяя как можно меньше его координат на как можно меньшую величину.
 \end{frame}
 
 \begin{frame}{Предпорядок распределений возможности}
-	\emph{Опр.} $\p_1 \prec \p_2$, если:
-	\begin{enumerate}
-		 \item $\supp\;p_2 \supset \supp \; \p_1$
+	\begin{columns}
+	  \column{0.6\textwidth}
+	    \emph{Опр.} $\p_1 \prec \p_2$ (читается: <<уточняет>>), если:
+	    \begin{itemize}
+		 \item $\supp\;p_2 \supset \supp \; \p_1$;
 
 		  \item $\exists \gamma: \p_2(\omega) = \gamma(\p_1(\omega))
-		   \omega \in \supp\;\p_1$ 
+		   \omega \in \supp\;\p_1$; \begin{center}{\footnotesize $\gamma: \zo \rightarrow \zo$ -- монотонная непрерывная, $\gamma(0)=0$, $\gamma(1)=1$} \end{center}
 
 		  \item $p_2(\omega) \leq p_2(\omega'), \omega \not\in  \supp \; \p_1, 
-		  \omega' \in  \supp \; \p_1$
-	\end{enumerate}
+		  \omega' \in  \supp \; \p_1$.
+	    \end{itemize}
+	    
+	    \vspace*{3mm}
+	    \emph{Опр.} $\check{\p} = \p_1 \vee \p_2$ (<<супремум>>), если
+	    \vspace*{-2mm}
+	    \begin{gather*}
+		  \check{\p} \succ \p_1, \check{\p} \succ \p_2, \text{но: } \\ \forall\;\p' \neq \check{\p}, \p' \succ \p_1, \p' \succ \p_2: \p' \succ \check{\p}.
+	    \end{gather*}
+	    
+	    \vspace*{2mm}
+	    \emph{Опр.} $\hat{\p} = \p_1 \wedge \p_2$ (<<инфинум>>) -- аналогично.
+	     
+	     \vspace*{1mm}
+	     \begin{center}
+		  Итого, распределения одного и того же н.\,э. образуют полурешётку (справа).
+	     \end{center}
+	   \column{0.5\textwidth}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Алгоритм коллективной экспертизы}
+
 \end{frame}
