@@ -79,5 +79,19 @@
 \end{frame}
 
 \begin{frame}{Алгоритм коллективной экспертизы}
-
+    \begin{tikzpicture}
+      \begin{axis}[
+	width = 0.5\textwidth, height = 0.4\textwidth,
+ %   xlabel = {$L$},
+%    ylabel = {$\alpha$},
+	%ymin = 0, ymax = 0.4,  % if left default there will be margins
+	%xmin = 2, xmax = 30,
+ %   xtick = {2, 6, 10, 14, 18, 22, 26, 30}
+	xticklabels = {,,},
+	yticklabels = {,,}
+	]
+	\addplot[blue, very thick] table[x=n, y=cone] {./pic/results.txt};
+	\addplot[dash pattern=on 6pt off 3pt on 1pt off 3pt] table[x=n, y=svm] {./pic/results.txt};
+      \end{axis}
+    \end{tikzpicture}
 \end{frame}
