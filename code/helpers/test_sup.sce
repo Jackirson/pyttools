@@ -156,11 +156,11 @@ endfunction
 //=================================================
 if( exists('donttest') )  
     if( donttest > 0 ) // prevent test execution
-        abort;
+        return;
     end 
 end       
 
-tests = 1 : 11;
+tests = 1 : 1;
 for testno = tests
     test_command = msprintf("possTemp = test%02d();", testno);
     mprintf("test%02d - ", testno);
