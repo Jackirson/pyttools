@@ -1,14 +1,9 @@
 
-function set_axis_props()
-    a = gca();
-    a.data_bounds(1, 2) = 0;
-    a.data_bounds(2, 2) = 1;
-    a.tight_limits="on";
-    a.auto_ticks = ["off", "off", "off"];
-endfunction
+// load our test database and help functions
+exec 'test_sup.sce';
 
 // input are ROWS of poss-dist (as ever)
-function [f] = draw(poss2d)
+function [pStack] = draw_sup_plus(poss2d)
     f = figure("background", -2, "figure_name", "Compare Pref and Sup");
     if exists("f0") then
         f.figure_position(1) = f.figure_position(1) + f0.figure_size(1);
