@@ -1,5 +1,6 @@
 
 // load our test database and help functions
+donttest = 1;
 exec 'test_sup.sce';
 
 // input are ROWS of poss-dist (as ever)

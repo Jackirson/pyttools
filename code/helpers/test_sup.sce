@@ -2,6 +2,8 @@
 // Helper functions
 //=================================================
 
+exec 'loader.sce';
+
 function test_sup(p1, p2, psup1, psup2)
 //    open_new_figure();
 //    [tmp, ind] = gsort(p1);
@@ -152,6 +154,11 @@ endfunction
 //=================================================
 // Test execution
 //=================================================
+if( exists('donttest') )  
+    if( donttest > 0 ) // prevent test execution
+        abort;
+    end 
+end       
 
 tests = 1 : 11;
 for testno = tests
