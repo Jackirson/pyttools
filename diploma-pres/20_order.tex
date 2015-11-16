@@ -31,7 +31,6 @@
 	\end{columns}  } 
 \end{frame}
 
-\begin{comment}
 \begin{frame}{Вектора предпочтений}
 	
 	{ \small Коллективное мнение экспертов с помощью векторов предпочтений \\ ($R$ экспертов, 1 объект с 1 параметром), аналогично случаю матриц п.\,с.:}
@@ -47,22 +46,22 @@
 	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$, нормируем и \emph{эквилизуем}, изменяя как можно меньше его координат на как можно меньшую величину.
 \end{frame}
 
-    \begin{tikzpicture}
-      \begin{axis}[
-	width = 0.5\textwidth, height = 0.4\textwidth,
+   % \begin{tikzpicture}
+  %    \begin{axis}[
+%	width = 0.5\textwidth, height = 0.4\textwidth,
  %   xlabel = {$L$},
 %    ylabel = {$\alpha$},
 	%ymin = 0, ymax = 0.4,  % if left default there will be margins
 	%xmin = 2, xmax = 30,
  %   xtick = {2, 6, 10, 14, 18, 22, 26, 30}
-	xticklabels = {,,},
-	yticklabels = {,,}
-	]
-	\addplot[blue, very thick] table[x=n, y=cone] {./pic/results.txt};
-	\addplot[dash pattern=on 6pt off 3pt on 1pt off 3pt] table[x=n, y=svm] {./pic/results.txt};
-      \end{axis}
-    \end{tikzpicture}
-\end{comment}
+%	xticklabels = {,,},
+%	yticklabels = {,,}
+%	]
+%	\addplot[blue, very thick] table[x=n, y=cone] {./pic/results.txt};
+%	\addplot[dash pattern=on 6pt off 3pt on 1pt off 3pt] table[x=n, y=svm] {./pic/results.txt};
+%     \end{axis}
+ %   \end{tikzpicture}
+
 
 \begin{frame}{Предпорядок распределений возможности}
 	\begin{columns}
@@ -93,17 +92,40 @@
 		  Итого, распределения одного и того же н.\,э. образуют полурешётку (справа).
 	     \end{center}
 	   \column{0.5\textwidth}
+	     \begin{center}
+	     	   triv
+	     	    \vspace{5mm}
+		\\ sup
+	    \end{center} 
+	     \begin{columns}
+		  \column{0.5\linewidth}
+		   \begin{center}
+		     PP1
+		     \vspace{5mm}
+		  \\ P1
+		   \end{center} 
+		  \column{0.5\linewidth}
+		   \begin{center}
+		     PP2
+		      \vspace{5mm}
+		  \\ P2 
+		   \end{center} 
+	      \end{columns}
+	      
+	      
 	\end{columns}
 \end{frame}
 
+
+
 \begin{frame}{Алгоритм коллективной экспертизы}
  \begin{center}
-    Пусть имеется $n$ объектов с $m$ параметрами, и $R$ экспертов, каждый оценил все объекты по всем параметрам (если не так, какие-то распределения считаем тривиальными.)
-	\testbf{Идея}: 
+    Пусть имеется $n$ объектов с $m$ параметрами, и $R$ экспертов, каждый из которых оценил все объекты по всем параметрам (если это не так, отсутствующие распределения считаем тривиальными.)
+	\\ \vspace{3mm} \textbf{Идея}: 
 	\begin{enumerate}
-		составить <<длинные>> вектор $(\p_{11}^{(1)}, \ldots \p_{nm}^{(1)});\; (\p_{11}^{(2)}, \ldots \p_{nm}^{(2)})$ и т.\,д.;
-		рассчитать коллективный вектор $(\p_{11}, \ldots \p_{nm})$ методом $\vee$ или методом матриц п.\,с.;
-		<<куски>> этого вектора, $p_{ij}$,  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}. 
+		\item составить <<длинные>> вектор $(\p_{11}^{(1)}, \ldots \p_{nm}^{(1)});\; (\p_{11}^{(2)}, \ldots \p_{nm}^{(2)})$ и т.\,д.;
+		\item рассчитать коллективный вектор $(\p_{11}, \ldots \p_{nm})$ методом $\vee$ или методом матриц п.\,с.;
+		\item Одномерные <<куски>> этого вектора, $\p_{ij}$,  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}. 
 	\end{enumerate}	
  \end{center}
 \end{frame}
