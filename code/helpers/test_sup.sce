@@ -160,7 +160,7 @@ if( exists('donttest') )
     end 
 end       
 
-tests = 1 : 1;
+tests = 1 : 11;
 for testno = tests
     test_command = msprintf("possTemp = test%02d();", testno);
     mprintf("test%02d - ", testno);
