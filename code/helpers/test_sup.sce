@@ -156,16 +156,17 @@ endfunction
 //=================================================
 if( exists('donttest') )  
     if( donttest > 0 ) // prevent test execution
+        donttest = 0;
         return;
     end 
 end       
 
-tests = 1 : 1;
+tests = 3 : 3;
 for testno = tests
     test_command = msprintf("possTemp = test%02d();", testno);
     mprintf("test%02d - ", testno);
     execstr(test_command);
     [psup1, f] = draw_sup(possTemp(1,:), possTemp(2,:));
-    psup2 = draw_sup( possTemp(2,:), possTemp(1,:), f);
+  //  psup2 = draw_sup( possTemp(2,:), possTemp(1,:), f);
     test_sup( possTemp(1,:),  possTemp(2,:), psup1, psup2);    
 end

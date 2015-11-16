@@ -5,7 +5,7 @@
 		\item Методы Ю.~П.~Пытьева\footnote{Пытьев\;Ю.\,П. \emph{Эмпирическое восстановление мер возможности и правдоподобия возможности в моделях экспертных решений}, 2009}:
 % .}~// Докл. АН СССР, Т.\;224, \No 6, С.\;1283--1286, 2009.\\}: 
 		матрицы попарных сравнений и др.;
-		\item Новый метод для т.\,в.~Пытьева -- вектора предпочтений;
+	%%	\item Новый метод для т.\,в.~Пытьева -- вектора предпочтений;
 		\item Новый метод -- введение отношения предпорядка (частичного порядка с точностью до эквивалентности) на множестве распределений нечёткого элемента, вычислние (точной) верхней/нижней грани распределений.
 	\end{enumerate} 
 	
@@ -31,6 +31,7 @@
 	\end{columns}  } 
 \end{frame}
 
+\begin{comment}
 \begin{frame}{Вектора предпочтений}
 	
 	{ \small Коллективное мнение экспертов с помощью векторов предпочтений \\ ($R$ экспертов, 1 объект с 1 параметром), аналогично случаю матриц п.\,с.:}
@@ -45,6 +46,23 @@
 	
 	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$, нормируем и \emph{эквилизуем}, изменяя как можно меньше его координат на как можно меньшую величину.
 \end{frame}
+
+    \begin{tikzpicture}
+      \begin{axis}[
+	width = 0.5\textwidth, height = 0.4\textwidth,
+ %   xlabel = {$L$},
+%    ylabel = {$\alpha$},
+	%ymin = 0, ymax = 0.4,  % if left default there will be margins
+	%xmin = 2, xmax = 30,
+ %   xtick = {2, 6, 10, 14, 18, 22, 26, 30}
+	xticklabels = {,,},
+	yticklabels = {,,}
+	]
+	\addplot[blue, very thick] table[x=n, y=cone] {./pic/results.txt};
+	\addplot[dash pattern=on 6pt off 3pt on 1pt off 3pt] table[x=n, y=svm] {./pic/results.txt};
+      \end{axis}
+    \end{tikzpicture}
+\end{comment}
 
 \begin{frame}{Предпорядок распределений возможности}
 	\begin{columns}
@@ -79,19 +97,13 @@
 \end{frame}
 
 \begin{frame}{Алгоритм коллективной экспертизы}
-    \begin{tikzpicture}
-      \begin{axis}[
-	width = 0.5\textwidth, height = 0.4\textwidth,
- %   xlabel = {$L$},
-%    ylabel = {$\alpha$},
-	%ymin = 0, ymax = 0.4,  % if left default there will be margins
-	%xmin = 2, xmax = 30,
- %   xtick = {2, 6, 10, 14, 18, 22, 26, 30}
-	xticklabels = {,,},
-	yticklabels = {,,}
-	]
-	\addplot[blue, very thick] table[x=n, y=cone] {./pic/results.txt};
-	\addplot[dash pattern=on 6pt off 3pt on 1pt off 3pt] table[x=n, y=svm] {./pic/results.txt};
-      \end{axis}
-    \end{tikzpicture}
+ \begin{center}
+    Пусть имеется $n$ объектов с $m$ параметрами, и $R$ экспертов, каждый оценил все объекты по всем параметрам (если не так, какие-то распределения считаем тривиальными.)
+	\testbf{Идея}: 
+	\begin{enumerate}
+		составить <<длинные>> вектор $(\p_{11}^{(1)}, \ldots \p_{nm}^{(1)});\; (\p_{11}^{(2)}, \ldots \p_{nm}^{(2)})$ и т.\,д.;
+		рассчитать коллективный вектор $(\p_{11}, \ldots \p_{nm})$ методом $\vee$ или методом матриц п.\,с.;
+		<<куски>> этого вектора, $p_{ij}$,  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}. 
+	\end{enumerate}	
+ \end{center}
 \end{frame}

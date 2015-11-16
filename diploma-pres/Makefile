@@ -4,7 +4,7 @@ main=main_pres
 build=build
 
 FILES=$(main).tex \
-	  10_pev.tex 20_order.tex draw.tex preamble.tex pic
+	  10_pev.tex 20_order.tex 30_result.tex draw.tex preamble.tex pic
 
 ##################################################
 
@@ -26,11 +26,11 @@ build:
 
 latex:
 	@echo; echo ===== LaTeX; 
-	@cd $(build); $(compiler) -quiet -halt-on-error -shell-escape $(main).tex;
+	@cd $(build); $(compiler)  -halt-on-error -shell-escape $(main).tex;
 	
 latex2:
 	@echo; echo ===== LaTeX-2; 
-	@cd $(build); $(compiler) -quiet -halt-on-error -shell-escape $(main).tex;
+	@cd $(build); $(compiler)  -halt-on-error -shell-escape $(main).tex;
 
 warnings:
 	@echo; echo ===== WARNINGS; 
@@ -40,7 +40,7 @@ quick:
 	@$(MAKE) latex
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf:  clean build latex latex2 warnings
+$(build)/$(main).pdf:  clean build latex warnings
 
 clean:
 	@echo; echo ===== CLEAN; 
