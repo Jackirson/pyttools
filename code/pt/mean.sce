@@ -29,11 +29,12 @@ function poss_mean = ptMeanStack(poss2d, varargin);
      end 
      
      S = round( S / qRows );
-  ///   print(%io(2),[pref2d; S]);
+   ///  print(%io(2),[pref2d; S]);
      [SSorted, qIndex1d] = gsort(S,'g','i');  // sort asc
      
-    // make upper diagonal (see 151105-1)   
+    // equilization (see 151105-1)   
     while( ~ptIsValidPrefVector(SSorted, 'sorted') )
+   ///        print(%io(2), SSorted);
     qValCount = 1;
     qUsed = 0;
     for i = 1:length(SSorted)
@@ -44,12 +45,14 @@ function poss_mean = ptMeanStack(poss2d, varargin);
             nextVal = SSorted(i+1);
         end;    
         if( thisVal == nextVal )
-            qValCount = qValCount + 1;
+                qValCount = qValCount + 1;
         else
            if     ( qValCount < thisVal-qUsed ) 
-             SSorted(i) =   max(thisVal-1, 1);
+               SSorted(i) =   max(thisVal-1, 1);
+
            else if( qValCount > thisVal-qUsed )
-             SSorted(i) =   min(thisVal+1, length(SSorted));
+
+               SSorted(i) =   min(thisVal+1, length(SSorted));
            end; end;
            
            qUsed = qUsed + qValCount;
@@ -57,33 +60,31 @@ function poss_mean = ptMeanStack(poss2d, varargin);
         end;
     end//for
     end//while
-     
-//    for i = 1:length(SSorted)
-//        thisVal = SSorted(i);
-//        if( i == length(SSorted) )
-//            nextVal = 0;
-//        else    
-//            nextVal = SSorted(i+1);
-//        end;    
-//        if( thisVal == nextVal )
-//           if( qValCount == thisVal-qUsed )
-//              SSorted(i+1) =   thisVal+1; 
-//           end; 
-//           qValCount = qValCount + 1;
-//        else
-//           if ( qValCount < thisVal-qUsed & i < length(SSorted) ) 
-//              SSorted(i+1) =  thisVal;
-//           end; 
-//           
-//           qUsed = qUsed + qValCount;
-//           qValCount = 1
+ 
+//     while( ~ptIsValidPrefVector(SSorted, 'sorted') )
+//     ///      print(%io(2), SSorted);
+//
+//    qUsed = 0;
+//    ValsUsed = zeros(SSorted);
+//    for i = unique(SSorted)
+//        ValsI = (SSorted == i);
+//        if( sum(ValsI) > i-qUsed )     
+//              SSorted(ValsI & ~ValsUsed) =   min(i+1, length(SSorted));
+//        else 
+//           if ( sum(ValsI) < i-qUsed )
+//              SSorted(ValsI & ~ValsUsed) =   max(i-1, 1);
+//           end
+//           qUsed = qUsed + sum(ValsI); 
+//
 //        end
+//        ValsUsed = ValsUsed | ValsI;
 //    end//for
-   //p1 = 0.1:0.1:1;p2 = [0.4:0.1:1 0.8:-0.2:0.4];
-  // p1 = [0.1    0.2    0.5    1.    0.5 ];p2 = [0.4    0.6    1.    0.6    0.6 ];    
-     
+//    end//while
+
+/// print(%io(2), SSorted);
+ 
      S(qIndex1d) = SSorted;           // revert sort
-  ///   print(%io(2), S);
+ ///    print(%io(2), S);
      poss_mean = ptPref2Poss(S);
      return;
    end
