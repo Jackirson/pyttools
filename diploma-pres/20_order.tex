@@ -31,7 +31,7 @@
 		  \\ \text{$m_*$ не всегда просто найти!}
 	      \end{gather*}
 	\end{columns}  } 
-\end{frame}
+\end{frame} %===========================
 
 \begin{frame}{Вектора предпочтений}
 	\vspace{-3mm}
@@ -48,7 +48,7 @@
 	\textbf{Задача}: $\displaystyle s_* = \arg \underset{s} \min \sum_{r=1}^R \rho(s - s^{(r)})$, где  $\displaystyle \rho(s, s') = \big( \sum_{j=1}^{\abs{T}+1}(s_{j} - {s'}_{j})^2 \big)^{1/2}$.
 	
 	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$ и удовлетворяем условия (1-2), изменяя как можно меньше  координат на как можно меньшую величину.
-\end{frame}
+\end{frame} %===========================
 
    % \begin{tikzpicture}
   %    \begin{axis}[
@@ -71,6 +71,7 @@
 	\begin{columns}
 	  \column{0.6\textwidth}
 	    \emph{Опр.} $\p_1 \prec \p_2$ (читается: <<уточняет>>), если:
+	    %\begin{cases}
 	    \begin{itemize}
 		 \item $\supp\;p_2 \supset \supp \; \p_1$;
 
@@ -80,13 +81,20 @@
 		  \item $p_2(\omega) \leq p_2(\omega'), \omega \not\in  \supp \; \p_1, 
 		  \omega' \in  \supp \; \p_1$.
 	    \end{itemize}
+
 	    
-	    \vspace*{3mm}
-	    \emph{Опр.} $\check{\p} = \p_1 \vee \p_2$ (<<супремум>>), если
-	    \vspace*{-2mm}
-	    \begin{gather*}
-		  \check{\p} \succ \p_1, \check{\p} \succ \p_2, \text{но: } \\ \forall\;\p' \neq \check{\p}, \p' \succ \p_1, \p' \succ \p_2: \p' \succ \check{\p}.
-	    \end{gather*}
+	  %  \vspace*{-3mm}
+	    \begin{center}
+		При достаточно общих условиях: %множества решений {\em задачи выбора} вложены:
+		\includegraphics[width=0.8\linewidth]{./pic/solution_sets2}
+		%\\ Здесь $D = 2^{\setN}$,
+		\\ $\displaystyle D_r = \arg \min_d \P^{(r)}(\Eps(d))$ {\footnotesize -- решения задачи выбора на оценках $r$-го эксперта, $D$ -- все решения.}  
+	     \end{center}
+	    
+	    {\small Оправдано использование $\p_1 \vee \p_2$ (супремума).} 
+%	    \begin{gather*}
+%		\mathsmaller{  \check{\p} \succ \p_1, \check{\p} \succ \p_2 }, \text{но: } \\ \forall\;\p' \neq \check{\p}, \p' \succ \p_1, \p' \succ \p_2: \p' \succ \check{\p}.
+%	    \end{gather*}
 	    
 	%    \vspace*{2mm}
 	  %  \emph{Опр.} $\hat{\p} = \p_1 \wedge \p_2$ (<<инфинум>>) -- аналогично.
@@ -95,29 +103,57 @@
 
 	   \column{0.4\textwidth}
 	     \begin{center}
-	     	   triv
-	     	    \vspace{5mm}
-		\\ sup
+	     	\hspace*{-2mm}    \tikz{ \node (otriv){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, ultra thick] table[x=xx, y=triv] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture} };}
+	     	    \vspace{2mm} 
+		\\ \hspace*{-3mm} \tikz{ \node (osup){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, very thick] table[x=xx, y=sup] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture}  };}
 	    \end{center} 
+	     \vspace{-3mm}
 	     \begin{columns}
 		  \column{0.5\linewidth}
 		   \begin{center}
-		     PP1
-		     \vspace{5mm}
-		  \\ P1
+		      \tikz{ \node (oPP1){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, very thick] table[x=xx, y=pp1] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture} };}
+		     \vspace{-2mm}
+		  \\ \tikz{ \node (oP1){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, very thick] table[x=xx, y=p1] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
 		  \column{0.5\linewidth}
 		   \begin{center}
-		     PP2
-		      \vspace{5mm}
-		  \\ P2 
+		     \tikz{ \node (oPP2){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, very thick] table[x=xx, y=pp2] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture} };}
+		      \vspace{-2mm}
+		  \\ \tikz{ \node (oP2){   
+      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+	\addplot[green, very thick] table[x=xx, y=p2] {./pic/chapeter02-lattice2.dat};
+       \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
 	      \end{columns}
 	      \begin{center}
-		 {\small  Распределения одного и того же н.\,э. образуют полурешётку. }
+	          \vspace{-2ex}
+		 {\small  Распределения образуют полурешётку. }
 	     \end{center}
 	\end{columns}
-\end{frame}
+	
+	\begin{tikzpicture}[overlay]
+		\path[->] (otriv.south) edge  (osup.north);
+		\path[->] (osup.south) edge  (oPP1.north);
+		\path[->] (osup.south) edge  (oPP2.north);
+		\path[->] (oPP1.south) edge  (oP1.north);
+		\path[->] (oPP2.south) edge  (oP2.north);
+	\end{tikzpicture}	
+\end{frame} %===========================
 
 
 
@@ -131,4 +167,6 @@
 		\item Одномерные <<куски>> этого вектора, $\p_{ij}$,  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}. 
 	\end{enumerate}	
  \end{center}
-\end{frame}
+\end{frame} %===========================
+
+% == eof == eof ===
