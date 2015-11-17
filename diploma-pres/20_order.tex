@@ -70,28 +70,29 @@
 \begin{frame}{Предпорядок распределений возможности}
 	\begin{columns}
 	  \column{0.6\textwidth}
-	    \emph{Опр.} $\p_1 \prec \p_2$ (читается: <<уточняет>>), если:
-	    %\begin{cases}
-	    \begin{itemize}
-		 \item $\supp\;p_2 \supset \supp \; \p_1$;
-
-		  \item $\exists \gamma: \p_2(\omega) = \gamma(\p_1(\omega))
-		   \omega \in \supp\;\p_1$; \begin{center}{\footnotesize $\gamma: \zo \rightarrow \zo$ -- монотонная непрерывная, $\gamma(0)=0$, $\gamma(1)=1$} \end{center}
-
-		  \item $p_2(\omega) \leq p_2(\omega'), \omega \not\in  \supp \; \p_1, 
-		  \omega' \in  \supp \; \p_1$.
-	    \end{itemize}
-
+	    \begin{gather*}
+	    \p_1 \prec \p_2 \text{ (читается <<уточняет>>) } \Leftrightarrow \\ 
+	     \Leftrightarrow
+	    \begin{cases}
+ 		  \supp\;p_2 \supset \supp \; \p_1;
+		  \\ \exists \gamma: \p_2(\omega) = \gamma(\p_1(\omega))\;   \mathsmaller{ \omega \in \supp\;\p_1}; 
+		 \\ \mathsmaller{\gamma: \zo \rightarrow \zo \text{ -- монотонная непрерывная,} } 
+		%  \\ \hspace{10ex}
+		\mathsmaller{\gamma(0)=0, \gamma(1)=1}
+		 \\ p_2(\omega) \leq p_2(\omega'),  \mathsmaller{\omega \not\in  \supp \; \p_1,  \omega' \in  \supp \; \p_1}.
+	    \end{cases}
+	    \end{gather*}
 	    
-	  %  \vspace*{-3mm}
+
 	    \begin{center}
 		При достаточно общих условиях: %множества решений {\em задачи выбора} вложены:
-		\includegraphics[width=0.8\linewidth]{./pic/solution_sets2}
+		\includegraphics[width=0.75\linewidth]{./pic/solution_sets2}
 		%\\ Здесь $D = 2^{\setN}$,
 		\\ $\displaystyle D_r = \arg \min_d \P^{(r)}(\Eps(d))$ {\footnotesize -- решения задачи выбора на оценках $r$-го эксперта, $D$ -- все решения.}  
 	     \end{center}
-	    
-	    {\small Оправдано использование $\p_1 \vee \p_2$ (супремума).} 
+	  
+	  \vspace*{-1mm}	   
+	   {\small Оправдано использование $\p_1 \vee \p_2$ (супремума).} 
 %	    \begin{gather*}
 %		\mathsmaller{  \check{\p} \succ \p_1, \check{\p} \succ \p_2 }, \text{но: } \\ \forall\;\p' \neq \check{\p}, \p' \succ \p_1, \p' \succ \p_2: \p' \succ \check{\p}.
 %	    \end{gather*}
