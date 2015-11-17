@@ -1,59 +1,53 @@
 \section{Задача и алгоритм коллективной экспертизы}
 
 \begin{frame}{Задача коллективной экспертизы: варианты}
+ \vspace*{-3mm}
 	\begin{enumerate}
-		\item Ю.~П.~Пытьева\footnote{Пытьев\;Ю.\,П. \emph{Эмпирическое восстановление мер возможности и правдоподобия возможности в моделях экспертных решений}, 2009}:
+		\item Методы Ю.~П.~Пытьева\footnote{Пытьев\;Ю.\,П. \emph{Эмпирическое восстановление мер возможности и правдоподобия возможности в моделях экспертных решений}, 2009}:
 % .}~// Докл. АН СССР, Т.\;224, \No 6, С.\;1283--1286, 2009.\\}: 
 		матрицы попарных сравнений и др.;
-		\item Новый метод -- вектора предпочтений;
+		\item Новый метод -- вектора предпочтений; %новый для т.\,в.~Пытьева
 		\item Новый метод -- введение отношения предпорядка (частичного порядка с точностью до эквивалентности) на множестве распределений нечёткого элемента, вычислние (точной) верхней/нижней грани распределений.
 	\end{enumerate} 
-\end{frame}	
-
-\begin{frame}{Матрицы попарных сравнений}
-
-{ \small 
+	
+	{ \small Коллективное мнение экспертов с помощью матриц попарного сравнения: 
+	\\ $\big(  \p^{(r)}(\cdot)$ -- совместное распределение на основе оценок эксперта $r = 1 \ldots R \big)$ 
 	\begin{columns}
 	   \column{0.5\textwidth}
 	      \begin{gather*}
-		 r = 1 \ldots R \text{ -- эксперты:}
-		\\ m^{(r)}_{kj} = \begin{cases}
+		   m^{(r)}_{kj} = \begin{cases}
 			\;\;\;1,\;\; \p^{(r)}(t_k) > \p^{(r)}(t_j)\\
 			\;\;\;0,\;\; \p^{(r)}(t_k) = \p^{(r)}(t_j)\\
 			-1, \;\; \p^{(r)}(t_k) < \p^{(r)}(t_j)
-		 \end{cases} 
-		 \\ \text{при } k,j = 1\ldots\abs{T}
-		 \\[2ex]  m^{(r)}_{kj} = \begin{cases}
-			\;\;\;1,\;\; \p^{(r)}(t_k) > 0\\
-			\;\;\;0,\;\; \p^{(r)}(t_k) = 0\\
-			-1, \;\; \p^{(r)}(t_k) < 0
-		 \end{cases} 
-		 \\ \text{при } k,j = \abs{T}+1.		   
-		%  \\ \p^{(r)}(x_{\abs{X}+1}) \define= 0.  
+		  \end{cases} 
+		  \\ k,j = 1\ldots\abs{T}+1; 
+		  \\ \text{причём }\p^{(r)}(t_{\abs{T}+1}) \define= 0.  
 	      \end{gather*}
 	   \column{0.5\textwidth}
-	  %   \vspace*{-5mm}
+	     \vspace*{-3mm}
 	      \begin{gather*}
-		  m_* = \arg \min_m \sum_{r=1}^{R} \rho(m^{(r)}, m), %\text{где } 
-		  \\ \rho(m, m') = \big( \sum_{k,j=1}^{\abs{X}}(m_{kj} - {m'}_{kj})^2 \big)^{1/2}.
+		  m_* = \arg \min_m \sum_{r=1}^{R} \rho(m^{(r)}, m),
+		  \\ \text{где } \rho(m, m') = \big( \sum_{k,j=1}^{\abs{T}+1}(m_{kj} - {m'}_{kj})^2 \big)^{1/2}.
 		  \\ \text{$m_*$ не всегда просто найти!}
 	      \end{gather*}
 	\end{columns}  } 
 \end{frame}
 
 \begin{frame}{Вектора предпочтений}
-	
-	{ \small Коллективное мнение экспертов с помощью векторов предпочтений \\ ($R$ экспертов, 1 объект с 1 параметром), аналогично случаю матриц п.\,с.:}
+	\vspace{-3mm}
+	{ \small Коллективное мнение экспертов с помощью векторов предпочтений аналогично случаю матриц парных сравнений ($r = 1 \ldots R$):}
 	\begin{gather*}
-		{s^{(r)}}_j = \sum_{x \in X} \mathlarger{\mathlarger{\chi} }_{A_j}(x): \;\;
-		 \mathsmaller{ \p^{(r)}(x_{\abs{X}+1}) \define= 0; \;  r = 1 \ldots R;\; j = 1\ldots\abs{X}+1 }; 
-		 \\ \text{здесь } A^{(r)}_j = \{x \in X: \p^{(r)}(x) \leq \p^{(r)}(x_j)\} 
+		s^{(r)}_j = \sum_{t \in T} \mathlarger{\mathlarger{\chi} }_{A_j^{(r)}}(t),
+		 \mathsmaller{\text{\small причём } \p^{(r)}(t_{\abs{T}+1}) \define= 0, \; j = 1\ldots\abs{T}+1. } 
+		 \\ \text{Здесь } A^{(r)}_j = \{t \in T: \p^{(r)}(t) \leq \p^{(r)}(t_j)\}. 
 	\end{gather*}
-	Вектор предпочтений $s$ должен быть нормирован: $\max s_j= |X|$ и \emph{эквилизован}: число координат $|J|: s_j \leq s_0, j \in J$ должно быть не больше $s_0$.
+	Вектор предпочтений $s$ должен удовлетворять двум условиям:
+	\\ (1) $\max s_j= |T|$ (нормировка возможности);
+	\\ (2) число координат $|J_i| = i$, где $J_i = \{j: s_j \leq i\}$, $i \subset I = \{1 \ldots |T|\}$.
 	
-	\textbf{Задача}: $\displaystyle s_* = \arg \underset{s} \min \sum_{r=1}^R \rho(s - s^{(r)})$, где  $\displaystyle \rho(s, s') = \big( \sum_{j=1}^{\abs{X}}(s_{j} - {s'}_{j})^2 \big)^{1/2}$.
+	\textbf{Задача}: $\displaystyle s_* = \arg \underset{s} \min \sum_{r=1}^R \rho(s - s^{(r)})$, где  $\displaystyle \rho(s, s') = \big( \sum_{j=1}^{\abs{T}+1}(s_{j} - {s'}_{j})^2 \big)^{1/2}$.
 	
-	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$, нормируем и \emph{эквилизуем}, изменяя как можно меньше его координат на как можно меньшую величину.
+	\textbf{Алгоритм решения}:  берём  $ \ol s =  \frac{1}{R} \sum_{r=1}^R s^{(r)}$ и удовлетворяем условия (1-2), изменяя как можно меньше  координат на как можно меньшую величину.
 \end{frame}
 
    % \begin{tikzpicture}
@@ -94,14 +88,12 @@
 		  \check{\p} \succ \p_1, \check{\p} \succ \p_2, \text{но: } \\ \forall\;\p' \neq \check{\p}, \p' \succ \p_1, \p' \succ \p_2: \p' \succ \check{\p}.
 	    \end{gather*}
 	    
-	    \vspace*{2mm}
-	    \emph{Опр.} $\hat{\p} = \p_1 \wedge \p_2$ (<<инфинум>>) -- аналогично.
+	%    \vspace*{2mm}
+	  %  \emph{Опр.} $\hat{\p} = \p_1 \wedge \p_2$ (<<инфинум>>) -- аналогично.
 	     
-	     \vspace*{1mm}
-	     \begin{center}
-		  Итого, распределения одного и того же н.\,э. образуют полурешётку (справа).
-	     \end{center}
-	   \column{0.5\textwidth}
+	%     \vspace*{1mm}
+
+	   \column{0.4\textwidth}
 	     \begin{center}
 	     	   triv
 	     	    \vspace{5mm}
@@ -121,8 +113,9 @@
 		  \\ P2 
 		   \end{center} 
 	      \end{columns}
-	      
-	      
+	      \begin{center}
+		 {\small  Распределения одного и того же н.\,э. образуют полурешётку. }
+	     \end{center}
 	\end{columns}
 \end{frame}
 
