@@ -13,13 +13,7 @@
  			\includegraphics[width=1.0\linewidth]{./pic/theobjects}
  	\end{columns}
  	
-        \hspace{20mm} { \small \tikz { \node  (n1) { \light{монотонна и задана заказчиком экспертизы}  }; } }
-	 $x_i = \tikz[baseline] { \node[anchor=base, fill=\mygreen] (t1) {$f$}; } (x_{i1}, ..., x_{im}),\; x_i \in X$ -- <<качество>> объектов.
-	\begin{tikzpicture}[overlay]
-		\path[->] (n1.west) edge  (t1.north east);
-	\end{tikzpicture}
-
-	\vspace*{3mm}
+	\vspace*{6mm}
 	\begin{columns}
 		\column{0.60\textwidth}
 		Экспертные оценки -- это распределения $\tilde x_{ij}$: 
@@ -27,7 +21,7 @@
 		{\footnotesize где $i = 1 \ldots n$ -- номер объекта, $j = 1 \ldots m$, -- номер параметра, $r = 1 \ldots R$ -- номер эксперта}.  
 		\column{0.40\textwidth}
 		\begin{center}
-			\vspace*{-8mm}
+			\vspace*{-4mm}
 			%   {\small Примеры оценок:}
 			  {\scriptsize {Примеры оценок: значения $\p(x)$ показаны цветом, $x \in \setTen$}}
 			  \\ \vspace*{2mm}
@@ -36,12 +30,18 @@
 	\end{columns}
  \end{frame} %===========================
 
-\begin{frame}{Пример модели <<качества>> объекта}
-     \begin{flushright}
-       \vspace{-10mm} {\large $x_i = f(x_{i1}, ..., x_{im})$ }% \forall i \in \setN.$
-     \end{flushright}   
+\begin{frame}{Модель <<качества>> объекта}
+ %    \begin{flushright}
+             \hspace{20mm} { \small \tikz { \node  (n1) { \light{монотонна и задана заказчиком экспертизы}  }; } }
+	 $x_i = \tikz[baseline] { \node[anchor=base, fill=\mygreen] (t1) {$f$}; } (x_{i1}, ..., x_{im}),\; x_i \in X$ -- <<качество>> объектов.
+	\begin{tikzpicture}[overlay]
+		\path[->] (n1.west) edge  (t1.north east);
+	\end{tikzpicture}
+	
+       \vspace{-3mm} % {\large $x_i = f(x_{i1}, ..., x_{im})$ }% \forall i \in \setN.$
+  %   \end{flushright}   
 	\begin{center}
-		\includegraphics[width=0.9\linewidth]{./pic/schemeF2}
+		\includegraphics[width=0.75\linewidth]{./pic/schemeF2}
 	\end{center}
 \end{frame} %===========================
 
