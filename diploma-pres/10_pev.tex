@@ -8,12 +8,14 @@
 			\\ \vspace*{2mm}   % характеризуем с совсем разных сторон
  			$\tilde x_{ij} \in X$, {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$} 
  			\\ \vspace*{3mm}
- 			$x_{ij} \in X$ -- их значения (неизвестны), где $X$ --  числовое множество. %некое выпуклое подмножество действительной оси
+ 			$x_{ij} \in X$ -- их значения (неизвестны), где $X$ --  числовое множество.
+ 			\\ Например, $X = \{0, \ldots, 10\}$. 
+ 			%некое выпуклое подмножество действительной оси
  		\column{0.50\textwidth}
  			\includegraphics[width=1.0\linewidth]{./pic/theobjects}
  	\end{columns}
  	
-	\vspace*{6mm}
+	\vspace*{3mm}
 	\begin{columns}
 		\column{0.60\textwidth}
 		Экспертные оценки -- это распределения $\tilde x_{ij}$: 
@@ -28,46 +30,38 @@
 			  \resizebox{1.0\linewidth}{!}{\showevDisplayFullScale{./pic/chapter01-tech01.dat}}
 		\end{center}
 	\end{columns}
- \end{frame} %===========================
-
-\begin{frame}{Модель <<качества>> объекта}
- %    \begin{flushright}
-             \hspace{20mm} { \small \tikz { \node  (n1) { \light{монотонна и задана заказчиком экспертизы}  }; } }
+	             \hspace{20mm} { \small \tikz { \node  (n1) { \light{монотонна и задана заказчиком экспертизы}  }; } }
 	 $x_i = \tikz[baseline] { \node[anchor=base, fill=\mygreen] (t1) {$f$}; } (x_{i1}, ..., x_{im}),\; x_i \in X$ -- <<качество>> объектов.
 	\begin{tikzpicture}[overlay]
 		\path[->] (n1.west) edge  (t1.north east);
 	\end{tikzpicture}
-	
-       \vspace{-3mm} % {\large $x_i = f(x_{i1}, ..., x_{im})$ }% \forall i \in \setN.$
-  %   \end{flushright}   
-	\begin{center}
-		\includegraphics[width=0.75\linewidth]{./pic/schemeF2}
-	\end{center}
-\end{frame} %===========================
+ \end{frame} %===========================
 
 \section{Задача и алгоритм выбора}
 \begin{frame}{Основная задача выбора объектов}
-	%\begin{center}
+	
+	{\small Пусть $t = (x_{11}, ..., x_{nm}) \in T = X^{nm}$ -- вектор значений параметров всех объектов}.	
+	\\[1.5ex] Пусть $d \subset \setN$ -- какой-то выбор; $\delta_t$ -- верный выбор {\small при известном $t$}. %нсли бы знали x_i
+	\begin{gather*}
+	      \abs{d} = \abs{\delta_t} = k \text{ -- задано; } \delta_{t} \define= \{i_1, \mydots, i_k\}: \forall\, i \in \delta_t,\; \forall\, i' \in \setN \setminus \delta_t: \\ f(x_{i1}, ..., x_{im}) > f(x_{i'1}, ..., x_{i'm}).
+	 \end{gather*}
 	%\vspace*{-2mm}
-	\hspace*{0.125\linewidth}
-	\includegraphics[width=0.75\linewidth]{./pic/globalscheme}
+	\hspace*{0.17\linewidth}
+	\includegraphics[width=0.65\linewidth]{./pic/globalscheme}
+	
+	\vspace*{-4mm}
+	\begin{center}
+	    Работает \emph{один} эксперт {\small (или используется результат коллективной экспертизы)}. Оценки $\p_{ij}$ %,{\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$},
+	    порождают возможность $\P(\{t\}) = \p(t)$ через их совместное распределение $\p(x_{11}, \ldots, x_{nm}) = \inf_{i, j}\,\p_{ij}(x_{ij})$, {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}.
 	%\end{center}
-	%\vspace*{-2mm}
-	\\ Работает \emph{один} эксперт {\small (или используется результат коллективной экспертизы)}. 
-	\\ Оценки $\p_{ij}$ %,{\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$},
-	порождают возможность через совместное распределение:
 	% каждый эксперт оценивает все параметры, которые являются разложением макропараметров качества объектов.
 	% в данной задаче всюду используется одна и та же шкала возможности
-	\\ \vspace*{2mm} $\P\{(t)\} = \p(t)$, $t = (x_{11}, ..., x_{nm})\; \text{\small -- вектор значений параметров всех объектов}$.
-	\\ \vspace*{2mm} Пусть $d \subset \setN$ -- какое-то решение; $\delta_t$ -- верное решение {\small при известном $t$}: %нсли бы знали x_i
-	\begin{gather*}
-	      \delta_{t} \define= \{i_1, \mydots, i_k\}: \forall\, i \in \delta_t,\; \forall\, i' \in \setN \setminus \delta_t: \\ f(x_{i1}, ..., x_{im}) > f(x_{i'1}, ..., x_{i'm}).
-	 \end{gather*}
-	  \vspace*{-8mm}
-	\begin{center}
-	      \vspace*{-1mm}
-	     \textbf{Задача }{\small (ставится впервые)}: \tikz[baseline] {  \node[anchor=base, fill=\mygreen]{ $\P(\{d \neq \delta_t\}) \sim \underset{d} \min$ }; },
-	     где $\abs{d} = \abs{\delta_t} = k$ -- задано. % размер подможества.
+	%\\ \vspace*{2mm} $\P(\{t\}) = \p(t)$.
+	%\vspace*{-2mm}
+	%\begin{center}
+	%      \vspace*{-1mm}
+	     \\[1.5ex] \textbf{Задача }{\small (ставится впервые)}: \tikz[baseline] {  \node[anchor=base, fill=\mygreen]{ $\P(\Eps(d)) \sim \underset{d} \min$ }; },
+	     где $\Eps(d) = \{d \neq \delta_t\}$. % размер подможества.
 	     \\ {\footnotesize Оптимальное решение может быть не единственным!}
 	\end{center}
 \end{frame} %===========================
@@ -75,10 +69,12 @@
 \begin{frame}{Алгоритм выбора: работа с  возможностью}
 \vspace*{-4mm} 
 \begin{gather*}
-	\text{\small Возьмем любое событие $A$, в частности, $A= \Eps(d) = \{d \neq \delta_t\}$.}
-	\\ \P(A) > p_0 \in \zo \text{?.. Решается легко из-за свойств $\sup$ и $\inf$.}
-	\\  \text{\hspace{4ex} \small \light{перебор всех векторов $t$ потребовал бы $O(\abs{X}^{nm})$ операций!}}
-	\\[5pt]  \hspace*{4mm} {\small  t = (x_{11}, \ldots, x_{nm})  \in T = X^{nm} \text{ -- вектор значений параметров всех объектов} }
+%	\text{\small Возьмем любое событие $A$, в частности, $A= \Eps(d)$.}
+	%\hspace*{4mm} 
+	\mathsmaller{  t = (x_{11}, \ldots, x_{nm})  \in T = X^{nm}, x_{ij} \text{ -- его коордианты}, {i = 1 \ldots n, j = 1 \ldots m}.}
+	\\[2ex] \P(A) = \text{?..  перебрать все $t \in T$ можно за $O(\abs{X}^{nm})$ операций}.
+	\\ \P(A) > p_0 \in \zo \text{?.. Решается за $O(nm)$ из-за свойств $\sup$ и $\inf$.}
+	%\\[5pt]  \hspace*{4mm} {\small  t = (x_{11}, \ldots, x_{nm})  \in T = X^{nm} \text{ -- вектор значений параметров всех объектов} }
 \end{gather*}
 {\large 
   \hspace{6mm} $\P($\tikz[baseline]{\node[anchor=base, fill=\mygreen](nPA){$A$};}$\displaystyle  ) = \sup_{ t \in A}\;\inf_{i, j}\,\p_{ij}(x_{ij})\; $
@@ -86,7 +82,9 @@
 }
 \begin{center}
     \tikz{ \node (tSets) { \includegraphics[width=0.5\linewidth]{./pic/algo_sets_simple} };}
-    \\ Разработан алгоритм, который за время $O(nm)$ позволяет проверить, пересекаются ли $A= \Eps(d)$ и $B$. Если и только если пересекаются, $\P(\Eps(d)) > p_0$.
+    
+   % {\small Для нахождения $\P(A)$ перебор всех векторов $t$ потребовал бы $O(\abs{X}^{nm})$ операций!}
+    Разработан алгоритм, который за время $O(nm)$ позволяет проверить, пересекаются ли $\Eps(d)$ и $B$. Если и только если пересекаются, $\P(\Eps(d)) > p_0$.
 \end{center}
 \begin{tikzpicture}[overlay]
 	\path[->] (nPA.south) edge [bend right] (tSets.west);
