@@ -14,7 +14,7 @@ function poss = test101()
 endfunction
 
 function poss = test102()
-    x= linspace(-0.5, 7.5, 10);
+    x= linspace(-0.5, 7.5, 12);
     p1 = [zeros(x(x<0))  sin(x(x>=0 & x<=%pi))  zeros(x(x>%pi))];
     p2 = p1;
     p3 = exp(-((x-4)/1.5).^2);

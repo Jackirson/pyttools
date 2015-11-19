@@ -80,7 +80,7 @@
         \node[
             rectangle, draw,
             minimum width=\showeval@nodewidth, minimum height=\showeval@nodeheight,
-            white, fill=\showeval@cur@color,
+            white, fill=\showeval@cur@color,draw=black,
             xshift=\showeval@point\showeval@xshift,
             yshift=#1
         ]{};
@@ -96,7 +96,8 @@
     ]{showeval@db}{#1}
     \DTLnewdbonloadtrue
     \begin{tikzpicture}
-        \ifthenelse{\equal{#3}{rough}}{\showeval@drawticks@rough}{\showeval@drawticks}
+        \ifthenelse{\equal{#3}{rough}}{ % \showeval@drawticks@rough}
+								} { \showeval@drawticks}
         \setcounter{showeval@counI}{0}
         \DTLforeach{showeval@db}{
             \showeval@pI   =p00,

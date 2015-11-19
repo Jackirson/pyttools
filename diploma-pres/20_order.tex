@@ -7,7 +7,7 @@
 % .}~// Докл. АН СССР, Т.\;224, \No 6, С.\;1283--1286, 2009.\\}: 
 		метод матриц попарных сравнений и др.;
 		\item Новый метод -- метод векторов предпочтений; %новый для т.\,в.~Пытьева
-		\item Новый метод -- введение отношения предпорядка (частичного порядка с точностью до эквивалентности) на множестве распределений нечёткого элемента, вычислние (точной) верхней/нижней грани распределений.
+		\item Новый метод -- введение отношения предпорядка (частичного порядка с точностью до эквивалентности) на множестве распределений неопределённого элемента, вычислние верхней грани распределений.
 	\end{enumerate} 
 	
 	{ \small Коллективное мнение экспертов с помощью матриц попарного сравнения: 
@@ -67,7 +67,7 @@
  %   \end{tikzpicture}
 
 
-\begin{frame}{Предпорядок распределений возможности}
+\begin{frame}{Предпорядок распределений правдоподобия}
 	\begin{columns}
 	  \column{0.6\textwidth}
 	    \begin{gather*}
@@ -84,7 +84,7 @@
 	    \end{gather*}
 
 	    \begin{center}
-		При достаточно общих условиях: %множества решений {\em задачи выбора} вложены:
+		{\em Теорема:} при достаточно общих условиях %множества решений {\em задачи выбора} вложены:
 		\includegraphics[width=0.75\linewidth]{./pic/solution_sets2}
 		%\\ Здесь $D = 2^{\setN}$,
 		\\ $\displaystyle D_r = \arg \min_d \P^{(r)}(\Eps(d))$ {\footnotesize -- решения задачи выбора на основе оценок $r$-го эксперта, $D$ -- все решения.}
@@ -98,12 +98,12 @@
 	   \column{0.4\textwidth}
 	     \begin{center}
 	     	\hspace*{-2mm}    \tikz{ \node (otriv){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, ultra thick] table[x=xx, y=triv] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 	     	    \vspace{2mm} 
 		\\ \hspace*{-3mm} \tikz{ \node (osup){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, very thick] table[x=xx, y=sup] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture}  };}
 	    \end{center} 
@@ -112,24 +112,24 @@
 		  \column{0.5\linewidth}
 		   \begin{center}
 		      \tikz{ \node (oPP1){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, very thick] table[x=xx, y=pp1] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
-		     \vspace{-2mm}
+		     \vspace{2mm}
 		  \\ \tikz{ \node (oP1){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, very thick] table[x=xx, y=p1] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
 		  \column{0.5\linewidth}
 		   \begin{center}
 		     \tikz{ \node (oPP2){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, very thick] table[x=xx, y=pp2] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
-		      \vspace{-2mm}
+		      \vspace{2mm}
 		  \\ \tikz{ \node (oP2){   
-      \begin{tikzpicture}  \begin{axis}[width = 35mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
+      \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
 	\addplot[green, very thick] table[x=xx, y=p2] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
@@ -151,16 +151,17 @@
 
 \begin{frame}{Алгоритм коллективной экспертизы}
  \begin{center}
-
-	Разработан алгоритм вычисления супремума {\em одномерных} распределений. 
-	\hspace{-3mm}  %\textbf{Идея}:
-	\\[2ex] В качестве коллективной экспертизы разумно использовать супремум. Но не можем его вычислить ($\abs{T} = \abs{X}^{nm}$). Попробуем найти более верхнюю грань.
-	\\[2ex] \textbf{Алгоритм}: 
-	\vspace{-3mm}
+      \vspace{-2em}
+	В качестве коллективной экспертизы разумно использовать супремум. Но не можем его вычислить ($\abs{T} = \abs{X}^{nm}$). %Разработан только алгоритм вычисления супремума {\em одномерных} распределений. 
+	Что делать? Попробуем найти другую верхнюю грань, уточняемую оценками экспертов.
+	\\[3ex] \textbf{Алгоритм} для конечного множества баллов $X$: 
+	\vspace{-2mm}
 	\begin{enumerate}
-		\item составить <<длинные>> векторы $v_r = (\p_{11}^{(r)}, \ldots \p_{nm}^{(r)}),\; r = 1 \ldots R$;
-		\item рассчитать вектор $v = (\p_{11}, \ldots \p_{nm}) = \underset{r} \vee  v_r$; 
-		\item Одномерные <<куски>> этого вектора, $\p_{ij}$,  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}. 
+		\item ввести функции $v_r: X \times \setN \times \setM \rightarrow \zo$ 
+		\\ $v_r(x, i, j) = \p_{ij}^{(r)}$, { \footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$, $r = 1 \ldots R$, $x \in X$};
+		\item рассчитать распределение $v = \underset{r \in R} \vee  v_r$; 
+		\item выполить обратное преобразование $\check{\p}_{ij}(x) = v(x, i,j)$ и полученные $\check{\p}_{ij}$  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}.
+		\item совместное распределение $\p^{(r)}$, полученное из экспертных оценок $\p_{ij}^{(r)}$, и совместное распределение $\check{\p}$ соотносятся как $\check{p} \succ p^{(r)}$  $\forall r = 1 \ldots R$. 
 	\end{enumerate}	
 	%\textbf{Надо доказать}, что получается действительно верхняя грать всех совместных $\p^{(r)}$.
  \end{center}
