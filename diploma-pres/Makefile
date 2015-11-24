@@ -40,7 +40,7 @@ quick:
 	@$(MAKE) latex
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf:  clean build latex warnings
+$(build)/$(main).pdf:  clean build latex latex2 warnings
 
 clean:
 	@echo; echo ===== CLEAN; 
