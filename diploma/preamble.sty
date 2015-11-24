@@ -1,13 +1,36 @@
 
 \usepackage[T2A]{fontenc}
 \usepackage[russian,english]{babel}
-\usepackage{amssymb,latexsym,amsmath,amsthm,amsfonts,xspace}
+\usepackage{amssymb,latexsym,amsmath,amsthm,amsfonts,xspace,euscript}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
 \usepackage{verbatim, titlesec, titletoc, appendix} % comment envirnment
-%\newtheorem{rutheorem}{\inputencoding{utf8}Теорема}
-%\newenvironment{theorem}{\begin{rutheorem}}{\end{rutheorem}}
+
+% notices
+%\newcommand{\noticeheader}{ {\textbf{Замечание}}\\ }
+%\newenvironment{notice}{\small}{\\ \normalsize}
+\usepackage{paralist}
+\theoremstyle{definition}
+\newtheorem{definition}{\inputencoding{utf8}Определение}
+\newtheorem{example}{\inputencoding{utf8}Пример}
+\newtheorem{theorem}{\inputencoding{utf8}Теорема}
+\newtheorem{lemm}{\inputencoding{utf8}Лемма}
+\newtheorem{conseq}{\inputencoding{utf8}Следствие}
+
+\newtheoremstyle{note}% name
+  {3pt}%      Space above
+  {3pt}%      Space below
+  {\small}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bf}% Thm head font
+  {:}%        Punctuation after thm head
+  {.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{note}
+\newtheorem{notice}{\inputencoding{utf8}Замечание}
 
 %\newenvironment{penalty}{}{}
 
@@ -54,10 +77,6 @@
 \usepackage{ccaption}
 \captiondelim{~---~}
 \renewcommand{\figurename}{Рисунок}
-
-% notices
-\newcommand{\noticeheader}{ {\textbf{Замечание}}\\ }
-\newenvironment{notice}{\small}{\\ \normalsize}
 
 % possibility symbols
 \newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}
