@@ -8,7 +8,7 @@ using namespace std;
 
 class Eval : public vector<unsigned int> {
     protected:
-        int numLevels, maxPoint;
+        int numLevels, maxPoint; //, mqPrecision;
 
     public:
         Eval(int numLevels = 4, int maxPoint = 10);

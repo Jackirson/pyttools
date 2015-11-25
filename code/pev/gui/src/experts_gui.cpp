@@ -9,7 +9,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
+#include <map>
 
 using namespace std;
 
@@ -243,17 +244,20 @@ void MainWindow::onSaveSingleTech() {
 void MainWindow::onDuplicate() {
     if( mActiveTech <= 0 ) return;
 
+    // **** the code snippet below is used only 2 times
     QList<QMdiSubWindow *> lst = ui->techMdiArea->subWindowList();
     QList<QMdiSubWindow *>::iterator it;
 
+
     int maxNumber = lst.length();
-    vector<TechEval> sortedTechs(maxNumber+1, TechEval(QPARAM, QLEVEL));
+    map<int, TechEval> sortedTechs;
 
     for (it = lst.begin(); it != lst.end(); it++) {
         int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
-        sortedTechs.at(number-1) =  // that's vector<Eval>::operator=
+        sortedTechs[number-1] =  // that's vector<Eval>::operator=
                  dynamic_cast<TechEvWindow *>((*it)->widget())->getData(QLEVEL);
     }
+    // **** end snippet
 
     int next_number = findSmallestUnusedTechNumber();
     QMdiSubWindow *subwnd =  ui->techMdiArea->addSubWindow(
@@ -329,34 +333,35 @@ void MainWindow::onLoadTechFile() {
     file.close();
 }
 
-
 // saveToStream: outputs given tech or all techs (ntech= -1)
 //              to pstream via operator<<
 // returns count of saved techs
 // **this func and the next one actually belong to a Saver class
 int MainWindow::saveToStream(int ntech, ostream &pstream)
 {
+    // **** the code snippet below is used only 2 times
     QList<QMdiSubWindow *> lst = ui->techMdiArea->subWindowList();
     QList<QMdiSubWindow *>::iterator it;
 
     int maxNumber = lst.length();
-    vector<TechEval> sortedTechs(maxNumber, TechEval(QPARAM, QLEVEL));
+    map<int, TechEval> sortedTechs;
 
     for (it = lst.begin(); it != lst.end(); it++) {
         int number =  dynamic_cast<TechEvWindow *>((*it)->widget())->getNumber();
-        sortedTechs.at(number-1) =  // that's vector<Eval>::operator=
+        sortedTechs[number-1] =  // that's vector<Eval>::operator=
                  dynamic_cast<TechEvWindow *>((*it)->widget())->getData(QLEVEL);
     }
+    // **** end snippet
 
     if( ntech < 0 )             // save all
     {
-       for (int i=0; i < maxNumber; ++i)
-          pstream << sortedTechs[i];
+       for (auto& el : sortedTechs) // el has type pair<int,TechEval>
+          pstream << el.second;
        return maxNumber;
     }
-    else if(ntech < maxNumber && ntech >= 0)  // save single
+    else if(sortedTechs.find(ntech) != sortedTechs.end())  // save single
     {
-       pstream << sortedTechs[ntech];
+       pstream << sortedTechs.at(ntech);
        return 1;
     }
     else

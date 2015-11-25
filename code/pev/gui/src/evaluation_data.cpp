@@ -1,10 +1,15 @@
 #include "evaluation_data.h"
 #include "math.h"
+#include <iomanip>
+
+const int PRECISION = 6; // (default size of double in string)-2
 
 Eval::Eval(int numLevels, int maxPoint) {
     this->numLevels = numLevels;
     this->maxPoint = 10; // TODO: implement maxPoint
     resize(this->maxPoint + 1);
+
+   // mqPrecision = std::to_string(1.0/numLevels).size();  // for cout
 }
 
 double Eval::operator() (int i) {
@@ -35,7 +40,7 @@ int Eval::getMaxPoint() {
 
 ostream & operator<< (ostream &out, Eval &eval) {
     for (int i = 0; i <= eval.getMaxPoint(); i++) {
-        out << eval(i) << " ";
+        out << std::fixed << std::setprecision(PRECISION) << eval(i) << " ";
     }
     return out;
 }
