@@ -28,11 +28,11 @@ build: $(FILES) $(build)
 
 latex:
 	@echo; echo ===== LaTeX; 
-	@cd $(build); $(compiler) -quiet -halt-on-error -shell-escape $(main).tex;
+	@cd $(build); $(compiler) -halt-on-error  $(main).tex;
 	
 latex2:
 	@echo; echo ===== LaTeX-2; 
-	@cd $(build); $(compiler) -quiet -halt-on-error -shell-escape $(main).tex;
+	@cd $(build); $(compiler) -halt-on-error $(main).tex;
 
 biber:
 	@if test -f $(build)/$(main).bcf;\
