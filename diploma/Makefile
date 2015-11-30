@@ -21,7 +21,8 @@ $(name).pdf: $(build)/$(main).pdf
 	@echo; echo ===== CP; 
 	@cp $< $@
 
-build:
+build: $(FILES) $(build)
+	@rm -f -r $(build);
 	@mkdir $(build);
 	@cd $(build) && ln -s $(FILES:%=../%) .
 
@@ -44,11 +45,17 @@ warnings:
 	@echo; echo ===== WARNINGS; 
 	@cat $(build)/$(main).log | grep 'LaTeX Warning' | grep -v 'float specifier changed' || echo "NONE"
 
-quick:
-	@$(MAKE) latex
+quick:  
+	@make build
+	@make latex
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf:  clean build latex biber latex2 warnings
+$(build)/$(main).pdf:  $(FILES)
+	@make build
+	@make latex 
+	@make biber
+	@make latex2
+	@make warnings
 
 clean:
 	@echo; echo ===== CLEAN; 
