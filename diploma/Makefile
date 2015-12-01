@@ -48,6 +48,7 @@ warnings:
 quick:  
 	@make build
 	@make latex
+	@echo; echo ===== CP; 
 	@cp $(build)/$(main).pdf $(name).pdf
 
 $(build)/$(main).pdf:  $(FILES)
