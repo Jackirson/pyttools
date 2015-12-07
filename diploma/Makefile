@@ -30,10 +30,6 @@ latex:
 	@echo; echo ===== LaTeX; 
 	@cd $(build); $(compiler) -halt-on-error  $(main).tex;
 	
-latex2:
-	@echo; echo ===== LaTeX-2; 
-	@cd $(build); $(compiler) -halt-on-error $(main).tex;
-
 biber:
 	@if test -f $(build)/$(main).bcf;\
 	then\
@@ -55,7 +51,8 @@ $(build)/$(main).pdf:  $(FILES)
 	@make build
 	@make latex 
 	@make biber
-	@make latex2
+	@make latex
+	@make latex
 	@make warnings
 
 clean:
