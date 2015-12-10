@@ -1,5 +1,5 @@
 #Folder names and filenames
-name=diplomaKirill1-3
+name=diplomaKirill
 main=main
 build=build
 
