@@ -225,8 +225,23 @@
 
 Используя такую модель экспертной оценки, можно предоставить эксперту свободу выбора своей субъективной шкалы, и экспертные оценки на рис. \ref{ris:fuzzy_ass03} будут выражать одно и то же экспертное мнение.
 \begin{figure}[h]
-\center{\includegraphics[width=0.7\linewidth]{./pic/dummy}}
-\caption{\small Пример двух эквивалентных нечётких экспертных оценок.}
+%\center{\includegraphics[width=0.7\linewidth]{./pic/dummy}}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.75\textwidth, height=0.6\textwidth,
+    xlabel={$x$}, ylabel={$p(x)$},
+    ymin=0, ymax=1.2, xmin=0, xmax=10,
+    ytick = {0,1}
+]
+\addplot[black!50!green, very thick] table[x=x, y=p1] {./pic/equivPoss.dat};
+\addplot[black!50!green, very thick, dashed] table[x=x, y=p2] {./pic/equivPoss.dat};
+\addplot[black, thin, dotted] table[x=x, y=one] {./pic/equivPoss.dat};
+\addplot[blue, thin, dotted] table[x=x, y=max] {./pic/equivPoss.dat};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{\small Пример двух эквивалентных нечётких экспертных оценок. Они имеют одинаковые носители и совпадающие точки единичной возможности.}
 \label{ris:fuzzy_ass03}
 \end{figure}
 
