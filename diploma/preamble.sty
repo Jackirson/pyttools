@@ -6,6 +6,12 @@
 \usepackage[utf8]{inputenc}
 
 % my math packages
+\usepackage{accents}
+%\newcommand{\ubar}[1]{{\underaccent{\mathring}{#1}}}
+\newcommand{\obar}[1]{{\bar{#1}}}
+\newcommand{\ubar}[1]{{\mathring{#1}}}
+\newcommand{\mygamma}{\varphi}
+
 \usepackage{pgfplots}
 \pgfplotsset{
     every tick label/.append style={font=\small},
