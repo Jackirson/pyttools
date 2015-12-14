@@ -101,12 +101,12 @@
 	     \begin{center}
 	     	\hspace*{-2mm}    \tikz{ \node (otriv){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, ultra thick] table[x=xx, y=triv] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, ultra thick] table[x=xx, y=triv] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 	     	    \vspace{2mm} 
 		\\ \hspace*{-3mm} \tikz{ \node (osup){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, very thick] table[x=xx, y=sup] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, very thick] table[x=xx, y=sup] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture}  };}
 	    \end{center} 
 	     \vspace{-3mm}
@@ -115,24 +115,24 @@
 		   \begin{center}
 		      \tikz{ \node (oPP1){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, very thick] table[x=xx, y=pp1] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, very thick] table[x=xx, y=pp1] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		     \vspace{2mm}
 		  \\ \tikz{ \node (oP1){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, very thick] table[x=xx, y=p1] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, very thick] table[x=xx, y=p1] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
 		  \column{0.5\linewidth}
 		   \begin{center}
 		     \tikz{ \node (oPP2){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, very thick] table[x=xx, y=pp2] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, very thick] table[x=xx, y=pp2] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		      \vspace{2mm}
 		  \\ \tikz{ \node (oP2){   
       \begin{tikzpicture}  \begin{axis}[width = 32mm, height = 25mm,	xticklabels = {,,}, yticklabels = {,,}, ymin = -0.1, ymax = 1.1 ]
-	\addplot[green, very thick] table[x=xx, y=p2] {./pic/chapeter02-lattice2.dat};
+	\addplot[\mydarkgreen, very thick] table[x=xx, y=p2] {./pic/chapeter02-lattice2.dat};
        \end{axis}   \end{tikzpicture} };}
 		   \end{center} 
 	      \end{columns}
@@ -156,14 +156,14 @@
  \begin{center}
       \vspace{-2em}
 	В качестве коллективной экспертизы разумно использовать супремум. Но не можем его вычислить ($\abs{T} = \abs{X}^{nm}$). %Разработан только алгоритм вычисления супремума {\em одномерных} распределений. 
-	Что делать? Попробуем найти другую верхнюю грань, уточняемую оценками экспертов.
+	Что делать? Попробуем найти другую верхнюю грань, уточняемую оценками экспертов $\p^{(r)}$.
 	\\[3ex] \textbf{Алгоритм} для конечного множества баллов $X$: 
 	\vspace{-2mm}
 	\begin{enumerate}
 		\item ввести функции $v_r: X \times \setN \times \setM \rightarrow \zo$ 
 		\\ $v_r(x, i, j) = \p_{ij}^{(r)}$, { \footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$, $r = 1 \ldots R$, $x \in X$};
 		\item рассчитать распределение $v = \underset{r \in R} \vee  v_r$; 
-		\item выполить обратное преобразование $\check{\p}_{ij}(x) = v(x, i,j)$ и полученные $\check{\p}_{ij}$  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}.
+		\item выполнить обратное преобразование $\check{\p}_{ij}(x) = v(x, i,j)$ и полученные $\check{\p}_{ij}$  считать коллективным мнением экспертов по параметрам объектов {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}.
 		\item совместное распределение $\p^{(r)}$, полученное из экспертных оценок $\p_{ij}^{(r)}$, и совместное распределение $\check{\p}$ соотносятся как $\check{p} \succ p^{(r)}$  $\forall r = 1 \ldots R$. 
 	\end{enumerate}	
 	%\textbf{Надо доказать}, что получается действительно верхняя грать всех совместных $\p^{(r)}$.
