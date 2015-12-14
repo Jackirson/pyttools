@@ -102,6 +102,14 @@ function poss= test04()
     poss =[ p1; p2 ];
 endfunction
 
+function poss= test04a()
+    x = linspace(0, 1, 50);
+    p1 = 2 * exp(-x.^2);
+    p1(p1 > 1) = 1;
+    p2 = exp(-x.^2);
+    poss =[ p1; p2 ];
+endfunction
+
 function  poss= test05()
     x = linspace(0, 1, 50);
     p1 = x;

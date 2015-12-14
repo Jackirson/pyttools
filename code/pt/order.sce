@@ -11,22 +11,26 @@ function f=ptPrecise(poss1, poss2)
     supp2 = poss2 > 0;
 	S1minusS2 = supp1 & ~supp2;
     S2minusS1 = supp2 & ~supp1;
+    f = 0;
     
     // check D1
     if ~( sum(S1minusS2) == 0 ) then
-        f=%F;  // S1 is not inside S2;
+        f=1;  // S1 is not inside S2;
         return;
     end
     
     // check D2
     if ~( ptIsMonotoneFunc(poss1(supp1), poss2(supp1)) ) then
-        f=%F;  // there is no g-func;
+        f=2;  // there is no g-func;
         return;
     end           
     
     // check D3
    // Xmax = length(poss1);  // or poss2...
-     f = ( min(poss2(supp1)) >= max(poss2(~supp1)) );   
+     if ~( min(poss2(supp1)) >= max(poss2(~supp1)) )
+         f = 3;
+     end
+        
 endfunction
 
 // test if poss1 > poss2
@@ -42,6 +46,10 @@ endfunction
 //=================================================
 function poss_sup = ptSupStack(poss2d);
    qRows =  size(poss2d, 1);
+   if( qRows == 1 )
+      poss_sup =  poss2d(1,:);
+      return;         
+   end 
    if(  qRows == 2 ) // only 2 rows 
 	poss_sup = ptSup( poss2d(1,:), poss2d(2,:) );
    else
