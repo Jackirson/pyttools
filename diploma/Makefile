@@ -5,7 +5,7 @@ build=build
 
 FILES=$(main).tex \
       intro.tex methods.tex algo.tex infinum.tex samples.tex extro.tex \
-	  preamble.sty thesis.bib pic
+	  titlepage.tex preamble.sty thesis.bib pic
 
 ##################################################
 
