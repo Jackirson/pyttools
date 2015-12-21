@@ -50,7 +50,7 @@
 %\newenvironment{penalty}{}{}
 
 % требуется для оформления ссылок
-\RequirePackage[pdftex,unicode,colorlinks,linkcolor=blue,citecolor=red,bookmarksopen,pdfhighlight=/N]{hyperref}
+\RequirePackage[pdftex,unicode,colorlinks,linkcolor=blue,citecolor=red,bookmarksopen,pdfhighlight=/N,hidelinks]{hyperref}
 
 % biber from AndReW
 \usepackage{csquotes} %???
@@ -66,7 +66,7 @@
 \addbibresource{thesis.bib}
 
 % page settings
-\RequirePackage[a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm,headsep=5mm,headheight=7mm]{geometry}
+\RequirePackage[a4paper,left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=5mm,headheight=7mm]{geometry}
 \usepackage{indentfirst}
 \parindent=10mm
 \newcommand{\tocsecindent}{\hspace{1mm}}
@@ -77,7 +77,7 @@
 %% AndReW:
 %% Some hooks to make it possible to insert the notes necessary to support the review process.
 %% To disable the notes just comment out the following \def line.
-\def\usetodos{todonotes}
+%%%%%%\def\usetodos{todonotes}
 
 \ifdefined\usetodos
 \geometry{left=28mm, right=2mm}
