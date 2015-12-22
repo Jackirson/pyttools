@@ -1,10 +1,10 @@
 #Folder names and filenames
-name=diploma_pres
+name=diploma_pres_Kirill
 main=main_pres
 build=build
 
 FILES=$(main).tex \
-	  10_pev.tex 20_order.tex 30_result.tex draw.tex preamble.tex pic
+	  10_pev.tex 20_order.tex 30_result.tex 40_extra.tex draw.tex preamble.tex pic
 
 ##################################################
 
@@ -20,27 +20,37 @@ $(name).pdf: $(build)/$(main).pdf
 	@echo; echo ===== CP; 
 	@cp $< $@
 
-build:
+build: $(FILES) $(build)
+	@rm -f -r $(build);
 	@mkdir $(build);
 	@cd $(build) && ln -s $(FILES:%=../%) .
 
 latex:
 	@echo; echo ===== LaTeX; 
-	@cd $(build); $(compiler)  -halt-on-error -shell-escape $(main).tex;
+	@cd $(build); $(compiler) -halt-on-error  $(main).tex;
 	
-latex2:
-	@echo; echo ===== LaTeX-2; 
-	@cd $(build); $(compiler)  -halt-on-error -shell-escape $(main).tex;
+biber:
+	@if test -f $(build)/$(main).bcf;\
+	then\
+		echo; echo ===== Biber; \
+		cd $(build) && biber $(main);\
+	fi;
 
 warnings:
 	@echo; echo ===== WARNINGS; 
 	@cat $(build)/$(main).log | grep 'LaTeX Warning' | grep -v 'float specifier changed' || echo "NONE"
 
-quick:
-	@$(MAKE) latex
+quick:  
+	@make build
+	@make latex
+	@echo; echo ===== CP; 
 	@cp $(build)/$(main).pdf $(name).pdf
 
-$(build)/$(main).pdf:  clean build latex latex2 warnings
+$(build)/$(main).pdf:  $(FILES)
+	@make build
+	@make latex 
+	@make latex
+	@make warnings
 
 clean:
 	@echo; echo ===== CLEAN; 
