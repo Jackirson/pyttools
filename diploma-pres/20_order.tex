@@ -142,7 +142,25 @@
 	\end{tikzpicture}	
 \end{frame} %===========================
 
-\begin{frame}{Алгоритм коллективной экспертизы ($X$ конечно)}
+\begin{frame}{Пример решения задачи коллективной экспертизы}
+  \vspace{-2.5ex}
+  \begin{center}
+    Графики $p_1, p_2, p_3$ -- исходные распределения, $\bar{\p}$ -- среднее, вычисленное по методу векторов предпочтений, $\p$ -- супремум (всегда $\exists$ в случае конечного числа эл. событий, есть алгоритм его построения.) 
+  \end{center} 
+  \vspace{-4ex}
+  %\begin{columns}
+   % \column{0.55\textwidth}
+	  \begin{center}
+	      \includegraphics[width=0.55\linewidth]{./pic/prefsup102}
+	  \end{center}
+  %  \column{0.50\textwidth}
+  %        \begin{center}
+%	      \includegraphics[width=1\linewidth]{./pic/prefsup6}
+%	  \end{center}
+ % \end{columns}
+\end{frame} %===========================
+
+\begin{frame}{Алгоритм коллективной экспертизы}
  \begin{center}
       \vspace{-1ex}
 	%{\small В конченом случае $\exists\ \underset{r \in R} \vee \p^{(r)}$  (супремум). Но его найти сложно. %Время $O\big(\abs{X}^{nm}\big)$ --- если <<в лоб>>. }%,  но его вычисление <<в лоб>> требует времени порядка $\abs{T} = \abs{X}^{nm}$. Найдём другую верхнюю грань.} 
@@ -154,7 +172,7 @@
 	\begin{enumerate}
 		\item ввести функции $v_r: X \times \setN \times \setM \rightarrow \zo$ 
 		\\ $v_r(x, i, j) = \p_{ij}^{(r)}$, { \footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$, $r = 1 \ldots R$, $x \in X$};
-		\item рассчитать распределение $v = \underset{r \in R} \vee  v_r$ (супремум функций $v_r$); 
+		\item рассчитать распределение $v = \underset{r=1}{\overset{R} \vee}  v_r$ (супремум функций $v_r$); 
 		\item выполнить обратное преобразование $\check{\p}_{ij}(x) = v(x, i,j)$ и полученные $\check{\p}_{ij}$  считать коллективным мнением экспертов, {\footnotesize $i = 1 \ldots n$, $j = 1 \ldots m$}.
 	\end{enumerate}
 	\vspace{-2mm}
@@ -167,5 +185,21 @@
  \end{center}
 \end{frame} %===========================
 
+\begin{frame}{Пример решения задачи  коллективной экспертизы}
+  \vspace{-2ex}
+  \begin{center}
+    Графики $\p_1, \p_2$ -- исходные распределения, $\p$ -- их супремум, $\check{\p}$ -- их верхняя грань, вычисленная по <<быстрому>> алгоримту.
+      \vspace{-1ex}
+    \includegraphics[width=0.8\linewidth]{./pic/myplot_sovp}
+  \end{center} 
+\end{frame} %===========================
 
+\begin{frame}{Пример решения задачи  коллективной экспертизы}
+  \vspace{-2ex}
+  \begin{center}
+    Графики $\p_1, \p_2$ -- исходные распределения, $\p$ -- их супремум, $\check{\p}$ -- их верхняя грань, вычисленная по <<быстрому>> алгоримту.
+      \vspace{-1ex}
+    \includegraphics[width=0.8\linewidth]{./pic/mytest}
+  \end{center} 
+\end{frame} %===========================
 % == eof == eof ===
