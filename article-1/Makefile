@@ -1,6 +1,6 @@
 #Folder names and filenames
 name=article
-main=sample
+main=main
 build=build
 
 FILES=$(main).tex \
